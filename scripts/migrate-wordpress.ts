@@ -17,13 +17,13 @@ import * as path from 'path'
 const config = {
   wordpress: {
     host: process.env.WP_DB_HOST || 'localhost',
-    user: process.env.WP_DB_USER || 'hatef',
-    password: process.env.WP_DB_PASSWORD || 'hatef123',
+    user: process.env.WP_DB_USER || 'wpuser',
+    password: process.env.WP_DB_PASSWORD || 'wppass123',
     database: process.env.WP_DB_NAME || 'wordpress_temp',
     tablePrefix: process.env.WP_TABLE_PREFIX || 'wp_',
   },
-  uploadsSource: '/var/www/hatef/wordpress/uploads',
-  uploadsTarget: '/var/www/hatef/uploads',
+  uploadsSource: '/var/www/melisa/wordpress/uploads',
+  uploadsTarget: '/var/www/melisa/uploads',
 }
 
 const prisma = new PrismaClient()
