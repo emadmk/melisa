@@ -71,7 +71,7 @@ async function migrateCategories(wpConnection: mysql.Connection) {
     `SELECT t.term_id, t.name, t.slug, tt.description, tt.parent
      FROM ${prefix}terms t
      INNER JOIN ${prefix}term_taxonomy tt ON t.term_id = tt.term_id
-     WHERE tt.taxonomy = 'product-category'`
+     WHERE tt.taxonomy = 'products-category'`
   )
 
   let count = 0
