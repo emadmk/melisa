@@ -30,23 +30,23 @@ async function getBrands(): Promise<Brand[]> {
 }
 
 export const metadata: Metadata = {
-  title: 'درباره ما',
-  description: 'آشنایی با کرمان هاتف ارتباط - بیش از ۱۸ سال سابقه در تجهیزات مخابراتی و امنیتی',
+  title: 'About Us',
+  description: 'Learn about Melisa - Over 15 years of experience in telecommunications and security equipment in Dubai, UAE',
 }
 
 const stats = [
-  { icon: Calendar, label: 'سال تجربه', value: '18+' },
-  { icon: Building, label: 'پروژه موفق', value: '500+' },
-  { icon: Users, label: 'مشتری راضی', value: '300+' },
-  { icon: Award, label: 'برند معتبر', value: '4' },
+  { icon: Calendar, label: 'Years Experience', value: '15+' },
+  { icon: Building, label: 'Successful Projects', value: '500+' },
+  { icon: Users, label: 'Satisfied Clients', value: '300+' },
+  { icon: Award, label: 'Trusted Brands', value: '5' },
 ]
 
 export default async function AboutPage() {
   const brands = await getBrands()
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'درباره ما', url: '/about' },
+    { name: 'Home', url: '/' },
+    { name: 'About Us', url: '/about' },
   ]
 
   return (
@@ -59,8 +59,8 @@ export default async function AboutPage() {
 
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">درباره ما</h1>
-          <p className="text-gray-500 text-center mt-3">آشنایی با {siteConfig.name}</p>
+          <h1 className="text-3xl font-bold text-dark text-center">About Us</h1>
+          <p className="text-gray-500 text-center mt-3">Learn more about {siteConfig.name}</p>
         </div>
       </div>
 
@@ -68,20 +68,20 @@ export default async function AboutPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-2xl font-bold text-dark mb-6">درباره هاتف</h2>
+            <h2 className="text-2xl font-bold text-dark mb-6">About Melisa</h2>
             <p className="text-gray-600 leading-relaxed mb-6">
-              ارتباطات فرآیندی است که در آن اطلاعات از مبدا به مقصد منتقل می‌شود.
-              این شرکت مخابراتی در پروژه‌های مخابراتی، رادیویی، دوربین مدار بسته و پیجینگ تخصص دارد.
-              این شرکت با تکنولوژی پیشرفته خدمات ارتباطی و تبادل اطلاعات با کیفیت و ایمن را به مشتریان خود ارائه می‌دهد.
+              Communication is a process in which information is transferred from source to destination.
+              This telecommunications company specializes in telecommunications, radio, CCTV, and paging projects.
+              With advanced technology, the company provides high-quality and secure communication and information exchange services to its customers.
             </p>
             <p className="text-gray-600 leading-relaxed mb-6">
-              این شرکت توانایی طراحی، اجرا و نصب پروژه‌های پیچیده و پیشرفته مخابراتی و رادیویی را دارد.
-              همچنین به طور مستمر در تحقیق و توسعه فناوری‌های جدید در صنعت سرمایه‌گذاری می‌کند.
-              علاوه بر این، این شرکت در زمینه دوربین مداربسته فعالیت دارد و خدمات امنیتی و نظارتی را با استفاده از تجهیزات مدرن دوربین مدار بسته ارائه می‌دهد.
+              The company has the ability to design, implement, and install complex and advanced telecommunications and radio projects.
+              It also continuously invests in research and development of new technologies in the industry.
+              Additionally, the company is involved in the CCTV field and can provide security and surveillance services using modern CCTV equipment.
             </p>
             <p className="text-gray-600 leading-relaxed">
-              در زمینه پیجینگ خدمات ارتباطی و پیام‌رسانی را ارائه می‌دهد.
-              این شرکت با تخصص و تجربه فنی قوی خود ارتباط موثر و پایداری با مشتریان خود برقرار کرده و در صنعت مخابرات و ارتباطات به برتری دست یافته است.
+              In the paging field, it offers communication and messaging services.
+              With strong technical expertise and experience, the company has established effective and sustainable communication with its customers and achieved excellence in the telecommunications and communication industry.
             </p>
           </div>
 
@@ -89,14 +89,14 @@ export default async function AboutPage() {
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
               <Image
                 src="/images/about-us-img.webp"
-                alt="کرمان هاتف ارتباط"
+                alt="Melisa Telecommunications"
                 fill
                 className="object-cover"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 bg-primary text-white p-6 rounded-2xl shadow-lg">
-              <div className="text-4xl font-bold">18+</div>
-              <div className="text-sm opacity-90">سال تجربه</div>
+              <div className="text-4xl font-bold">15+</div>
+              <div className="text-sm opacity-90">Years Experience</div>
             </div>
           </div>
         </div>
@@ -110,7 +110,7 @@ export default async function AboutPage() {
               const IconComponent = stat.icon
               return (
                 <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-primary-light rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <IconComponent className="w-8 h-8 text-primary" />
                   </div>
                   <div className="text-3xl font-bold text-dark mb-1">{stat.value}</div>
@@ -125,7 +125,7 @@ export default async function AboutPage() {
       {/* Brands */}
       {brands.length > 0 && (
         <div className="container mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-dark text-center mb-8">برندهای نمایندگی</h2>
+          <h2 className="text-2xl font-bold text-dark text-center mb-8">Our Partner Brands</h2>
           <div className="flex flex-wrap items-center justify-center gap-12">
             {brands.map((brand) => (
               brand.logo && (

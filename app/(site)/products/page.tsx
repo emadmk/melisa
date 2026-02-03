@@ -5,8 +5,8 @@ import CategorySidebar from '@/components/products/CategorySidebar'
 import { prisma } from '@/lib/db'
 
 export const metadata: Metadata = {
-  title: 'محصولات',
-  description: 'مشاهده تمامی محصولات کرمان هاتف ارتباط شامل دوربین مداربسته، کنترل دسترسی، تجهیزات بی‌سیم و سیستم پیجینگ',
+  title: 'Products',
+  description: 'View all Melisa products including security cameras, access control, wireless equipment and paging systems',
 }
 
 export const dynamic = 'force-dynamic'
@@ -102,8 +102,8 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   ])
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'محصولات', url: '/products' },
+    { name: 'Home', url: '/' },
+    { name: 'Products', url: '/products' },
   ]
 
   return (
@@ -118,9 +118,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
       {/* Page Header */}
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-dark text-center">محصولات</h1>
+          <h1 className="text-3xl font-bold text-dark text-center">Products</h1>
           <p className="text-gray-500 text-center mt-2">
-            در این قسمت می‌توانید تمامی محصولات را مشاهده نمایید
+            Browse our complete product catalog
           </p>
         </div>
       </div>

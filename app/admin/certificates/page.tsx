@@ -37,7 +37,7 @@ export default function CertificatesAdminPage() {
   }, [fetchCertificates])
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این گواهینامه مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this certificate?')) return
 
     setDeleting(id)
     try {
@@ -46,11 +46,11 @@ export default function CertificatesAdminPage() {
       if (data.success) {
         fetchCertificates()
       } else {
-        alert('خطا در حذف')
+        alert('Error deleting')
       }
     } catch (error) {
       console.error('Error deleting certificate:', error)
-      alert('خطا در حذف')
+      alert('Error deleting')
     } finally {
       setDeleting(null)
     }
@@ -67,19 +67,19 @@ export default function CertificatesAdminPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dark">گواهینامه‌ها</h1>
+        <h1 className="text-2xl font-bold text-dark">Certificates</h1>
         <button
           onClick={() => setShowModal(true)}
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن گواهینامه
+          Add Certificate
         </button>
       </div>
 
       {certificates.length === 0 ? (
         <div className="bg-white rounded-xl shadow-sm p-12 text-center text-gray-500">
-          گواهینامه‌ای یافت نشد
+          No certificates found
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -95,7 +95,7 @@ export default function CertificatesAdminPage() {
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-400">
-                    بدون تصویر
+                    No image
                   </div>
                 )}
               </div>
@@ -108,7 +108,7 @@ export default function CertificatesAdminPage() {
                 <div className="flex items-center gap-2">
                   <button className="flex-1 px-3 py-2 border rounded-lg text-sm hover:bg-gray-50 transition-colors flex items-center justify-center gap-1">
                     <Edit className="w-4 h-4" />
-                    ویرایش
+                    Edit
                   </button>
                   <button
                     onClick={() => handleDelete(cert.id)}
@@ -133,7 +133,7 @@ export default function CertificatesAdminPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg w-full max-w-md mx-4">
             <div className="flex items-center justify-between p-6 border-b">
-              <h2 className="font-bold text-dark">افزودن گواهینامه</h2>
+              <h2 className="font-bold text-dark">Add Certificate</h2>
               <button
                 onClick={() => setShowModal(false)}
                 className="text-gray-400 hover:text-gray-600"
@@ -142,14 +142,14 @@ export default function CertificatesAdminPage() {
               </button>
             </div>
             <div className="p-6 text-center text-gray-500">
-              فرم افزودن گواهینامه در حال توسعه است
+              Certificate form is under development
             </div>
             <div className="p-6 border-t">
               <button
                 onClick={() => setShowModal(false)}
                 className="w-full py-2 border rounded-lg hover:bg-gray-50"
               >
-                بستن
+                Close
               </button>
             </div>
           </div>

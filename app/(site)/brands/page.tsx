@@ -17,8 +17,8 @@ interface Brand {
 }
 
 export const metadata: Metadata = {
-  title: 'برندها',
-  description: 'نمایندگی رسمی برندهای Motorola، Avigilon، Cambium Networks و Industronic در ایران',
+  title: 'Brands',
+  description: 'Official distributor of Motorola, Avigilon, Cambium Networks and Industronic brands in the UAE',
 }
 
 async function getBrands() {
@@ -37,8 +37,8 @@ export default async function BrandsPage() {
   const brands = await getBrands()
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'برندها', url: '/brands' },
+    { name: 'Home', url: '/' },
+    { name: 'Brands', url: '/brands' },
   ]
 
   return (
@@ -51,9 +51,9 @@ export default async function BrandsPage() {
 
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">برندها</h1>
+          <h1 className="text-3xl font-bold text-dark text-center">Brands</h1>
           <p className="text-gray-500 text-center mt-3 max-w-2xl mx-auto">
-            نمایندگی رسمی برندهای معتبر جهانی در ایران
+            Official distributor of leading global brands in the UAE
           </p>
         </div>
       </div>
@@ -61,7 +61,7 @@ export default async function BrandsPage() {
       <div className="container mx-auto px-4 py-12">
         {brands.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">در حال حاضر برندی ثبت نشده است</p>
+            <p className="text-gray-500">No brands registered yet</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -88,11 +88,11 @@ export default async function BrandsPage() {
                 <p className="text-gray-600 mb-4">{brand.description || ''}</p>
 
                 <span className="text-sm text-gray-400 mb-4">
-                  {brand._count.products} محصول
+                  {brand._count.products} Products
                 </span>
 
                 <span className="inline-flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all">
-                  مشاهده محصولات
+                  View Products
                   <ArrowLeft className="w-4 h-4" />
                 </span>
               </Link>

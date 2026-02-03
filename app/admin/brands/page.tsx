@@ -83,18 +83,18 @@ export default function BrandsPage() {
         setShowModal(false)
         fetchBrands()
       } else {
-        alert(data.error || 'خطا در ذخیره')
+        alert(data.error || 'Error saving')
       }
     } catch (error) {
       console.error('Error saving brand:', error)
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setSaving(false)
     }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این برند مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this brand?')) return
 
     setDeleting(id)
     try {
@@ -104,11 +104,11 @@ export default function BrandsPage() {
       if (data.success) {
         fetchBrands()
       } else {
-        alert(data.error || 'خطا در حذف')
+        alert(data.error || 'Error deleting')
       }
     } catch (error) {
       console.error('Error deleting brand:', error)
-      alert('خطا در حذف')
+      alert('Error deleting')
     } finally {
       setDeleting(null)
     }
@@ -125,19 +125,19 @@ export default function BrandsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dark">برندها</h1>
+        <h1 className="text-2xl font-bold text-dark">Brands</h1>
         <button
           onClick={openAddModal}
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن برند
+          Add Brand
         </button>
       </div>
 
       {brands.length === 0 ? (
         <div className="bg-white rounded-xl shadow-sm p-12 text-center text-gray-500">
-          برندی یافت نشد
+          No brands found
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -163,7 +163,7 @@ export default function BrandsPage() {
                   <h3 className="font-bold text-dark">{brand.name}</h3>
                 </div>
                 <p className="text-sm text-gray-500 mb-4">
-                  {brand._count?.products || 0} محصول
+                  {brand._count?.products || 0} product(s)
                 </p>
                 <div className="flex items-center gap-2">
                   <button
@@ -171,7 +171,7 @@ export default function BrandsPage() {
                     className="flex-1 px-3 py-2 border rounded-lg text-sm hover:bg-gray-50 transition-colors flex items-center justify-center gap-1"
                   >
                     <Edit className="w-4 h-4" />
-                    ویرایش
+                    Edit
                   </button>
                   <button
                     onClick={() => handleDelete(brand.id)}
@@ -197,20 +197,20 @@ export default function BrandsPage() {
           <div className="bg-white rounded-xl shadow-lg w-full max-w-md mx-4">
             <div className="flex items-center justify-between p-6 border-b">
               <h2 className="font-bold text-dark">
-                {editingBrand ? 'ویرایش برند' : 'افزودن برند'}
+                {editingBrand ? 'Edit Brand' : 'Add Brand'}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
                 className="text-gray-400 hover:text-gray-600"
               >
-                ×
+                x
               </button>
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  نام برند *
+                  Brand Name *
                 </label>
                 <input
                   type="text"
@@ -224,7 +224,7 @@ export default function BrandsPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  اسلاگ
+                  Slug
                 </label>
                 <input
                   type="text"
@@ -241,7 +241,7 @@ export default function BrandsPage() {
                   value={logo}
                   onChange={(url) => setLogo(url)}
                   folder="brands"
-                  label="لوگو برند"
+                  label="Brand Logo"
                 />
               </div>
 
@@ -252,14 +252,14 @@ export default function BrandsPage() {
                   className="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-                  ذخیره
+                  Save
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
                   className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  انصراف
+                  Cancel
                 </button>
               </div>
             </form>

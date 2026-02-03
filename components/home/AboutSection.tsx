@@ -7,10 +7,10 @@ import { ArrowLeft, Award, Users, Building, Calendar } from 'lucide-react'
 import { siteConfig } from '@/lib/seo'
 
 const stats = [
-  { icon: Calendar, value: siteConfig.experience, label: 'سال تجربه', suffix: '+' },
-  { icon: Building, value: '500', label: 'پروژه موفق', suffix: '+' },
-  { icon: Users, value: '1000', label: 'مشتری راضی', suffix: '+' },
-  { icon: Award, value: '4', label: 'نمایندگی رسمی', suffix: '' },
+  { icon: Calendar, value: siteConfig.experience, label: 'Years of Experience', suffix: '+' },
+  { icon: Building, value: '500', label: 'Successful Projects', suffix: '+' },
+  { icon: Users, value: '1000', label: 'Satisfied Customers', suffix: '+' },
+  { icon: Award, value: '4', label: 'Official Distributors', suffix: '' },
 ]
 
 export default function AboutSection() {
@@ -29,7 +29,7 @@ export default function AboutSection() {
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
               <Image
                 src="/images/about-us-img.webp"
-                alt="کرمان هاتف ارتباط"
+                alt="Melisa Communications"
                 fill
                 className="object-cover"
               />
@@ -38,7 +38,7 @@ export default function AboutSection() {
             {/* Experience Badge */}
             <div className="absolute -bottom-6 -left-6 bg-primary text-white p-6 rounded-2xl shadow-xl">
               <div className="text-4xl font-bold">{siteConfig.experience}+</div>
-              <div className="text-sm opacity-90">سال تجربه</div>
+              <div className="text-sm opacity-90">Years of Experience</div>
             </div>
 
             {/* Decorative */}
@@ -54,24 +54,24 @@ export default function AboutSection() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-2 bg-primary-light text-primary rounded-full text-sm font-medium mb-4">
-              درباره ما
+              About Us
             </span>
 
             <h2 className="text-3xl lg:text-4xl font-bold text-dark mb-6">
-              شریک قابل اعتماد شما در
-              <span className="text-primary"> امنیت و ارتباطات</span>
+              Your Trusted Partner in
+              <span className="text-primary"> Security and Communications</span>
             </h2>
 
             <p className="text-gray-600 leading-relaxed mb-6">
-              ارتباطات فرآیندی است که در آن اطلاعات از مبدا به مقصد منتقل می‌شود.
-              این شرکت مخابراتی در پروژه‌های مخابراتی، رادیویی، دوربین مدار بسته و پیجینگ تخصص دارد.
-              این شرکت با تکنولوژی پیشرفته خدمات ارتباطی و تبادل اطلاعات با کیفیت و ایمن را به مشتریان خود ارائه می‌دهد.
+              Communication is a process in which information is transferred from source to destination.
+              This telecommunications company specializes in telecommunications, radio, CCTV, and paging projects.
+              With advanced technology, this company provides high-quality and secure communication and information exchange services to its customers.
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-8">
-              این شرکت توانایی طراحی، اجرا و نصب پروژه‌های پیچیده و پیشرفته مخابراتی و رادیویی را دارد.
-              همچنین به طور مستمر در تحقیق و توسعه فناوری‌های جدید در صنعت سرمایه‌گذاری می‌کند.
-              این شرکت با تخصص و تجربه فنی قوی خود ارتباط موثر و پایداری با مشتریان خود برقرار کرده و در صنعت مخابرات و ارتباطات به برتری دست یافته است.
+              This company has the ability to design, implement, and install complex and advanced telecommunications and radio projects.
+              It also continuously invests in research and development of new technologies in the industry.
+              With its strong technical expertise and experience, this company has established effective and lasting relationships with its customers and has achieved excellence in the telecommunications and communications industry.
             </p>
 
             {/* Stats */}
@@ -101,7 +101,7 @@ export default function AboutSection() {
               href="/about"
               className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-medium transition-colors"
             >
-              بیشتر بخوانید
+              Read More
               <ArrowLeft className="w-4 h-4" />
             </Link>
           </motion.div>

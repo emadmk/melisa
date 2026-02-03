@@ -18,8 +18,8 @@ interface Service {
 }
 
 export const metadata: Metadata = {
-  title: 'خدمات',
-  description: 'خدمات کرمان هاتف ارتباط شامل راه‌اندازی، تامین تجهیزات، نصب و مهندسی سیستم‌های مخابراتی و امنیتی',
+  title: 'Services',
+  description: 'Melisa services including setup, equipment supply, installation and engineering of telecommunications and security systems',
 }
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -38,8 +38,8 @@ export default async function ServicesPage() {
   const services = await getServices()
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'خدمات', url: '/services' },
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' },
   ]
 
   return (
@@ -54,9 +54,9 @@ export default async function ServicesPage() {
       {/* Page Header */}
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">خدمات ما</h1>
+          <h1 className="text-3xl font-bold text-dark text-center">Our Services</h1>
           <p className="text-gray-500 text-center mt-3 max-w-2xl mx-auto">
-            با بیش از ۱۸ سال تجربه در زمینه تجهیزات مخابراتی و امنیتی، خدمات جامعی را به مشتریان خود ارائه می‌دهیم
+            With over 18 years of experience in telecommunications and security equipment, we offer comprehensive services to our customers
           </p>
         </div>
       </div>
@@ -65,7 +65,7 @@ export default async function ServicesPage() {
       <div className="container mx-auto px-4 py-12">
         {services.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">در حال حاضر خدماتی ثبت نشده است</p>
+            <p className="text-gray-500">No services are currently registered</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -105,7 +105,7 @@ export default async function ServicesPage() {
                       </p>
 
                       <span className="inline-flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all">
-                        اطلاعات بیشتر
+                        Learn More
                         <ArrowLeft className="w-4 h-4" />
                       </span>
                     </div>

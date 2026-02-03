@@ -80,18 +80,18 @@ export default function FaqsAdminPage() {
         setShowModal(false)
         fetchFaqs()
       } else {
-        alert(data.error || 'خطا در ذخیره')
+        alert(data.error || 'Error saving')
       }
     } catch (error) {
       console.error('Error saving faq:', error)
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setSaving(false)
     }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این سوال مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this question?')) return
 
     setDeleting(id)
     try {
@@ -100,11 +100,11 @@ export default function FaqsAdminPage() {
       if (data.success) {
         fetchFaqs()
       } else {
-        alert('خطا در حذف')
+        alert('Error deleting')
       }
     } catch (error) {
       console.error('Error deleting faq:', error)
-      alert('خطا در حذف')
+      alert('Error deleting')
     } finally {
       setDeleting(null)
     }
@@ -121,20 +121,20 @@ export default function FaqsAdminPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dark">سوالات متداول</h1>
+        <h1 className="text-2xl font-bold text-dark">FAQs</h1>
         <button
           onClick={openAddModal}
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن سوال
+          Add Question
         </button>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm divide-y">
         {faqs.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            سوالی یافت نشد
+            No questions found
           </div>
         ) : (
           faqs.map((faq) => (
@@ -171,7 +171,7 @@ export default function FaqsAdminPage() {
                   <button
                     onClick={() => openEditModal(faq)}
                     className="p-2 text-gray-400 hover:text-primary transition-colors"
-                    title="ویرایش"
+                    title="Edit"
                   >
                     <Edit className="w-4 h-4" />
                   </button>
@@ -179,7 +179,7 @@ export default function FaqsAdminPage() {
                     onClick={() => handleDelete(faq.id)}
                     disabled={deleting === faq.id}
                     className="p-2 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
-                    title="حذف"
+                    title="Delete"
                   >
                     {deleting === faq.id ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -200,7 +200,7 @@ export default function FaqsAdminPage() {
           <div className="bg-white rounded-xl shadow-lg w-full max-w-lg mx-4">
             <div className="flex items-center justify-between p-6 border-b">
               <h2 className="font-bold text-dark">
-                {editingFaq ? 'ویرایش سوال' : 'افزودن سوال'}
+                {editingFaq ? 'Edit Question' : 'Add Question'}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
@@ -213,46 +213,46 @@ export default function FaqsAdminPage() {
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  دسته‌بندی
+                  Category
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 >
-                  <option value="">انتخاب دسته‌بندی</option>
-                  <option value="سفارش">سفارش</option>
-                  <option value="گارانتی">گارانتی</option>
-                  <option value="خدمات">خدمات</option>
-                  <option value="پرداخت">پرداخت</option>
-                  <option value="عمومی">عمومی</option>
+                  <option value="">Select Category</option>
+                  <option value="Orders">Orders</option>
+                  <option value="Warranty">Warranty</option>
+                  <option value="Services">Services</option>
+                  <option value="Payment">Payment</option>
+                  <option value="General">General</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  سوال *
+                  Question *
                 </label>
                 <input
                   type="text"
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="سوال را وارد کنید..."
+                  placeholder="Enter question..."
                   required
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  پاسخ *
+                  Answer *
                 </label>
                 <textarea
                   rows={4}
                   value={answer}
                   onChange={(e) => setAnswer(e.target.value)}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="پاسخ را وارد کنید..."
+                  placeholder="Enter answer..."
                   required
                 />
               </div>
@@ -264,14 +264,14 @@ export default function FaqsAdminPage() {
                   className="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-                  ذخیره
+                  Save
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
                   className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  انصراف
+                  Cancel
                 </button>
               </div>
             </form>

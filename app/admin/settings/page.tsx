@@ -7,19 +7,19 @@ export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('general')
 
   const tabs = [
-    { id: 'general', name: 'عمومی' },
-    { id: 'contact', name: 'اطلاعات تماس' },
-    { id: 'social', name: 'شبکه‌های اجتماعی' },
+    { id: 'general', name: 'General' },
+    { id: 'contact', name: 'Contact Information' },
+    { id: 'social', name: 'Social Networks' },
     { id: 'seo', name: 'SEO' },
   ]
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dark">تنظیمات</h1>
+        <h1 className="text-2xl font-bold text-dark">Settings</h1>
         <button className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
           <Save className="w-5 h-5" />
-          ذخیره تغییرات
+          Save Changes
         </button>
       </div>
 
@@ -49,17 +49,17 @@ export default function SettingsPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  نام سایت (فارسی)
+                  Site Name (Persian)
                 </label>
                 <input
                   type="text"
-                  defaultValue="کرمان هاتف ارتباط"
+                  defaultValue="Kerman Hatef Ertebat"
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  نام سایت (انگلیسی)
+                  Site Name (English)
                 </label>
                 <input
                   type="text"
@@ -71,24 +71,24 @@ export default function SettingsPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                توضیحات سایت
+                Site Description
               </label>
               <textarea
                 rows={3}
-                defaultValue="نمایندگی رسمی موتورولا، آویژیلون و کمبیوم نتورکس در ایران"
+                defaultValue="Official representative of Motorola, Avigilon and Cambium Networks in Iran"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                لوگو سایت
+                Site Logo
               </label>
               <label className="flex items-center gap-3 p-4 border-2 border-dashed rounded-lg cursor-pointer hover:border-primary hover:bg-orange-50 transition-colors w-fit">
                 <Upload className="w-6 h-6 text-gray-400" />
                 <div>
-                  <p className="text-sm font-medium text-gray-700">آپلود لوگو</p>
-                  <p className="text-xs text-gray-400">PNG, SVG - حداکثر ۱ مگابایت</p>
+                  <p className="text-sm font-medium text-gray-700">Upload Logo</p>
+                  <p className="text-xs text-gray-400">PNG, SVG - Max 1MB</p>
                 </div>
                 <input type="file" className="hidden" accept="image/*" />
               </label>
@@ -101,7 +101,7 @@ export default function SettingsPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  شماره تلفن
+                  Phone Number
                 </label>
                 <input
                   type="text"
@@ -112,7 +112,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  شماره واتساپ
+                  WhatsApp Number
                 </label>
                 <input
                   type="text"
@@ -125,7 +125,7 @@ export default function SettingsPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                ایمیل
+                Email
               </label>
               <input
                 type="email"
@@ -137,11 +137,11 @@ export default function SettingsPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                آدرس
+                Address
               </label>
               <textarea
                 rows={2}
-                defaultValue="تهران، رسالت، مجیدیه شمالی، خ اردکانی، کوچه مهتابی پور، پلاک ۲۸"
+                defaultValue="Tehran, Resalat, North Majidieh, Ardakani St., Mehtabipour Alley, No. 28"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
@@ -149,17 +149,17 @@ export default function SettingsPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  ساعات کاری
+                  Working Hours
                 </label>
                 <input
                   type="text"
-                  defaultValue="شنبه تا پنج‌شنبه ۹ تا ۱۸"
+                  defaultValue="Saturday to Thursday 9 AM to 6 PM"
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  موقعیت روی نقشه
+                  Map Location
                 </label>
                 <input
                   type="text"
@@ -176,7 +176,7 @@ export default function SettingsPage() {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                اینستاگرام
+                Instagram
               </label>
               <input
                 type="text"
@@ -187,7 +187,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                لینکدین
+                LinkedIn
               </label>
               <input
                 type="text"
@@ -198,7 +198,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                تلگرام
+                Telegram
               </label>
               <input
                 type="text"
@@ -214,37 +214,37 @@ export default function SettingsPage() {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                عنوان صفحه اصلی (Title)
+                Homepage Title (Title)
               </label>
               <input
                 type="text"
-                defaultValue="کرمان هاتف ارتباط | نمایندگی رسمی موتورولا در ایران"
+                defaultValue="Kerman Hatef Ertebat | Official Motorola Representative in Iran"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                توضیحات متا (Meta Description)
+                Meta Description
               </label>
               <textarea
                 rows={3}
-                defaultValue="کرمان هاتف ارتباط، نمایندگی رسمی موتورولا، آویژیلون و کمبیوم نتورکس. فروش و خدمات تجهیزات مخابراتی، دوربین مداربسته و کنترل دسترسی."
+                defaultValue="Kerman Hatef Ertebat, official representative of Motorola, Avigilon and Cambium Networks. Sales and services for telecommunications equipment, CCTV cameras and access control."
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                کلمات کلیدی
+                Keywords
               </label>
               <input
                 type="text"
-                defaultValue="موتورولا، دوربین مداربسته، تجهیزات مخابراتی، بی‌سیم، کنترل دسترسی"
+                defaultValue="Motorola, CCTV camera, telecommunications equipment, two-way radio, access control"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                کد Google Analytics
+                Google Analytics Code
               </label>
               <input
                 type="text"

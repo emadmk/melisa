@@ -42,7 +42,7 @@ export default function PostsPage() {
   }, [fetchPosts])
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this post?')) return
 
     setDeleting(id)
     try {
@@ -51,11 +51,11 @@ export default function PostsPage() {
       if (data.success) {
         fetchPosts()
       } else {
-        alert('خطا در حذف')
+        alert('Error deleting')
       }
     } catch (error) {
       console.error('Error deleting post:', error)
-      alert('خطا در حذف')
+      alert('Error deleting')
     } finally {
       setDeleting(null)
     }
@@ -73,13 +73,13 @@ export default function PostsPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-bold text-dark">مقالات وبلاگ</h1>
+        <h1 className="text-2xl font-bold text-dark">Blog Posts</h1>
         <Link
           href="/admin/posts/new"
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن مقاله
+          Add Post
         </Link>
       </div>
 
@@ -90,7 +90,7 @@ export default function PostsPage() {
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="جستجوی مقاله..."
+              placeholder="Search posts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pr-10 pl-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -107,7 +107,7 @@ export default function PostsPage() {
           </div>
         ) : posts.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            مقاله‌ای یافت نشد
+            No posts found
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -115,16 +115,16 @@ export default function PostsPage() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    مقاله
+                    Post
                   </th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    وضعیت
+                    Status
                   </th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    تاریخ
+                    Date
                   </th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    عملیات
+                    Actions
                   </th>
                 </tr>
               </thead>
@@ -143,7 +143,7 @@ export default function PostsPage() {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                              بدون تصویر
+                              No Image
                             </div>
                           )}
                         </div>
@@ -161,7 +161,7 @@ export default function PostsPage() {
                             : 'bg-gray-100 text-gray-600'
                         }`}
                       >
-                        {post.status === 'PUBLISHED' ? 'منتشر شده' : 'پیش‌نویس'}
+                        {post.status === 'PUBLISHED' ? 'Published' : 'Draft'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500">
@@ -173,14 +173,14 @@ export default function PostsPage() {
                           href={`/blog/${post.slug}`}
                           target="_blank"
                           className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                          title="مشاهده"
+                          title="View"
                         >
                           <Eye className="w-4 h-4" />
                         </Link>
                         <Link
                           href={`/admin/posts/${post.id}/edit`}
                           className="p-2 text-gray-400 hover:text-primary transition-colors"
-                          title="ویرایش"
+                          title="Edit"
                         >
                           <Edit className="w-4 h-4" />
                         </Link>
@@ -188,7 +188,7 @@ export default function PostsPage() {
                           onClick={() => handleDelete(post.id)}
                           disabled={deleting === post.id}
                           className="p-2 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
-                          title="حذف"
+                          title="Delete"
                         >
                           {deleting === post.id ? (
                             <Loader2 className="w-4 h-4 animate-spin" />

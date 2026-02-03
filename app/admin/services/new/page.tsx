@@ -44,14 +44,14 @@ export default function NewServicePage() {
       const data = await res.json()
 
       if (data.success) {
-        alert('خدمت با موفقیت ایجاد شد')
+        alert('Service created successfully')
         router.push('/admin/services')
       } else {
-        alert(data.message || 'خطا در ایجاد خدمت')
+        alert(data.message || 'Error creating service')
       }
     } catch (error) {
       console.error('Error creating service:', error)
-      alert('خطا در ایجاد خدمت')
+      alert('Error creating service')
     } finally {
       setSaving(false)
     }
@@ -66,19 +66,19 @@ export default function NewServicePage() {
         >
           <ArrowRight className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">افزودن خدمت جدید</h1>
+        <h1 className="text-2xl font-bold text-dark">Add New Service</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">اطلاعات اصلی</h2>
+              <h2 className="font-bold text-dark mb-4">Main Information</h2>
 
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    عنوان خدمت (فارسی) *
+                    Service Title (Persian) *
                   </label>
                   <input
                     type="text"
@@ -91,7 +91,7 @@ export default function NewServicePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    عنوان خدمت (انگلیسی)
+                    Service Title (English)
                   </label>
                   <input
                     type="text"
@@ -103,7 +103,7 @@ export default function NewServicePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    اسلاگ (URL)
+                    Slug (URL)
                   </label>
                   <input
                     type="text"
@@ -111,13 +111,13 @@ export default function NewServicePage() {
                     value={formData.slug}
                     onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                     dir="ltr"
-                    placeholder="خالی بگذارید برای تولید خودکار"
+                    placeholder="Leave empty for auto-generation"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات کوتاه
+                    Short Description
                   </label>
                   <textarea
                     rows={2}
@@ -129,7 +129,7 @@ export default function NewServicePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات کامل
+                    Full Description
                   </label>
                   <textarea
                     rows={6}
@@ -144,26 +144,26 @@ export default function NewServicePage() {
 
           <div className="space-y-6">
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">انتشار</h2>
+              <h2 className="font-bold text-dark mb-4">Publishing</h2>
 
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    وضعیت
+                    Status
                   </label>
                   <select
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                   >
-                    <option value="DRAFT">پیش‌نویس</option>
-                    <option value="PUBLISHED">منتشر شده</option>
+                    <option value="DRAFT">Draft</option>
+                    <option value="PUBLISHED">Published</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    ترتیب نمایش
+                    Display Order
                   </label>
                   <input
                     type="number"
@@ -183,20 +183,20 @@ export default function NewServicePage() {
                   ) : (
                     <Save className="w-5 h-5" />
                   )}
-                  ذخیره خدمت
+                  Save Service
                 </button>
               </div>
             </div>
 
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">آیکون</h2>
+              <h2 className="font-bold text-dark mb-4">Icon</h2>
 
               <select
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 value={formData.icon}
                 onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
               >
-                <option value="">انتخاب آیکون</option>
+                <option value="">Select Icon</option>
                 {iconOptions.map((icon) => (
                   <option key={icon} value={icon}>
                     {icon}
@@ -206,22 +206,22 @@ export default function NewServicePage() {
             </div>
 
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">تصویر</h2>
+              <h2 className="font-bold text-dark mb-4">Image</h2>
               <ImageUpload
                 value={formData.image || null}
                 onChange={(url) => setFormData({ ...formData, image: url || '' })}
                 folder="services"
-                label="تصویر خدمت"
+                label="Service Image"
               />
             </div>
 
             {/* SEO */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">سئو</h2>
+              <h2 className="font-bold text-dark mb-4">SEO</h2>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    عنوان متا
+                    Meta Title
                     <span className={`mr-2 text-xs ${formData.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
                       ({formData.metaTitle.length}/60)
                     </span>
@@ -235,7 +235,7 @@ export default function NewServicePage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات متا
+                    Meta Description
                     <span className={`mr-2 text-xs ${formData.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
                       ({formData.metaDesc.length}/160)
                     </span>

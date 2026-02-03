@@ -17,12 +17,12 @@ interface Certificate {
 
 function formatYear(date: Date | null): string {
   if (!date) return ''
-  return new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(date)
+  return new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(date)
 }
 
 export const metadata: Metadata = {
-  title: 'گواهینامه‌ها و مجوزها',
-  description: 'گواهینامه‌ها و مجوزهای رسمی کرمان هاتف ارتباط - نمایندگی رسمی برندهای معتبر',
+  title: 'Certificates & Licenses',
+  description: 'Official certificates and licenses of Melisa - Authorized distributor of reputable brands',
 }
 
 async function getCertificates(): Promise<Certificate[]> {
@@ -36,8 +36,8 @@ export default async function CertificatesPage() {
   const certificates = await getCertificates()
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'گواهینامه‌ها', url: '/certificates' },
+    { name: 'Home', url: '/' },
+    { name: 'Certificates', url: '/certificates' },
   ]
 
   return (
@@ -50,8 +50,8 @@ export default async function CertificatesPage() {
 
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">گواهینامه‌ها و مجوزها</h1>
-          <p className="text-gray-500 text-center mt-3">نمایندگی‌های رسمی و مجوزهای فعالیت</p>
+          <h1 className="text-3xl font-bold text-dark text-center">Certificates & Licenses</h1>
+          <p className="text-gray-500 text-center mt-3">Official authorizations and operating licenses</p>
         </div>
       </div>
 
@@ -60,18 +60,18 @@ export default async function CertificatesPage() {
         <div className="bg-white rounded-xl shadow-sm p-8 mb-12 text-center">
           <Award className="w-16 h-16 text-primary mx-auto mb-4" />
           <h2 className="text-xl font-bold text-dark mb-3">
-            نمایندگی رسمی برندهای معتبر جهانی
+            Authorized Distributor of Leading Global Brands
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            کرمان هاتف ارتباط با داشتن نمایندگی رسمی از برندهای معتبر جهانی، تضمین کننده
-            اصالت کالا و ارائه خدمات پس از فروش استاندارد است.
+            Melisa, as an authorized distributor of reputable global brands, guarantees
+            product authenticity and provides standard after-sales services.
           </p>
         </div>
 
         {/* Certificates Grid */}
         {certificates.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">در حال حاضر گواهینامه‌ای ثبت نشده است</p>
+            <p className="text-gray-500">No certificates registered yet</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

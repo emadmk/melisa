@@ -40,7 +40,7 @@ export default function ProjectsAdminPage() {
   }, [fetchProjects])
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این پروژه مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this project?')) return
 
     setDeleting(id)
     try {
@@ -49,11 +49,11 @@ export default function ProjectsAdminPage() {
       if (data.success) {
         fetchProjects()
       } else {
-        alert('خطا در حذف')
+        alert('Error deleting')
       }
     } catch (error) {
       console.error('Error deleting project:', error)
-      alert('خطا در حذف')
+      alert('Error deleting')
     } finally {
       setDeleting(null)
     }
@@ -63,7 +63,7 @@ export default function ProjectsAdminPage() {
     if (!dateString) return '-'
     try {
       const date = new Date(dateString)
-      return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit' }).format(date)
+      return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit' }).format(date)
     } catch {
       return dateString
     }
@@ -80,42 +80,42 @@ export default function ProjectsAdminPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dark">پروژه‌ها</h1>
+        <h1 className="text-2xl font-bold text-dark">Projects</h1>
         <Link
           href="/admin/projects/new"
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن پروژه
+          Add Project
         </Link>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {projects.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            پروژه‌ای یافت نشد
+            No projects found
           </div>
         ) : (
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  پروژه
+                  Project
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  کارفرما
+                  Client
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  موقعیت
+                  Location
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  وضعیت
+                  Status
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  تاریخ اتمام
+                  Completion Date
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  عملیات
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -134,7 +134,7 @@ export default function ProjectsAdminPage() {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                            بدون تصویر
+                            No image
                           </div>
                         )}
                       </div>
@@ -158,7 +158,7 @@ export default function ProjectsAdminPage() {
                           : 'bg-gray-100 text-gray-600'
                       }`}
                     >
-                      {project.status === 'PUBLISHED' ? 'منتشر شده' : 'پیش‌نویس'}
+                      {project.status === 'PUBLISHED' ? 'Published' : 'Draft'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
@@ -170,14 +170,14 @@ export default function ProjectsAdminPage() {
                         href={`/projects/${project.slug}`}
                         target="_blank"
                         className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                        title="مشاهده"
+                        title="View"
                       >
                         <Eye className="w-4 h-4" />
                       </Link>
                       <Link
                         href={`/admin/projects/${project.id}/edit`}
                         className="p-2 text-gray-400 hover:text-primary transition-colors"
-                        title="ویرایش"
+                        title="Edit"
                       >
                         <Edit className="w-4 h-4" />
                       </Link>
@@ -185,7 +185,7 @@ export default function ProjectsAdminPage() {
                         onClick={() => handleDelete(project.id)}
                         disabled={deleting === project.id}
                         className="p-2 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
-                        title="حذف"
+                        title="Delete"
                       >
                         {deleting === project.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />

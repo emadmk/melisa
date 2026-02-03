@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const product = await getProduct(slug)
 
   if (!product) {
-    return { title: 'محصول یافت نشد' }
+    return { title: 'Product not found' }
   }
 
   return {
@@ -138,8 +138,8 @@ export default async function ProductPage({ params }: PageProps) {
   }
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'محصولات', url: '/products' },
+    { name: 'Home', url: '/' },
+    { name: 'Products', url: '/products' },
     ...(product.category ? [{ name: product.category.nameFa, url: `/products/category/${product.category.slug}` }] : []),
     { name: product.titleFa, url: `/products/${product.slug}` },
   ]
@@ -150,7 +150,7 @@ export default async function ProductPage({ params }: PageProps) {
     image: getImageUrl(product.image),
     brand: product.brand?.name,
     category: product.category?.nameFa,
-    url: `https://hatefertebat.ir/products/${product.slug}`,
+    url: `https://melisa.ae/products/${product.slug}`,
   })
 
   return (
@@ -218,7 +218,7 @@ export default async function ProductPage({ params }: PageProps) {
                       </div>
                     )}
                     <span className="text-sm text-gray-600">
-                      برند: <span className="font-medium text-primary">{product.brand.name}</span>
+                      Brand: <span className="font-medium text-primary">{product.brand.name}</span>
                     </span>
                   </Link>
                 )}
@@ -248,7 +248,7 @@ export default async function ProductPage({ params }: PageProps) {
                       className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg font-medium hover:bg-primary-dark transition-colors"
                     >
                       <Download className="w-4 h-4" />
-                      دریافت کاتالوگ
+                      Download Catalog
                     </a>
                   )}
 
@@ -257,7 +257,7 @@ export default async function ProductPage({ params }: PageProps) {
                     className="inline-flex items-center gap-2 border-2 border-primary text-primary px-5 py-2.5 rounded-lg font-medium hover:bg-primary hover:text-white transition-colors"
                   >
                     <FileText className="w-4 h-4" />
-                    استعلام قیمت
+                    Request Quote
                   </Link>
 
                   <PrintButton />
@@ -266,7 +266,7 @@ export default async function ProductPage({ params }: PageProps) {
                 {/* Attributes */}
                 {attributes.length > 0 && (
                   <div className="border-t pt-6">
-                    <h3 className="font-bold text-dark mb-4">ویژگی‌ها:</h3>
+                    <h3 className="font-bold text-dark mb-4">Features:</h3>
                     <ul className="space-y-2">
                       {attributes.map((attr, index) => (
                         <li key={index} className="flex items-start gap-2 text-gray-600">
@@ -288,7 +288,7 @@ export default async function ProductPage({ params }: PageProps) {
         {relatedProducts.length > 0 && (
           <div className="bg-gray-50 py-12">
             <div className="container mx-auto px-4">
-              <h2 className="text-2xl font-bold text-dark mb-8">محصولات مشابه</h2>
+              <h2 className="text-2xl font-bold text-dark mb-8">Related Products</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {relatedProducts.map((relProduct) => (
                   <ProductCard key={relProduct.id} product={relProduct} showCompare={false} />
@@ -302,9 +302,9 @@ export default async function ProductPage({ params }: PageProps) {
         <div id="inquiry" className="bg-white py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto">
-              <h2 className="text-2xl font-bold text-dark mb-2 text-center">فرم درخواست قیمت</h2>
+              <h2 className="text-2xl font-bold text-dark mb-2 text-center">Price Request Form</h2>
               <p className="text-gray-500 text-center mb-8">
-                برای دریافت قیمت و مشاوره، فرم زیر را تکمیل کنید
+                Fill out the form below to receive pricing and consultation
               </p>
               <InquiryForm productId={product.id} productTitle={product.titleFa} />
             </div>

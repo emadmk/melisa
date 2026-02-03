@@ -70,7 +70,7 @@ export default function FeaturedProducts() {
               viewport={{ once: true }}
               className="section-title"
             >
-              محصولات برگزیده
+              Featured Products
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,7 @@ export default function FeaturedProducts() {
               transition={{ delay: 0.1 }}
               className="section-subtitle"
             >
-              محبوب‌ترین و پرفروش‌ترین محصولات ما
+              Our most popular and best-selling products
             </motion.p>
           </div>
 
@@ -92,7 +92,7 @@ export default function FeaturedProducts() {
               href="/products"
               className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg font-medium hover:bg-primary-dark transition-colors"
             >
-              همه محصولات
+              All Products
               <ArrowLeft className="w-4 h-4" />
             </Link>
           </motion.div>
@@ -105,7 +105,7 @@ export default function FeaturedProducts() {
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            محصولی یافت نشد
+            No products found
           </div>
         ) : (
           <motion.div

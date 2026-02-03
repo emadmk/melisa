@@ -44,7 +44,7 @@ export default function NewCatalogPage() {
     e.preventDefault()
 
     if (!form.file) {
-      alert('فایل کاتالوگ الزامی است')
+      alert('Catalog file is required')
       return
     }
 
@@ -65,10 +65,10 @@ export default function NewCatalogPage() {
       if (data.success) {
         router.push('/admin/catalogs')
       } else {
-        alert(data.message || 'خطا در ذخیره')
+        alert(data.message || 'Error saving')
       }
     } catch {
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setLoading(false)
     }
@@ -83,14 +83,14 @@ export default function NewCatalogPage() {
         >
           <ArrowRight className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">کاتالوگ جدید</h1>
+        <h1 className="text-2xl font-bold text-dark">New Catalog</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان فارسی *
+              Persian Title *
             </label>
             <input
               type="text"
@@ -103,7 +103,7 @@ export default function NewCatalogPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان انگلیسی
+              English Title
             </label>
             <input
               type="text"
@@ -116,7 +116,7 @@ export default function NewCatalogPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              اسلاگ
+              Slug
             </label>
             <input
               type="text"
@@ -124,20 +124,20 @@ export default function NewCatalogPage() {
               onChange={(e) => setForm({ ...form, slug: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               dir="ltr"
-              placeholder="خالی بگذارید تا خودکار ساخته شود"
+              placeholder="Leave empty for auto-generation"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              دسته‌بندی
+              Category
             </label>
             <select
               value={form.categoryId}
               onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="">بدون دسته‌بندی</option>
+              <option value="">No Category</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.nameFa}
@@ -148,21 +148,21 @@ export default function NewCatalogPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              وضعیت
+              Status
             </label>
             <select
               value={form.status}
               onChange={(e) => setForm({ ...form, status: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="DRAFT">پیش‌نویس</option>
-              <option value="PUBLISHED">منتشر شده</option>
+              <option value="DRAFT">Draft</option>
+              <option value="PUBLISHED">Published</option>
             </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              ترتیب
+              Order
             </label>
             <input
               type="number"
@@ -174,7 +174,7 @@ export default function NewCatalogPage() {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              توضیحات
+              Description
             </label>
             <textarea
               value={form.description}
@@ -189,7 +189,7 @@ export default function NewCatalogPage() {
               value={form.file || null}
               onChange={(url) => setForm({ ...form, file: url || '' })}
               folder="catalogs"
-              label="فایل کاتالوگ *"
+              label="Catalog File *"
               accept=".pdf,.doc,.docx"
             />
           </div>
@@ -199,7 +199,7 @@ export default function NewCatalogPage() {
               value={form.thumbnail || null}
               onChange={(url) => setForm({ ...form, thumbnail: url || '' })}
               folder="catalogs"
-              label="تصویر بندانگشتی"
+              label="Thumbnail"
             />
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function NewCatalogPage() {
             href="/admin/catalogs"
             className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
           >
-            انصراف
+            Cancel
           </Link>
           <button
             type="submit"
@@ -221,7 +221,7 @@ export default function NewCatalogPage() {
             ) : (
               <Save className="w-5 h-5" />
             )}
-            ذخیره
+            Save
           </button>
         </div>
       </form>

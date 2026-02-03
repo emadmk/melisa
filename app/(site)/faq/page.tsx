@@ -7,8 +7,8 @@ import prisma from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'سوالات متداول',
-  description: 'پاسخ سوالات رایج درباره تجهیزات مخابراتی، دوربین مداربسته و خدمات کرمان هاتف ارتباط',
+  title: 'Frequently Asked Questions',
+  description: 'Answers to common questions about telecommunications equipment, CCTV cameras and Melisa services',
   alternates: {
     canonical: `${siteConfig.url}/faq`,
   },
@@ -41,8 +41,8 @@ export default async function FaqPage() {
   const faqs = await getFaqs()
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'سوالات متداول', url: '/faq' },
+    { name: 'Home', url: '/' },
+    { name: 'FAQ', url: '/faq' },
   ]
 
   const faqSchema = faqs.length > 0 ? generateFaqSchema(faqs) : null
@@ -65,8 +65,8 @@ export default async function FaqPage() {
 
         <div className="bg-white border-b">
           <div className="container mx-auto px-4 py-12">
-            <h1 className="text-3xl font-bold text-dark text-center">سوالات متداول</h1>
-            <p className="text-gray-500 text-center mt-3">پاسخ سوالات رایج</p>
+            <h1 className="text-3xl font-bold text-dark text-center">Frequently Asked Questions</h1>
+            <p className="text-gray-500 text-center mt-3">Answers to common questions</p>
           </div>
         </div>
 

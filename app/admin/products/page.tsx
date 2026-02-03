@@ -96,7 +96,7 @@ export default function ProductsPage() {
   }, [fetchProducts])
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این محصول مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this product?')) return
 
     setDeleting(id)
     try {
@@ -106,11 +106,11 @@ export default function ProductsPage() {
       if (data.success) {
         fetchProducts()
       } else {
-        alert('خطا در حذف محصول')
+        alert('Error deleting product')
       }
     } catch (error) {
       console.error('Error deleting product:', error)
-      alert('خطا در حذف محصول')
+      alert('Error deleting product')
     } finally {
       setDeleting(null)
     }
@@ -119,7 +119,7 @@ export default function ProductsPage() {
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString)
-      return new Intl.DateTimeFormat('fa-IR').format(date)
+      return new Intl.DateTimeFormat('en-US').format(date)
     } catch {
       return dateString
     }
@@ -128,13 +128,13 @@ export default function ProductsPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-bold text-dark">محصولات</h1>
+        <h1 className="text-2xl font-bold text-dark">Products</h1>
         <Link
           href="/admin/products/new"
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن محصول
+          Add Product
         </Link>
       </div>
 
@@ -142,16 +142,16 @@ export default function ProductsPage() {
       <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="جستجوی محصول..."
+              placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value)
                 setPagination((p) => ({ ...p, page: 1 }))
               }}
-              className="w-full pr-10 pl-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
           <select
@@ -162,7 +162,7 @@ export default function ProductsPage() {
               setPagination((p) => ({ ...p, page: 1 }))
             }}
           >
-            <option value="">همه دسته‌بندی‌ها</option>
+            <option value="">All Categories</option>
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>{cat.nameFa}</option>
             ))}
@@ -175,7 +175,7 @@ export default function ProductsPage() {
               setPagination((p) => ({ ...p, page: 1 }))
             }}
           >
-            <option value="">همه برندها</option>
+            <option value="">All Brands</option>
             {brands.map((brand) => (
               <option key={brand.id} value={brand.id}>{brand.name}</option>
             ))}
@@ -191,30 +191,30 @@ export default function ProductsPage() {
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            محصولی یافت نشد
+            No products found
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    محصول
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Product
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    دسته‌بندی
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Category
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    برند
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Brand
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    وضعیت
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Status
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    تاریخ
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Date
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                    عملیات
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Actions
                   </th>
                 </tr>
               </thead>
@@ -233,7 +233,7 @@ export default function ProductsPage() {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                              بدون تصویر
+                              No image
                             </div>
                           )}
                         </div>
@@ -257,7 +257,7 @@ export default function ProductsPage() {
                             : 'bg-gray-100 text-gray-600'
                         }`}
                       >
-                        {product.status === 'PUBLISHED' ? 'منتشر شده' : 'پیش‌نویس'}
+                        {product.status === 'PUBLISHED' ? 'Published' : 'Draft'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500">
@@ -269,14 +269,14 @@ export default function ProductsPage() {
                           href={`/products/${product.slug}`}
                           target="_blank"
                           className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                          title="مشاهده"
+                          title="View"
                         >
                           <Eye className="w-4 h-4" />
                         </Link>
                         <Link
                           href={`/admin/products/${product.id}/edit`}
                           className="p-2 text-gray-400 hover:text-primary transition-colors"
-                          title="ویرایش"
+                          title="Edit"
                         >
                           <Edit className="w-4 h-4" />
                         </Link>
@@ -284,7 +284,7 @@ export default function ProductsPage() {
                           onClick={() => handleDelete(product.id)}
                           disabled={deleting === product.id}
                           className="p-2 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
-                          title="حذف"
+                          title="Delete"
                         >
                           {deleting === product.id ? (
                             <Loader2 className="w-4 h-4 animate-spin" />
@@ -305,7 +305,7 @@ export default function ProductsPage() {
         {pagination.totalPages > 0 && (
           <div className="flex items-center justify-between px-6 py-4 border-t">
             <p className="text-sm text-gray-500">
-              نمایش {((pagination.page - 1) * pagination.limit) + 1} تا {Math.min(pagination.page * pagination.limit, pagination.total)} از {pagination.total} محصول
+              Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} products
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -313,7 +313,7 @@ export default function ProductsPage() {
                 disabled={pagination.page === 1}
                 className="px-3 py-1 border rounded hover:bg-gray-50 disabled:opacity-50"
               >
-                قبلی
+                Previous
               </button>
               {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
                 let pageNum = i + 1
@@ -345,7 +345,7 @@ export default function ProductsPage() {
                 disabled={pagination.page === pagination.totalPages}
                 className="px-3 py-1 border rounded hover:bg-gray-50 disabled:opacity-50"
               >
-                بعدی
+                Next
               </button>
             </div>
           </div>

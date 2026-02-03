@@ -26,10 +26,10 @@ const mockSearch = async (query: string): Promise<SearchResult[]> => {
     {
       id: '1',
       type: 'product',
-      title: 'صفحه کلید هوشمند استاندارد',
+      title: 'Standard Smart Keypad',
       slug: 'smart-keypad-standard',
       image: '/images/products/keypad.png',
-      category: 'کنترل دسترسی',
+      category: 'Access Control',
     },
     {
       id: '2',
@@ -37,18 +37,18 @@ const mockSearch = async (query: string): Promise<SearchResult[]> => {
       title: 'VIDEO INTERCOM READER PRO',
       slug: 'video-intercom-reader-pro',
       image: '/images/products/intercom.png',
-      category: 'کنترل دسترسی',
+      category: 'Access Control',
     },
     {
       id: '3',
       type: 'category',
-      title: 'دوربین مداربسته',
+      title: 'CCTV Cameras',
       slug: 'cctv',
     },
     {
       id: '4',
       type: 'post',
-      title: 'راهنمای انتخاب دوربین مداربسته',
+      title: 'Guide to Choosing CCTV Cameras',
       slug: 'choosing-right-cctv',
     },
   ]
@@ -64,7 +64,7 @@ interface SearchAutocompleteProps {
 }
 
 export default function SearchAutocomplete({
-  placeholder = 'جستجوی محصولات...',
+  placeholder = 'Search products...',
   className = '',
 }: SearchAutocompleteProps) {
   const router = useRouter()
@@ -256,10 +256,10 @@ export default function SearchAutocomplete({
                           }`}
                         >
                           {result.type === 'product'
-                            ? 'محصول'
+                            ? 'Product'
                             : result.type === 'category'
-                            ? 'دسته‌بندی'
-                            : 'مقاله'}
+                            ? 'Category'
+                            : 'Article'}
                         </span>
                       </div>
                       <ArrowRight className="w-4 h-4 text-gray-400" />
@@ -273,19 +273,19 @@ export default function SearchAutocomplete({
                     onClick={() => setIsOpen(false)}
                   >
                     <Search className="w-4 h-4" />
-                    مشاهده همه نتایج برای &quot;{query}&quot;
+                    View all results for &quot;{query}&quot;
                   </Link>
                 </div>
               </>
             ) : query.trim() && !isLoading ? (
               <div className="p-8 text-center">
-                <p className="text-gray-500 mb-2">نتیجه‌ای یافت نشد</p>
+                <p className="text-gray-500 mb-2">No results found</p>
                 <Link
                   href={`/search?q=${encodeURIComponent(query)}`}
                   className="text-sm text-primary hover:underline"
                   onClick={() => setIsOpen(false)}
                 >
-                  جستجوی پیشرفته
+                  Advanced search
                 </Link>
               </div>
             ) : null}

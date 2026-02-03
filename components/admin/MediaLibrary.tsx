@@ -39,8 +39,8 @@ const mockFiles: MediaFile[] = [
     url: '/images/products/product-1.jpg',
     type: 'image',
     size: '245 KB',
-    uploadedAt: '۱۴۰۲/۱۰/۱۵',
-    dimensions: '800×600',
+    uploadedAt: '2024/01/15',
+    dimensions: '800x600',
   },
   {
     id: '2',
@@ -48,7 +48,7 @@ const mockFiles: MediaFile[] = [
     url: '/uploads/catalogs/motorola.pdf',
     type: 'pdf',
     size: '2.5 MB',
-    uploadedAt: '۱۴۰۲/۱۰/۱۴',
+    uploadedAt: '2024/01/14',
   },
   {
     id: '3',
@@ -56,8 +56,8 @@ const mockFiles: MediaFile[] = [
     url: '/images/products/product-2.jpg',
     type: 'image',
     size: '312 KB',
-    uploadedAt: '۱۴۰۲/۱۰/۱۳',
-    dimensions: '1200×800',
+    uploadedAt: '2024/01/13',
+    dimensions: '1200x800',
   },
 ]
 
@@ -115,7 +115,7 @@ export default function MediaLibrary({
       <div className="bg-white rounded-xl w-full max-w-5xl mx-4 max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="font-bold text-lg">کتابخانه رسانه</h2>
+          <h2 className="font-bold text-lg">Media Library</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg">
             <X className="w-5 h-5" />
           </button>
@@ -130,7 +130,7 @@ export default function MediaLibrary({
                 activeTab === 'all' ? 'bg-primary text-white' : 'hover:bg-gray-200'
               }`}
             >
-              همه
+              All
             </button>
             <button
               onClick={() => setActiveTab('images')}
@@ -138,7 +138,7 @@ export default function MediaLibrary({
                 activeTab === 'images' ? 'bg-primary text-white' : 'hover:bg-gray-200'
               }`}
             >
-              تصاویر
+              Images
             </button>
             <button
               onClick={() => setActiveTab('documents')}
@@ -146,7 +146,7 @@ export default function MediaLibrary({
                 activeTab === 'documents' ? 'bg-primary text-white' : 'hover:bg-gray-200'
               }`}
             >
-              اسناد
+              Documents
             </button>
           </div>
 
@@ -157,7 +157,7 @@ export default function MediaLibrary({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="جستجو..."
+                placeholder="Search..."
                 className="pr-9 pl-4 py-1.5 border rounded-lg text-sm w-48"
               />
             </div>
@@ -193,14 +193,14 @@ export default function MediaLibrary({
             }`}
           >
             <Upload className="w-10 h-10 text-gray-400 mx-auto mb-3" />
-            <p className="text-gray-600 mb-2">فایل‌ها را اینجا بکشید یا</p>
+            <p className="text-gray-600 mb-2">Drag files here or</p>
             <label className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-primary-dark transition-colors">
               <Upload className="w-4 h-4" />
-              انتخاب فایل
+              Select File
               <input type="file" multiple className="hidden" accept="image/*,.pdf" />
             </label>
             <p className="text-xs text-gray-400 mt-2">
-              حداکثر حجم: ۱۰ مگابایت | فرمت‌های مجاز: JPG, PNG, WebP, PDF
+              Max size: 10MB | Allowed formats: JPG, PNG, WebP, PDF
             </p>
           </div>
 
@@ -309,22 +309,22 @@ export default function MediaLibrary({
         <div className="flex items-center justify-between p-4 border-t bg-gray-50">
           <p className="text-sm text-gray-500">
             {selectedFiles.length > 0
-              ? `${selectedFiles.length} فایل انتخاب شده`
-              : 'فایلی انتخاب نشده'}
+              ? `${selectedFiles.length} file(s) selected`
+              : 'No file selected'}
           </p>
           <div className="flex gap-2">
             <button
               onClick={onClose}
               className="px-4 py-2 border rounded-lg hover:bg-gray-100"
             >
-              انصراف
+              Cancel
             </button>
             <button
               onClick={handleInsert}
               disabled={selectedFiles.length === 0}
               className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              درج
+              Insert
             </button>
           </div>
         </div>

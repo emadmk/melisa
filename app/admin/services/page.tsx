@@ -37,7 +37,7 @@ export default function ServicesAdminPage() {
   }, [fetchServices])
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این خدمت مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this service?')) return
 
     setDeleting(id)
     try {
@@ -46,11 +46,11 @@ export default function ServicesAdminPage() {
       if (data.success) {
         fetchServices()
       } else {
-        alert('خطا در حذف')
+        alert('Error deleting')
       }
     } catch (error) {
       console.error('Error deleting service:', error)
-      alert('خطا در حذف')
+      alert('Error deleting')
     } finally {
       setDeleting(null)
     }
@@ -67,42 +67,42 @@ export default function ServicesAdminPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dark">خدمات</h1>
+        <h1 className="text-2xl font-bold text-dark">Services</h1>
         <Link
           href="/admin/services/new"
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن خدمت
+          Add Service
         </Link>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {services.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            خدمتی یافت نشد
+            No services found
           </div>
         ) : (
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase w-12">
-                  ترتیب
+                  Order
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  عنوان
+                  Title
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  اسلاگ
+                  Slug
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  آیکون
+                  Icon
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  وضعیت
+                  Status
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  عملیات
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -131,7 +131,7 @@ export default function ServicesAdminPage() {
                           : 'bg-gray-100 text-gray-600'
                       }`}
                     >
-                      {service.status === 'PUBLISHED' ? 'فعال' : 'غیرفعال'}
+                      {service.status === 'PUBLISHED' ? 'Active' : 'Inactive'}
                     </span>
                   </td>
                   <td className="px-6 py-4">
@@ -140,14 +140,14 @@ export default function ServicesAdminPage() {
                         href={`/services/${service.slug}`}
                         target="_blank"
                         className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                        title="مشاهده"
+                        title="View"
                       >
                         <Eye className="w-4 h-4" />
                       </Link>
                       <Link
                         href={`/admin/services/${service.id}/edit`}
                         className="p-2 text-gray-400 hover:text-primary transition-colors"
-                        title="ویرایش"
+                        title="Edit"
                       >
                         <Edit className="w-4 h-4" />
                       </Link>
@@ -155,7 +155,7 @@ export default function ServicesAdminPage() {
                         onClick={() => handleDelete(service.id)}
                         disabled={deleting === service.id}
                         className="p-2 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
-                        title="حذف"
+                        title="Delete"
                       >
                         {deleting === service.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />

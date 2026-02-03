@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight, Plus, X, Loader2, Save } from 'lucide-react'
+import { ArrowLeft, Plus, X, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../components/ImageUpload'
 import FileUpload from '../../components/FileUpload'
 import SeoAnalyzer from '@/components/admin/SeoAnalyzer'
@@ -96,10 +96,10 @@ export default function NewProductPage() {
       if (data.success) {
         router.push('/admin/products')
       } else {
-        alert(data.message || 'خطا در ذخیره')
+        alert(data.message || 'Error saving')
       }
     } catch {
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setLoading(false)
     }
@@ -112,9 +112,9 @@ export default function NewProductPage() {
           href="/admin/products"
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <ArrowRight className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">افزودن محصول جدید</h1>
+        <h1 className="text-2xl font-bold text-dark">Add New Product</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -123,13 +123,13 @@ export default function NewProductPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Basic Info */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">اطلاعات اصلی</h2>
+              <h2 className="font-bold text-dark mb-4">Basic Information</h2>
 
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      عنوان محصول (فارسی) *
+                      Product Title (Persian) *
                     </label>
                     <input
                       type="text"
@@ -142,7 +142,7 @@ export default function NewProductPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      عنوان محصول (انگلیسی)
+                      Product Title (English)
                     </label>
                     <input
                       type="text"
@@ -156,7 +156,7 @@ export default function NewProductPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    اسلاگ (URL)
+                    Slug (URL)
                   </label>
                   <input
                     type="text"
@@ -164,13 +164,13 @@ export default function NewProductPage() {
                     onChange={(e) => setForm({ ...form, slug: e.target.value })}
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     dir="ltr"
-                    placeholder="خالی بگذارید تا خودکار ساخته شود"
+                    placeholder="Leave empty to generate automatically"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات کوتاه
+                    Short Description
                   </label>
                   <textarea
                     rows={2}
@@ -182,7 +182,7 @@ export default function NewProductPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات کامل
+                    Full Description
                   </label>
                   <textarea
                     rows={6}
@@ -196,23 +196,23 @@ export default function NewProductPage() {
 
             {/* Images */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">تصویر اصلی</h2>
+              <h2 className="font-bold text-dark mb-4">Main Image</h2>
               <ImageUpload
                 value={form.image || null}
                 onChange={(url) => setForm({ ...form, image: url || '' })}
                 folder="products"
-                label="تصویر اصلی محصول"
+                label="Main Product Image"
               />
             </div>
 
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">گالری تصاویر</h2>
+              <h2 className="font-bold text-dark mb-4">Image Gallery</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 {form.gallery.map((img, index) => (
                   <div key={index} className="relative">
                     <img
                       src={img}
-                      alt={`تصویر ${index + 1}`}
+                      alt={`Image ${index + 1}`}
                       className="w-full h-24 object-cover rounded-lg"
                     />
                     <button
@@ -229,21 +229,21 @@ export default function NewProductPage() {
                 value={null}
                 onChange={handleAddGalleryImage}
                 folder="products"
-                label="افزودن تصویر به گالری"
+                label="Add Image to Gallery"
               />
             </div>
 
             {/* Attributes */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="font-bold text-dark">مشخصات فنی</h2>
+                <h2 className="font-bold text-dark">Technical Specifications</h2>
                 <button
                   type="button"
                   onClick={addAttribute}
                   className="text-sm text-primary hover:underline flex items-center gap-1"
                 >
                   <Plus className="w-4 h-4" />
-                  افزودن مشخصه
+                  Add Attribute
                 </button>
               </div>
 
@@ -252,7 +252,7 @@ export default function NewProductPage() {
                   <div key={index} className="flex items-center gap-3">
                     <input
                       type="text"
-                      placeholder="نام مشخصه"
+                      placeholder="Attribute Name"
                       className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                       value={attr.key}
                       onChange={(e) => {
@@ -263,7 +263,7 @@ export default function NewProductPage() {
                     />
                     <input
                       type="text"
-                      placeholder="مقدار"
+                      placeholder="Value"
                       className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                       value={attr.value}
                       onChange={(e) => {
@@ -288,12 +288,12 @@ export default function NewProductPage() {
 
             {/* SEO */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">سئو</h2>
+              <h2 className="font-bold text-dark mb-4">SEO</h2>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    عنوان متا
-                    <span className={`mr-2 text-xs ${form.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                    Meta Title
+                    <span className={`ml-2 text-xs ${form.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
                       ({form.metaTitle.length}/60)
                     </span>
                   </label>
@@ -306,8 +306,8 @@ export default function NewProductPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات متا
-                    <span className={`mr-2 text-xs ${form.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
+                    Meta Description
+                    <span className={`ml-2 text-xs ${form.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
                       ({form.metaDesc.length}/160)
                     </span>
                   </label>
@@ -338,20 +338,20 @@ export default function NewProductPage() {
           <div className="space-y-6">
             {/* Publish */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">انتشار</h2>
+              <h2 className="font-bold text-dark mb-4">Publish</h2>
 
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    وضعیت
+                    Status
                   </label>
                   <select
                     value={form.status}
                     onChange={(e) => setForm({ ...form, status: e.target.value })}
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                   >
-                    <option value="DRAFT">پیش‌نویس</option>
-                    <option value="PUBLISHED">منتشر شده</option>
+                    <option value="DRAFT">Draft</option>
+                    <option value="PUBLISHED">Published</option>
                   </select>
                 </div>
 
@@ -362,7 +362,7 @@ export default function NewProductPage() {
                     onChange={(e) => setForm({ ...form, featured: e.target.checked })}
                     className="w-4 h-4 text-primary rounded focus:ring-primary"
                   />
-                  <span className="text-sm text-gray-700">محصول ویژه</span>
+                  <span className="text-sm text-gray-700">Featured Product</span>
                 </label>
 
                 <button
@@ -375,20 +375,20 @@ export default function NewProductPage() {
                   ) : (
                     <Save className="w-5 h-5" />
                   )}
-                  ذخیره
+                  Save
                 </button>
               </div>
             </div>
 
             {/* Category */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">دسته‌بندی</h2>
+              <h2 className="font-bold text-dark mb-4">Category</h2>
               <select
                 value={form.categoryId}
                 onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               >
-                <option value="">انتخاب دسته‌بندی</option>
+                <option value="">Select Category</option>
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.nameFa}
@@ -399,13 +399,13 @@ export default function NewProductPage() {
 
             {/* Brand */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">برند</h2>
+              <h2 className="font-bold text-dark mb-4">Brand</h2>
               <select
                 value={form.brandId}
                 onChange={(e) => setForm({ ...form, brandId: e.target.value })}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               >
-                <option value="">انتخاب برند</option>
+                <option value="">Select Brand</option>
                 {brands.map((brand) => (
                   <option key={brand.id} value={brand.id}>
                     {brand.name}
@@ -416,12 +416,12 @@ export default function NewProductPage() {
 
             {/* Catalog */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">کاتالوگ</h2>
+              <h2 className="font-bold text-dark mb-4">Catalog</h2>
               <FileUpload
                 value={form.catalogFile || null}
                 onChange={(url) => setForm({ ...form, catalogFile: url || '' })}
                 folder="products/catalogs"
-                label="فایل کاتالوگ"
+                label="Catalog File"
                 accept=".pdf"
               />
             </div>

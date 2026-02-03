@@ -37,7 +37,7 @@ export default function CtaSection() {
             viewport={{ once: true }}
             className="text-3xl lg:text-4xl font-bold text-white mb-6"
           >
-            نیاز به مشاوره دارید؟
+            Need Consultation?
           </motion.h2>
 
           <motion.p
@@ -47,8 +47,8 @@ export default function CtaSection() {
             transition={{ delay: 0.1 }}
             className="text-gray-300 text-lg mb-8 leading-relaxed"
           >
-            کارشناسان ما آماده پاسخگویی به سوالات شما و ارائه مشاوره تخصصی
-            در زمینه تجهیزات امنیتی و مخابراتی هستند.
+            Our experts are ready to answer your questions and provide specialized consultation
+            in the field of security and telecommunications equipment.
           </motion.p>
 
           <motion.div
@@ -75,14 +75,14 @@ export default function CtaSection() {
               className="inline-flex items-center gap-3 bg-green-500 text-white px-8 py-4 rounded-xl font-medium hover:bg-green-600 transition-colors w-full sm:w-auto justify-center"
             >
               <MessageCircle className="w-5 h-5" />
-              پیام در واتساپ
+              Message on WhatsApp
             </a>
 
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 bg-white/10 text-white px-8 py-4 rounded-xl font-medium hover:bg-white/20 transition-colors border border-white/20 w-full sm:w-auto justify-center"
             >
-              فرم تماس
+              Contact Form
               <ArrowLeft className="w-4 h-4" />
             </Link>
           </motion.div>

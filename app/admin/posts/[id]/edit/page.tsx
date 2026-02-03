@@ -88,10 +88,10 @@ export default function EditPostPage() {
       if (data.success) {
         router.push('/admin/posts')
       } else {
-        alert(data.message || 'خطا در ذخیره')
+        alert(data.message || 'Error saving')
       }
     } catch {
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setLoading(false)
     }
@@ -114,14 +114,14 @@ export default function EditPostPage() {
         >
           <ArrowRight className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">ویرایش مطلب</h1>
+        <h1 className="text-2xl font-bold text-dark">Edit Post</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان فارسی *
+              Persian Title *
             </label>
             <input
               type="text"
@@ -134,7 +134,7 @@ export default function EditPostPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان انگلیسی
+              English Title
             </label>
             <input
               type="text"
@@ -147,7 +147,7 @@ export default function EditPostPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              اسلاگ
+              Slug
             </label>
             <input
               type="text"
@@ -160,7 +160,7 @@ export default function EditPostPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              نویسنده
+              Author
             </label>
             <input
               type="text"
@@ -172,14 +172,14 @@ export default function EditPostPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              دسته‌بندی
+              Category
             </label>
             <select
               value={form.postCategoryId}
               onChange={(e) => setForm({ ...form, postCategoryId: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="">بدون دسته‌بندی</option>
+              <option value="">No Category</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.nameFa}
@@ -190,34 +190,34 @@ export default function EditPostPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              وضعیت
+              Status
             </label>
             <select
               value={form.status}
               onChange={(e) => setForm({ ...form, status: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="DRAFT">پیش‌نویس</option>
-              <option value="PUBLISHED">منتشر شده</option>
+              <option value="DRAFT">Draft</option>
+              <option value="PUBLISHED">Published</option>
             </select>
           </div>
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              برچسب‌ها
+              Tags
             </label>
             <input
               type="text"
               value={form.tags}
               onChange={(e) => setForm({ ...form, tags: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="با کاما جدا کنید"
+              placeholder="Separate with commas"
             />
           </div>
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              خلاصه
+              Excerpt
             </label>
             <textarea
               value={form.excerpt}
@@ -229,7 +229,7 @@ export default function EditPostPage() {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              محتوا
+              Content
             </label>
             <textarea
               value={form.content}
@@ -244,13 +244,13 @@ export default function EditPostPage() {
               value={form.image || null}
               onChange={(url) => setForm({ ...form, image: url || '' })}
               folder="posts"
-              label="تصویر شاخص"
+              label="Featured Image"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان متا
+              Meta Title
               <span className={`mr-2 text-xs ${form.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
                 ({form.metaTitle.length}/60)
               </span>
@@ -265,7 +265,7 @@ export default function EditPostPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              توضیحات متا
+              Meta Description
               <span className={`mr-2 text-xs ${form.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
                 ({form.metaDesc.length}/160)
               </span>
@@ -298,7 +298,7 @@ export default function EditPostPage() {
             href="/admin/posts"
             className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
           >
-            انصراف
+            Cancel
           </Link>
           <button
             type="submit"
@@ -310,7 +310,7 @@ export default function EditPostPage() {
             ) : (
               <Save className="w-5 h-5" />
             )}
-            ذخیره
+            Save
           </button>
         </div>
       </form>

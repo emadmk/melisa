@@ -16,7 +16,7 @@ export default function ImageUpload({
   value,
   onChange,
   folder = 'general',
-  label = 'تصویر',
+  label = 'Image',
   accept = 'image/*',
 }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false)
@@ -45,10 +45,10 @@ export default function ImageUpload({
       if (data.success) {
         onChange(data.data.url)
       } else {
-        setError(data.message || 'خطا در آپلود')
+        setError(data.message || 'Upload error')
       }
     } catch {
-      setError('خطا در آپلود فایل')
+      setError('Error uploading file')
     } finally {
       setUploading(false)
       if (inputRef.current) {
@@ -95,7 +95,7 @@ export default function ImageUpload({
           ) : (
             <>
               <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
-              <p className="text-sm text-gray-500">کلیک کنید یا فایل را بکشید</p>
+              <p className="text-sm text-gray-500">Click or drag file here</p>
             </>
           )}
         </div>

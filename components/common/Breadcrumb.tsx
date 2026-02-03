@@ -18,7 +18,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
     label: item.label || item.name || '',
     href: item.href || item.url || '',
   }))
-  const allItems = [{ label: 'خانه', href: '/' }, ...normalizedItems]
+  const allItems = [{ label: 'Home', href: '/' }, ...normalizedItems]
 
   const schema = generateBreadcrumbSchema(
     allItems.map((item) => ({

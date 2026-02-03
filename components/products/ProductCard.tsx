@@ -63,7 +63,7 @@ export default function ProductCard({
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-500 hover:bg-primary hover:text-white opacity-0 group-hover:opacity-100'
               )}
-              title={isInCompare ? 'حذف از مقایسه' : 'افزودن به مقایسه'}
+              title={isInCompare ? 'Remove from compare' : 'Add to compare'}
             >
               <Scale className="w-4 h-4" />
             </button>
@@ -105,7 +105,7 @@ export default function ProductCard({
           href={`/products/${product.slug}#inquiry`}
           className="block w-full bg-primary text-white text-center py-2.5 rounded-lg font-medium hover:bg-primary-dark transition-colors mt-auto"
         >
-          درخواست قیمت
+          Request Price
         </Link>
       </div>
     </div>

@@ -34,8 +34,8 @@ interface ServiceResult {
 }
 
 export const metadata: Metadata = {
-  title: 'جستجو',
-  description: 'جستجو در محصولات، مقالات و خدمات کرمان هاتف ارتباط',
+  title: 'Search',
+  description: 'Search products, articles and services at Melisa',
 }
 
 async function searchProducts(query: string): Promise<ProductResult[]> {
@@ -115,8 +115,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   }
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'جستجو', url: '/search' },
+    { name: 'Home', url: '/' },
+    { name: 'Search', url: '/search' },
   ]
 
   return (
@@ -129,7 +129,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center mb-6">جستجو</h1>
+          <h1 className="text-3xl font-bold text-dark text-center mb-6">Search</h1>
 
           <form action="/search" method="GET" className="max-w-2xl mx-auto">
             <div className="relative">
@@ -137,7 +137,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 type="text"
                 name="q"
                 defaultValue={query || ''}
-                placeholder="نام محصول، خدمات یا مقاله را جستجو کنید..."
+                placeholder="Search for products, services or articles..."
                 className="w-full px-6 py-4 pr-14 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent text-lg"
               />
               <button
@@ -156,7 +156,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           <div className="text-center py-12">
             <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-500">
-              عبارت مورد نظر خود را جستجو کنید
+              Enter your search term
             </p>
           </div>
         ) : (
@@ -165,8 +165,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <div>
               <div className="flex items-center gap-2 mb-6">
                 <Package className="w-5 h-5 text-primary" />
-                <h2 className="text-xl font-bold text-dark">محصولات</h2>
-                <span className="text-sm text-gray-400">({products.length} نتیجه)</span>
+                <h2 className="text-xl font-bold text-dark">Products</h2>
+                <span className="text-sm text-gray-400">({products.length} results)</span>
               </div>
 
               {products.length > 0 ? (
@@ -195,7 +195,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-4">محصولی یافت نشد</p>
+                <p className="text-gray-500 text-center py-4">No products found</p>
               )}
             </div>
 
@@ -203,8 +203,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <div>
               <div className="flex items-center gap-2 mb-6">
                 <FileText className="w-5 h-5 text-primary" />
-                <h2 className="text-xl font-bold text-dark">مقالات</h2>
-                <span className="text-sm text-gray-400">({posts.length} نتیجه)</span>
+                <h2 className="text-xl font-bold text-dark">Articles</h2>
+                <span className="text-sm text-gray-400">({posts.length} results)</span>
               </div>
 
               {posts.length > 0 ? (
@@ -223,7 +223,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-4">مقاله‌ای یافت نشد</p>
+                <p className="text-gray-500 text-center py-4">No articles found</p>
               )}
             </div>
 
@@ -231,8 +231,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <div>
               <div className="flex items-center gap-2 mb-6">
                 <Wrench className="w-5 h-5 text-primary" />
-                <h2 className="text-xl font-bold text-dark">خدمات</h2>
-                <span className="text-sm text-gray-400">({services.length} نتیجه)</span>
+                <h2 className="text-xl font-bold text-dark">Services</h2>
+                <span className="text-sm text-gray-400">({services.length} results)</span>
               </div>
 
               {services.length > 0 ? (
@@ -251,7 +251,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-4">خدماتی یافت نشد</p>
+                <p className="text-gray-500 text-center py-4">No services found</p>
               )}
             </div>
 
@@ -260,7 +260,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <div className="text-center py-12">
                 <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                 <p className="text-gray-500">
-                  نتیجه‌ای برای &quot;{query}&quot; یافت نشد
+                  No results found for &quot;{query}&quot;
                 </p>
               </div>
             )}

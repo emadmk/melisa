@@ -15,7 +15,7 @@ export default function FileUpload({
   value,
   onChange,
   folder = 'files',
-  label = 'فایل',
+  label = 'File',
   accept = '.pdf,.doc,.docx,.xls,.xlsx',
 }: FileUploadProps) {
   const [uploading, setUploading] = useState(false)
@@ -46,10 +46,10 @@ export default function FileUpload({
         onChange(data.data.url)
         setFileName(data.data.originalName)
       } else {
-        setError(data.message || 'خطا در آپلود')
+        setError(data.message || 'Upload error')
       }
     } catch {
-      setError('خطا در آپلود فایل')
+      setError('Error uploading file')
     } finally {
       setUploading(false)
       if (inputRef.current) {
@@ -82,7 +82,7 @@ export default function FileUpload({
               rel="noopener noreferrer"
               className="text-xs text-primary hover:underline"
             >
-              مشاهده فایل
+              View File
             </a>
           </div>
           <button
@@ -103,7 +103,7 @@ export default function FileUpload({
           ) : (
             <>
               <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
-              <p className="text-sm text-gray-500">کلیک کنید یا فایل را بکشید</p>
+              <p className="text-sm text-gray-500">Click or drag file here</p>
             </>
           )}
         </div>

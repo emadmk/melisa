@@ -25,19 +25,19 @@ import {
 import { cn } from '@/lib/utils'
 
 const sidebarLinks = [
-  { name: 'داشبورد', href: '/admin', icon: LayoutDashboard },
-  { name: 'محصولات', href: '/admin/products', icon: Package },
-  { name: 'دسته‌بندی‌ها', href: '/admin/categories', icon: FolderTree },
-  { name: 'برندها', href: '/admin/brands', icon: Building2 },
-  { name: 'خدمات', href: '/admin/services', icon: Wrench },
-  { name: 'وبلاگ', href: '/admin/posts', icon: FileText },
-  { name: 'کاتالوگ‌ها', href: '/admin/catalogs', icon: FileDown },
-  { name: 'پروژه‌ها', href: '/admin/projects', icon: FolderKanban },
-  { name: 'گواهینامه‌ها', href: '/admin/certificates', icon: Award },
-  { name: 'سوالات متداول', href: '/admin/faqs', icon: HelpCircle },
-  { name: 'استعلام‌ها', href: '/admin/inquiries', icon: MessageSquare },
-  { name: 'تنظیمات', href: '/admin/settings', icon: Settings },
-  { name: 'پشتیبان‌گیری', href: '/admin/backup', icon: Database },
+  { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { name: 'Products', href: '/admin/products', icon: Package },
+  { name: 'Categories', href: '/admin/categories', icon: FolderTree },
+  { name: 'Brands', href: '/admin/brands', icon: Building2 },
+  { name: 'Services', href: '/admin/services', icon: Wrench },
+  { name: 'Blog', href: '/admin/posts', icon: FileText },
+  { name: 'Catalogs', href: '/admin/catalogs', icon: FileDown },
+  { name: 'Projects', href: '/admin/projects', icon: FolderKanban },
+  { name: 'Certificates', href: '/admin/certificates', icon: Award },
+  { name: 'FAQ', href: '/admin/faqs', icon: HelpCircle },
+  { name: 'Inquiries', href: '/admin/inquiries', icon: MessageSquare },
+  { name: 'Settings', href: '/admin/settings', icon: Settings },
+  { name: 'Backup', href: '/admin/backup', icon: Database },
 ]
 
 export default function AdminLayout({
@@ -49,7 +49,7 @@ export default function AdminLayout({
   const pathname = usePathname()
 
   return (
-    <div className="min-h-screen bg-gray-100" dir="rtl">
+    <div className="min-h-screen bg-gray-100" dir="ltr">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -61,17 +61,17 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed top-0 right-0 h-full w-64 bg-slate-800 text-white z-50 transition-transform lg:translate-x-0',
-          sidebarOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+          'fixed top-0 left-0 h-full w-64 bg-slate-800 text-white z-50 transition-transform lg:translate-x-0',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
       >
         {/* Logo */}
         <div className="flex items-center justify-between p-4 border-b border-slate-700">
           <Link href="/admin" className="flex items-center gap-2">
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center font-bold text-lg">
-              ه
+              M
             </div>
-            <span className="font-bold">پنل مدیریت</span>
+            <span className="font-bold">Admin Panel</span>
           </Link>
           <button
             onClick={() => setSidebarOpen(false)}
@@ -110,13 +110,13 @@ export default function AdminLayout({
             className="flex items-center gap-2 text-gray-300 hover:text-white text-sm"
           >
             <LogOut className="w-4 h-4" />
-            بازگشت به سایت
+            Back to Website
           </Link>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="lg:mr-64">
+      <div className="lg:ml-64">
         {/* Header */}
         <header className="bg-white shadow-sm sticky top-0 z-30">
           <div className="flex items-center justify-between px-4 py-3">
@@ -133,7 +133,7 @@ export default function AdminLayout({
                 target="_blank"
                 className="text-sm text-gray-500 hover:text-primary flex items-center gap-1"
               >
-                مشاهده سایت
+                View Website
                 <ChevronLeft className="w-4 h-4" />
               </Link>
             </div>

@@ -31,7 +31,7 @@ interface RichTextEditorProps {
 export default function RichTextEditor({
   content,
   onChange,
-  placeholder = 'محتوا را وارد کنید...',
+  placeholder = 'Enter content...',
   onImageUpload,
 }: RichTextEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null)
@@ -111,70 +111,70 @@ export default function RichTextEditor({
     <div className="border rounded-lg overflow-hidden bg-white">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-1 p-2 border-b bg-gray-50">
-        <ToolbarButton onClick={() => execCommand('undo')} title="برگرداندن">
+        <ToolbarButton onClick={() => execCommand('undo')} title="Undo">
           <Undo className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('redo')} title="انجام مجدد">
+        <ToolbarButton onClick={() => execCommand('redo')} title="Redo">
           <Redo className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'h1')} title="تیتر ۱">
+        <ToolbarButton onClick={() => execCommand('formatBlock', 'h1')} title="Heading 1">
           <Heading1 className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'h2')} title="تیتر ۲">
+        <ToolbarButton onClick={() => execCommand('formatBlock', 'h2')} title="Heading 2">
           <Heading2 className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'h3')} title="تیتر ۳">
+        <ToolbarButton onClick={() => execCommand('formatBlock', 'h3')} title="Heading 3">
           <Heading3 className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('bold')} title="بولد">
+        <ToolbarButton onClick={() => execCommand('bold')} title="Bold">
           <Bold className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('italic')} title="ایتالیک">
+        <ToolbarButton onClick={() => execCommand('italic')} title="Italic">
           <Italic className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('underline')} title="خط زیر">
+        <ToolbarButton onClick={() => execCommand('underline')} title="Underline">
           <UnderlineIcon className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'pre')} title="کد">
+        <ToolbarButton onClick={() => execCommand('formatBlock', 'pre')} title="Code">
           <Code className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('justifyRight')} title="راست‌چین">
+        <ToolbarButton onClick={() => execCommand('justifyRight')} title="Align Right">
           <AlignRight className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('justifyCenter')} title="وسط‌چین">
+        <ToolbarButton onClick={() => execCommand('justifyCenter')} title="Align Center">
           <AlignCenter className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('justifyLeft')} title="چپ‌چین">
+        <ToolbarButton onClick={() => execCommand('justifyLeft')} title="Align Left">
           <AlignLeft className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('insertUnorderedList')} title="لیست نقطه‌ای">
+        <ToolbarButton onClick={() => execCommand('insertUnorderedList')} title="Bullet List">
           <List className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('insertOrderedList')} title="لیست شماره‌ای">
+        <ToolbarButton onClick={() => execCommand('insertOrderedList')} title="Numbered List">
           <ListOrdered className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'blockquote')} title="نقل قول">
+        <ToolbarButton onClick={() => execCommand('formatBlock', 'blockquote')} title="Quote">
           <Quote className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => setShowLinkModal(true)} title="لینک">
+        <ToolbarButton onClick={() => setShowLinkModal(true)} title="Link">
           <LinkIcon className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={addImage} title="تصویر">
+        <ToolbarButton onClick={addImage} title="Image">
           <ImageIcon className="w-4 h-4" />
         </ToolbarButton>
       </div>
@@ -198,7 +198,7 @@ export default function RichTextEditor({
       {showLinkModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-            <h3 className="font-bold text-lg mb-4">افزودن لینک</h3>
+            <h3 className="font-bold text-lg mb-4">Add Link</h3>
             <input
               type="url"
               value={linkUrl}
@@ -212,7 +212,7 @@ export default function RichTextEditor({
                 onClick={addLink}
                 className="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-primary-dark"
               >
-                تایید
+                Confirm
               </button>
               <button
                 onClick={() => {
@@ -221,7 +221,7 @@ export default function RichTextEditor({
                 }}
                 className="px-4 py-2 border rounded-lg hover:bg-gray-50"
               >
-                انصراف
+                Cancel
               </button>
             </div>
           </div>

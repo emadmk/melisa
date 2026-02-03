@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight, Loader2, Save } from 'lucide-react'
+import { ArrowLeft, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../components/ImageUpload'
 
 export default function NewBrandPage() {
@@ -38,10 +38,10 @@ export default function NewBrandPage() {
       if (data.success) {
         router.push('/admin/brands')
       } else {
-        alert(data.message || 'خطا در ذخیره')
+        alert(data.message || 'Error saving')
       }
     } catch {
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setLoading(false)
     }
@@ -54,16 +54,16 @@ export default function NewBrandPage() {
           href="/admin/brands"
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <ArrowRight className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">برند جدید</h1>
+        <h1 className="text-2xl font-bold text-dark">New Brand</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              نام برند *
+              Brand Name *
             </label>
             <input
               type="text"
@@ -76,7 +76,7 @@ export default function NewBrandPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              اسلاگ
+              Slug
             </label>
             <input
               type="text"
@@ -84,13 +84,13 @@ export default function NewBrandPage() {
               onChange={(e) => setForm({ ...form, slug: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               dir="ltr"
-              placeholder="خالی بگذارید تا خودکار ساخته شود"
+              placeholder="Leave empty to generate automatically"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              وب‌سایت
+              Website
             </label>
             <input
               type="url"
@@ -104,7 +104,7 @@ export default function NewBrandPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              ترتیب
+              Order
             </label>
             <input
               type="number"
@@ -116,7 +116,7 @@ export default function NewBrandPage() {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              توضیحات
+              Description
             </label>
             <textarea
               value={form.description}
@@ -131,7 +131,7 @@ export default function NewBrandPage() {
               value={form.logo || null}
               onChange={(url) => setForm({ ...form, logo: url || '' })}
               folder="brands"
-              label="لوگو"
+              label="Logo"
             />
           </div>
 
@@ -143,7 +143,7 @@ export default function NewBrandPage() {
                 onChange={(e) => setForm({ ...form, featured: e.target.checked })}
                 className="w-4 h-4 text-primary rounded focus:ring-primary"
               />
-              <span className="text-sm text-gray-700">برند ویژه</span>
+              <span className="text-sm text-gray-700">Featured Brand</span>
             </label>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function NewBrandPage() {
             href="/admin/brands"
             className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
           >
-            انصراف
+            Cancel
           </Link>
           <button
             type="submit"
@@ -165,7 +165,7 @@ export default function NewBrandPage() {
             ) : (
               <Save className="w-5 h-5" />
             )}
-            ذخیره
+            Save
           </button>
         </div>
       </form>

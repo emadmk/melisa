@@ -54,31 +54,31 @@ export default function PrintShareButtons({
 
   const shareLinks = [
     {
-      name: 'واتساپ',
+      name: 'WhatsApp',
       icon: MessageCircle,
       color: 'bg-green-500 hover:bg-green-600',
       url: `https://wa.me/?text=${encodeURIComponent(`${title}\n${shareUrl}`)}`,
     },
     {
-      name: 'تلگرام',
+      name: 'Telegram',
       icon: MessageCircle,
       color: 'bg-blue-500 hover:bg-blue-600',
       url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`,
     },
     {
-      name: 'توییتر',
+      name: 'Twitter',
       icon: Twitter,
       color: 'bg-sky-500 hover:bg-sky-600',
       url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`,
     },
     {
-      name: 'لینکدین',
+      name: 'LinkedIn',
       icon: Linkedin,
       color: 'bg-blue-700 hover:bg-blue-800',
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
     },
     {
-      name: 'فیسبوک',
+      name: 'Facebook',
       icon: Facebook,
       color: 'bg-blue-600 hover:bg-blue-700',
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
@@ -91,10 +91,10 @@ export default function PrintShareButtons({
       <button
         onClick={handlePrint}
         className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors print:hidden"
-        title="پرینت"
+        title="Print"
       >
         <Printer className="w-4 h-4" />
-        <span className="hidden sm:inline">پرینت</span>
+        <span className="hidden sm:inline">Print</span>
       </button>
 
       {/* Share Button */}
@@ -102,10 +102,10 @@ export default function PrintShareButtons({
         <button
           onClick={() => setShowShareMenu(!showShareMenu)}
           className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors print:hidden"
-          title="اشتراک‌گذاری"
+          title="Share"
         >
           <Share2 className="w-4 h-4" />
-          <span className="hidden sm:inline">اشتراک‌گذاری</span>
+          <span className="hidden sm:inline">Share</span>
         </button>
 
         <AnimatePresence>
@@ -125,7 +125,7 @@ export default function PrintShareButtons({
                 className="absolute left-0 top-full mt-2 bg-white rounded-xl shadow-xl border p-4 z-50 min-w-[240px]"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-dark">اشتراک‌گذاری</h4>
+                  <h4 className="font-bold text-dark">Share</h4>
                   <button
                     onClick={() => setShowShareMenu(false)}
                     className="p-1 hover:bg-gray-100 rounded-full"
@@ -166,7 +166,7 @@ export default function PrintShareButtons({
                         ? 'bg-green-100 text-green-600'
                         : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
                     }`}
-                    title="کپی لینک"
+                    title="Copy link"
                   >
                     {copied ? (
                       <Check className="w-5 h-5" />
@@ -178,7 +178,7 @@ export default function PrintShareButtons({
 
                 {copied && (
                   <p className="text-xs text-green-600 mt-2 text-center">
-                    لینک کپی شد!
+                    Link copied!
                   </p>
                 )}
               </motion.div>

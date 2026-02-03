@@ -14,7 +14,7 @@ interface SearchBoxProps {
 
 export default function SearchBox({
   className,
-  placeholder = 'جستجو در محصولات...',
+  placeholder = 'Search products...',
   autoFocus = false,
 }: SearchBoxProps) {
   const [query, setQuery] = useState('')

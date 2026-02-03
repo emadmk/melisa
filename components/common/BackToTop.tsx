@@ -31,7 +31,7 @@ export default function BackToTop() {
         'hover:bg-primary',
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
       )}
-      aria-label="بازگشت به بالا"
+      aria-label="Back to top"
     >
       <ChevronUp className="w-5 h-5" />
     </button>

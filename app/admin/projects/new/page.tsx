@@ -53,10 +53,10 @@ export default function NewProjectPage() {
       if (data.success) {
         router.push('/admin/projects')
       } else {
-        alert(data.message || 'خطا در ذخیره')
+        alert(data.message || 'Error saving')
       }
     } catch {
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setLoading(false)
     }
@@ -71,14 +71,14 @@ export default function NewProjectPage() {
         >
           <ArrowRight className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">پروژه جدید</h1>
+        <h1 className="text-2xl font-bold text-dark">New Project</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان فارسی *
+              Persian Title *
             </label>
             <input
               type="text"
@@ -91,7 +91,7 @@ export default function NewProjectPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان انگلیسی
+              English Title
             </label>
             <input
               type="text"
@@ -104,7 +104,7 @@ export default function NewProjectPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              اسلاگ
+              Slug
             </label>
             <input
               type="text"
@@ -112,13 +112,13 @@ export default function NewProjectPage() {
               onChange={(e) => setForm({ ...form, slug: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               dir="ltr"
-              placeholder="خالی بگذارید تا خودکار ساخته شود"
+              placeholder="Leave empty to auto-generate"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              کارفرما
+              Client
             </label>
             <input
               type="text"
@@ -130,7 +130,7 @@ export default function NewProjectPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              موقعیت
+              Location
             </label>
             <input
               type="text"
@@ -142,34 +142,34 @@ export default function NewProjectPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              سال
+              Year
             </label>
             <input
               type="text"
               value={form.year}
               onChange={(e) => setForm({ ...form, year: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="مثلا: 1402"
+              placeholder="e.g., 2024"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              وضعیت
+              Status
             </label>
             <select
               value={form.status}
               onChange={(e) => setForm({ ...form, status: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="DRAFT">پیش‌نویس</option>
-              <option value="PUBLISHED">منتشر شده</option>
+              <option value="DRAFT">Draft</option>
+              <option value="PUBLISHED">Published</option>
             </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              ترتیب
+              Order
             </label>
             <input
               type="number"
@@ -181,7 +181,7 @@ export default function NewProjectPage() {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              توضیحات
+              Description
             </label>
             <textarea
               value={form.description}
@@ -193,14 +193,14 @@ export default function NewProjectPage() {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              تصاویر پروژه
+              Project Images
             </label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
               {form.images.map((img, index) => (
                 <div key={index} className="relative">
                   <img
                     src={img}
-                    alt={`تصویر ${index + 1}`}
+                    alt={`Image ${index + 1}`}
                     className="w-full h-24 object-cover rounded-lg"
                   />
                   <button
@@ -217,7 +217,7 @@ export default function NewProjectPage() {
               value={null}
               onChange={handleAddImage}
               folder="projects"
-              label="افزودن تصویر"
+              label="Add Image"
             />
           </div>
 
@@ -229,14 +229,14 @@ export default function NewProjectPage() {
                 onChange={(e) => setForm({ ...form, featured: e.target.checked })}
                 className="w-4 h-4 text-primary rounded focus:ring-primary"
               />
-              <span className="text-sm text-gray-700">پروژه ویژه</span>
+              <span className="text-sm text-gray-700">Featured Project</span>
             </label>
           </div>
 
           {/* SEO */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان متا
+              Meta Title
               <span className={`mr-2 text-xs ${form.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
                 ({form.metaTitle.length}/60)
               </span>
@@ -251,7 +251,7 @@ export default function NewProjectPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              توضیحات متا
+              Meta Description
               <span className={`mr-2 text-xs ${form.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
                 ({form.metaDesc.length}/160)
               </span>
@@ -284,7 +284,7 @@ export default function NewProjectPage() {
             href="/admin/projects"
             className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
           >
-            انصراف
+            Cancel
           </Link>
           <button
             type="submit"
@@ -296,7 +296,7 @@ export default function NewProjectPage() {
             ) : (
               <Save className="w-5 h-5" />
             )}
-            ذخیره
+            Save
           </button>
         </div>
       </form>

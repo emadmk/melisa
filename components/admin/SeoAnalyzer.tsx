@@ -157,39 +157,39 @@ export default function SeoAnalyzer({
       items.push({
         id: 'meta-title-empty',
         category: 'basic',
-        title: 'عنوان متا',
+        title: 'Meta Title',
         status: 'error',
-        message: 'عنوان متا وارد نشده است',
-        suggestion: 'عنوان متا یکی از مهم‌ترین فاکتورهای سئو است. آن را وارد کنید.',
+        message: 'Meta title is not entered',
+        suggestion: 'Meta title is one of the most important SEO factors. Please enter it.',
         weight: 15,
       })
     } else if (metaTitle.length < 30) {
       items.push({
         id: 'meta-title-short',
         category: 'basic',
-        title: 'عنوان متا',
+        title: 'Meta Title',
         status: 'warning',
-        message: `عنوان متا کوتاه است (${metaTitle.length}/60 کاراکتر)`,
-        suggestion: 'عنوان متا حداقل ۳۰ کاراکتر باشد',
+        message: `Meta title is too short (${metaTitle.length}/60 characters)`,
+        suggestion: 'Meta title should be at least 30 characters',
         weight: 10,
       })
     } else if (metaTitle.length > 60) {
       items.push({
         id: 'meta-title-long',
         category: 'basic',
-        title: 'عنوان متا',
+        title: 'Meta Title',
         status: 'warning',
-        message: `عنوان متا طولانی است (${metaTitle.length}/60 کاراکتر)`,
-        suggestion: 'عنوان متا حداکثر ۶۰ کاراکتر باشد تا در گوگل کامل نمایش داده شود',
+        message: `Meta title is too long (${metaTitle.length}/60 characters)`,
+        suggestion: 'Meta title should be maximum 60 characters to display fully in Google',
         weight: 10,
       })
     } else {
       items.push({
         id: 'meta-title-ok',
         category: 'basic',
-        title: 'عنوان متا',
+        title: 'Meta Title',
         status: 'good',
-        message: `طول عنوان متا مناسب است (${metaTitle.length}/60 کاراکتر)`,
+        message: `Meta title length is appropriate (${metaTitle.length}/60 characters)`,
         weight: 15,
       })
     }
@@ -199,39 +199,39 @@ export default function SeoAnalyzer({
       items.push({
         id: 'meta-desc-empty',
         category: 'basic',
-        title: 'توضیحات متا',
+        title: 'Meta Description',
         status: 'error',
-        message: 'توضیحات متا وارد نشده است',
-        suggestion: 'توضیحات متا در نتایج گوگل نمایش داده می‌شود. آن را وارد کنید.',
+        message: 'Meta description is not entered',
+        suggestion: 'Meta description is displayed in Google results. Please enter it.',
         weight: 12,
       })
     } else if (metaDesc.length < 120) {
       items.push({
         id: 'meta-desc-short',
         category: 'basic',
-        title: 'توضیحات متا',
+        title: 'Meta Description',
         status: 'warning',
-        message: `توضیحات متا کوتاه است (${metaDesc.length}/160 کاراکتر)`,
-        suggestion: 'توضیحات متا حداقل ۱۲۰ کاراکتر باشد',
+        message: `Meta description is too short (${metaDesc.length}/160 characters)`,
+        suggestion: 'Meta description should be at least 120 characters',
         weight: 8,
       })
     } else if (metaDesc.length > 160) {
       items.push({
         id: 'meta-desc-long',
         category: 'basic',
-        title: 'توضیحات متا',
+        title: 'Meta Description',
         status: 'warning',
-        message: `توضیحات متا طولانی است (${metaDesc.length}/160 کاراکتر)`,
-        suggestion: 'توضیحات متا حداکثر ۱۶۰ کاراکتر باشد',
+        message: `Meta description is too long (${metaDesc.length}/160 characters)`,
+        suggestion: 'Meta description should be maximum 160 characters',
         weight: 8,
       })
     } else {
       items.push({
         id: 'meta-desc-ok',
         category: 'basic',
-        title: 'توضیحات متا',
+        title: 'Meta Description',
         status: 'good',
-        message: `طول توضیحات متا مناسب است (${metaDesc.length}/160 کاراکتر)`,
+        message: `Meta description length is appropriate (${metaDesc.length}/160 characters)`,
         weight: 12,
       })
     }
@@ -241,18 +241,18 @@ export default function SeoAnalyzer({
       items.push({
         id: 'slug-empty',
         category: 'basic',
-        title: 'آدرس صفحه (Slug)',
+        title: 'Page URL (Slug)',
         status: 'error',
-        message: 'آدرس صفحه وارد نشده است',
+        message: 'Page URL is not entered',
         weight: 8,
       })
     } else {
       items.push({
         id: 'slug-ok',
         category: 'basic',
-        title: 'آدرس صفحه (Slug)',
+        title: 'Page URL (Slug)',
         status: 'good',
-        message: 'آدرس صفحه تنظیم شده است',
+        message: 'Page URL is set',
         weight: 8,
       })
     }
@@ -263,10 +263,10 @@ export default function SeoAnalyzer({
       items.push({
         id: 'keyword-empty',
         category: 'keyword',
-        title: 'کلمه کلیدی اصلی',
+        title: 'Focus Keyword',
         status: 'info',
-        message: 'کلمه کلیدی اصلی تعیین نشده است',
-        suggestion: 'یک کلمه کلیدی اصلی برای بهینه‌سازی محتوا انتخاب کنید',
+        message: 'Focus keyword is not specified',
+        suggestion: 'Select a focus keyword to optimize your content',
         weight: 0,
       })
     } else {
@@ -275,19 +275,19 @@ export default function SeoAnalyzer({
         items.push({
           id: 'keyword-in-title',
           category: 'keyword',
-          title: 'کلمه کلیدی در عنوان',
+          title: 'Keyword in Title',
           status: 'good',
-          message: 'کلمه کلیدی در عنوان متا موجود است',
+          message: 'Keyword is present in meta title',
           weight: 10,
         })
       } else {
         items.push({
           id: 'keyword-not-in-title',
           category: 'keyword',
-          title: 'کلمه کلیدی در عنوان',
+          title: 'Keyword in Title',
           status: 'error',
-          message: 'کلمه کلیدی در عنوان متا موجود نیست',
-          suggestion: 'کلمه کلیدی را ترجیحاً در ابتدای عنوان قرار دهید',
+          message: 'Keyword is not present in meta title',
+          suggestion: 'Place the keyword preferably at the beginning of the title',
           weight: 10,
         })
       }
@@ -297,18 +297,18 @@ export default function SeoAnalyzer({
         items.push({
           id: 'keyword-in-desc',
           category: 'keyword',
-          title: 'کلمه کلیدی در توضیحات',
+          title: 'Keyword in Description',
           status: 'good',
-          message: 'کلمه کلیدی در توضیحات متا موجود است',
+          message: 'Keyword is present in meta description',
           weight: 8,
         })
       } else {
         items.push({
           id: 'keyword-not-in-desc',
           category: 'keyword',
-          title: 'کلمه کلیدی در توضیحات',
+          title: 'Keyword in Description',
           status: 'warning',
-          message: 'کلمه کلیدی در توضیحات متا موجود نیست',
+          message: 'Keyword is not present in meta description',
           weight: 8,
         })
       }
@@ -318,19 +318,19 @@ export default function SeoAnalyzer({
         items.push({
           id: 'keyword-in-slug',
           category: 'keyword',
-          title: 'کلمه کلیدی در URL',
+          title: 'Keyword in URL',
           status: 'good',
-          message: 'کلمه کلیدی در آدرس صفحه موجود است',
+          message: 'Keyword is present in page URL',
           weight: 6,
         })
       } else {
         items.push({
           id: 'keyword-not-in-slug',
           category: 'keyword',
-          title: 'کلمه کلیدی در URL',
+          title: 'Keyword in URL',
           status: 'warning',
-          message: 'کلمه کلیدی در آدرس صفحه موجود نیست',
-          suggestion: 'سعی کنید کلمه کلیدی در URL باشد',
+          message: 'Keyword is not present in page URL',
+          suggestion: 'Try to include the keyword in the URL',
           weight: 6,
         })
       }
@@ -340,19 +340,19 @@ export default function SeoAnalyzer({
         items.push({
           id: 'keyword-in-first-para',
           category: 'keyword',
-          title: 'کلمه کلیدی در پاراگراف اول',
+          title: 'Keyword in First Paragraph',
           status: 'good',
-          message: 'کلمه کلیدی در ابتدای محتوا آمده است',
+          message: 'Keyword appears at the beginning of content',
           weight: 6,
         })
       } else if (plainContent.length > 0) {
         items.push({
           id: 'keyword-not-in-first-para',
           category: 'keyword',
-          title: 'کلمه کلیدی در پاراگراف اول',
+          title: 'Keyword in First Paragraph',
           status: 'warning',
-          message: 'کلمه کلیدی در ۲۰۰ کاراکتر اول محتوا نیست',
-          suggestion: 'کلمه کلیدی را در پاراگراف اول استفاده کنید',
+          message: 'Keyword is not in the first 200 characters of content',
+          suggestion: 'Use the keyword in the first paragraph',
           weight: 6,
         })
       }
@@ -363,29 +363,29 @@ export default function SeoAnalyzer({
           items.push({
             id: 'keyword-density-low',
             category: 'keyword',
-            title: 'تراکم کلمه کلیدی',
+            title: 'Keyword Density',
             status: 'warning',
-            message: `تراکم کلمه کلیدی کم است (${keywordDensity.toFixed(1)}%)`,
-            suggestion: 'کلمه کلیدی را بیشتر در متن استفاده کنید (ایده‌آل: ۱-۲.۵٪)',
+            message: `Keyword density is low (${keywordDensity.toFixed(1)}%)`,
+            suggestion: 'Use the keyword more in the text (ideal: 1-2.5%)',
             weight: 5,
           })
         } else if (keywordDensity > 2.5) {
           items.push({
             id: 'keyword-density-high',
             category: 'keyword',
-            title: 'تراکم کلمه کلیدی',
+            title: 'Keyword Density',
             status: 'warning',
-            message: `تراکم کلمه کلیدی زیاد است (${keywordDensity.toFixed(1)}%)`,
-            suggestion: 'از تکرار بیش از حد کلمه کلیدی خودداری کنید (خطر keyword stuffing)',
+            message: `Keyword density is high (${keywordDensity.toFixed(1)}%)`,
+            suggestion: 'Avoid excessive keyword repetition (keyword stuffing risk)',
             weight: 5,
           })
         } else {
           items.push({
             id: 'keyword-density-ok',
             category: 'keyword',
-            title: 'تراکم کلمه کلیدی',
+            title: 'Keyword Density',
             status: 'good',
-            message: `تراکم کلمه کلیدی مناسب است (${keywordDensity.toFixed(1)}%)`,
+            message: `Keyword density is appropriate (${keywordDensity.toFixed(1)}%)`,
             weight: 5,
           })
         }
@@ -399,29 +399,29 @@ export default function SeoAnalyzer({
       items.push({
         id: 'content-too-short',
         category: 'readability',
-        title: 'طول محتوا',
+        title: 'Content Length',
         status: 'error',
-        message: `محتوا بسیار کوتاه است (${wordCount} کلمه)`,
-        suggestion: 'حداقل ۳۰۰ کلمه محتوا بنویسید',
+        message: `Content is very short (${wordCount} words)`,
+        suggestion: 'Write at least 300 words of content',
         weight: 10,
       })
     } else if (wordCount < 300) {
       items.push({
         id: 'content-short',
         category: 'readability',
-        title: 'طول محتوا',
+        title: 'Content Length',
         status: 'warning',
-        message: `محتوا کوتاه است (${wordCount} کلمه)`,
-        suggestion: 'برای رتبه‌بندی بهتر، حداقل ۳۰۰ کلمه توصیه می‌شود',
+        message: `Content is short (${wordCount} words)`,
+        suggestion: 'For better ranking, at least 300 words is recommended',
         weight: 10,
       })
     } else {
       items.push({
         id: 'content-ok',
         category: 'readability',
-        title: 'طول محتوا',
+        title: 'Content Length',
         status: 'good',
-        message: `طول محتوا مناسب است (${wordCount} کلمه)`,
+        message: `Content length is appropriate (${wordCount} words)`,
         weight: 10,
       })
     }
@@ -431,19 +431,19 @@ export default function SeoAnalyzer({
       items.push({
         id: 'no-h2',
         category: 'readability',
-        title: 'عناوین فرعی',
+        title: 'Subheadings',
         status: 'warning',
-        message: 'محتوا فاقد عنوان فرعی (H2) است',
-        suggestion: 'از عناوین فرعی برای ساختاردهی بهتر استفاده کنید',
+        message: 'Content lacks subheadings (H2)',
+        suggestion: 'Use subheadings for better structure',
         weight: 5,
       })
     } else if (headings.h2 > 0) {
       items.push({
         id: 'has-h2',
         category: 'readability',
-        title: 'عناوین فرعی',
+        title: 'Subheadings',
         status: 'good',
-        message: `${headings.h2} عنوان فرعی در محتوا موجود است`,
+        message: `${headings.h2} subheading(s) present in content`,
         weight: 5,
       })
     }
@@ -455,19 +455,19 @@ export default function SeoAnalyzer({
       items.push({
         id: 'no-internal-links',
         category: 'links',
-        title: 'لینک‌های داخلی',
+        title: 'Internal Links',
         status: 'warning',
-        message: 'محتوا فاقد لینک داخلی است',
-        suggestion: 'به صفحات مرتبط سایت لینک بدهید',
+        message: 'Content lacks internal links',
+        suggestion: 'Link to related pages on your site',
         weight: 5,
       })
     } else if (internalLinks.internal > 0) {
       items.push({
         id: 'has-internal-links',
         category: 'links',
-        title: 'لینک‌های داخلی',
+        title: 'Internal Links',
         status: 'good',
-        message: `${internalLinks.internal} لینک داخلی در محتوا موجود است`,
+        message: `${internalLinks.internal} internal link(s) present in content`,
         weight: 5,
       })
     }
@@ -477,9 +477,9 @@ export default function SeoAnalyzer({
       items.push({
         id: 'has-external-links',
         category: 'links',
-        title: 'لینک‌های خارجی',
+        title: 'External Links',
         status: 'good',
-        message: `${internalLinks.external} لینک خارجی در محتوا موجود است`,
+        message: `${internalLinks.external} external link(s) present in content`,
         weight: 3,
       })
     }
@@ -490,19 +490,19 @@ export default function SeoAnalyzer({
         items.push({
           id: 'images-no-alt',
           category: 'basic',
-          title: 'متن جایگزین تصاویر',
+          title: 'Image Alt Text',
           status: 'warning',
-          message: `${images.withoutAlt} تصویر بدون alt`,
-          suggestion: 'برای همه تصاویر متن جایگزین (alt) تعریف کنید',
+          message: `${images.withoutAlt} image(s) without alt text`,
+          suggestion: 'Define alt text for all images',
           weight: 4,
         })
       } else {
         items.push({
           id: 'images-alt-ok',
           category: 'basic',
-          title: 'متن جایگزین تصاویر',
+          title: 'Image Alt Text',
           status: 'good',
-          message: 'همه تصاویر دارای alt هستند',
+          message: 'All images have alt text',
           weight: 4,
         })
       }
@@ -567,9 +567,9 @@ export default function SeoAnalyzer({
             <span className="text-white font-bold text-lg">{score}</span>
           </div>
           <div className="text-right">
-            <span className="font-bold text-dark block">آنالیز سئو</span>
+            <span className="font-bold text-dark block">SEO Analysis</span>
             <span className="text-sm text-gray-500">
-              {score >= 80 ? 'عالی! ادامه بدهید' : score >= 50 ? 'قابل بهبود' : 'نیاز به بهینه‌سازی'}
+              {score >= 80 ? 'Excellent! Keep going' : score >= 50 ? 'Can be improved' : 'Needs optimization'}
             </span>
           </div>
         </div>
@@ -586,11 +586,11 @@ export default function SeoAnalyzer({
           <div className="p-4 bg-gray-50 border-b">
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
               <Target className="w-4 h-4 text-primary" />
-              کلمه کلیدی اصلی
+              Focus Keyword
             </label>
             <input
               type="text"
-              placeholder="مثال: بیسیم موتورولا"
+              placeholder="e.g., Motorola radio"
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               value={focusKeyword}
               onChange={(e) => onFocusKeywordChange(e.target.value)}
@@ -609,7 +609,7 @@ export default function SeoAnalyzer({
               }`}
             >
               <Search className="w-4 h-4" />
-              سئو
+              SEO
             </button>
             <button
               type="button"
@@ -621,7 +621,7 @@ export default function SeoAnalyzer({
               }`}
             >
               <AlignLeft className="w-4 h-4" />
-              خوانایی
+              Readability
             </button>
             <button
               type="button"
@@ -633,7 +633,7 @@ export default function SeoAnalyzer({
               }`}
             >
               <Eye className="w-4 h-4" />
-              پیش‌نمایش
+              Preview
             </button>
           </div>
 
@@ -645,7 +645,7 @@ export default function SeoAnalyzer({
                 {/* Score bar */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between text-sm mb-1">
-                    <span className="text-gray-600">امتیاز سئو</span>
+                    <span className="text-gray-600">SEO Score</span>
                     <span className={`font-bold ${getScoreColor(score)}`}>{score}%</span>
                   </div>
                   <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -686,17 +686,17 @@ export default function SeoAnalyzer({
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <Type className="w-5 h-5 mx-auto text-primary mb-1" />
                     <div className="text-lg font-bold text-dark">{wordCount}</div>
-                    <div className="text-xs text-gray-500">کلمه</div>
+                    <div className="text-xs text-gray-500">Words</div>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <FileText className="w-5 h-5 mx-auto text-primary mb-1" />
                     <div className="text-lg font-bold text-dark">{sentenceCount}</div>
-                    <div className="text-xs text-gray-500">جمله</div>
+                    <div className="text-xs text-gray-500">Sentences</div>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <LinkIcon className="w-5 h-5 mx-auto text-primary mb-1" />
                     <div className="text-lg font-bold text-dark">{internalLinks.internal + internalLinks.external}</div>
-                    <div className="text-xs text-gray-500">لینک</div>
+                    <div className="text-xs text-gray-500">Links</div>
                   </div>
                 </div>
 
@@ -727,12 +727,12 @@ export default function SeoAnalyzer({
               <div>
                 <p className="text-sm text-gray-500 mb-3 flex items-center gap-2">
                   <Globe className="w-4 h-4" />
-                  پیش‌نمایش در نتایج گوگل
+                  Google Search Preview
                 </p>
                 <div className="border rounded-lg p-4 bg-white" dir="rtl">
                   {/* Title */}
                   <div className="text-xl text-blue-700 hover:underline cursor-pointer truncate mb-1">
-                    {metaTitle || title || 'عنوان صفحه را وارد کنید'}
+                    {metaTitle || title || 'Enter page title'}
                   </div>
                   {/* URL */}
                   <div className="text-sm text-green-700 mb-1 truncate" dir="ltr">
@@ -740,20 +740,20 @@ export default function SeoAnalyzer({
                   </div>
                   {/* Description */}
                   <div className="text-sm text-gray-600 line-clamp-2">
-                    {metaDesc || 'توضیحات متا را وارد کنید تا در نتایج گوگل نمایش داده شود...'}
+                    {metaDesc || 'Enter meta description to display in Google results...'}
                   </div>
                 </div>
 
                 {/* Character counts */}
                 <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <span className="text-gray-600">عنوان متا:</span>
+                    <span className="text-gray-600">Meta Title:</span>
                     <span className={metaTitle.length > 60 ? 'text-red-500' : metaTitle.length < 30 ? 'text-yellow-500' : 'text-green-500'}>
                       {metaTitle.length}/60
                     </span>
                   </div>
                   <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <span className="text-gray-600">توضیحات متا:</span>
+                    <span className="text-gray-600">Meta Description:</span>
                     <span className={metaDesc.length > 160 ? 'text-red-500' : metaDesc.length < 120 ? 'text-yellow-500' : 'text-green-500'}>
                       {metaDesc.length}/160
                     </span>

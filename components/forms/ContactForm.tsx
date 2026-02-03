@@ -9,10 +9,10 @@ import { Input, Textarea, Button } from '@/components/ui'
 import { trackContactFormSubmit } from '@/lib/analytics'
 
 const contactSchema = z.object({
-  name: z.string().min(2, 'نام الزامی است'),
-  email: z.string().email('ایمیل معتبر وارد کنید'),
-  subject: z.string().min(3, 'موضوع الزامی است'),
-  message: z.string().min(10, 'پیام حداقل باید ۱۰ کاراکتر باشد'),
+  name: z.string().min(2, 'Name is required'),
+  email: z.string().email('Please enter a valid email'),
+  subject: z.string().min(3, 'Subject is required'),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
@@ -60,8 +60,8 @@ export default function ContactForm() {
   if (isSuccess) {
     return (
       <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-        <h3 className="text-lg font-bold text-green-800 mb-2">پیام شما ارسال شد</h3>
-        <p className="text-green-600">به زودی با شما تماس خواهیم گرفت</p>
+        <h3 className="text-lg font-bold text-green-800 mb-2">Your message has been sent</h3>
+        <p className="text-green-600">We will contact you soon</p>
       </div>
     )
   }
@@ -69,15 +69,15 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Input
-        label="نام"
-        placeholder="نام خود را وارد کنید"
+        label="Name"
+        placeholder="Enter your name"
         error={errors.name?.message}
         required
         {...register('name')}
       />
 
       <Input
-        label="ایمیل"
+        label="Email"
         placeholder="email@example.com"
         type="email"
         dir="ltr"
@@ -87,16 +87,16 @@ export default function ContactForm() {
       />
 
       <Input
-        label="موضوع"
-        placeholder="موضوع پیام"
+        label="Subject"
+        placeholder="Message subject"
         error={errors.subject?.message}
         required
         {...register('subject')}
       />
 
       <Textarea
-        label="پیام"
-        placeholder="پیام خود را بنویسید..."
+        label="Message"
+        placeholder="Write your message..."
         rows={5}
         error={errors.message?.message}
         required
@@ -105,9 +105,9 @@ export default function ContactForm() {
 
       <Button type="submit" className="w-full" disabled={isSubmitting}>
         {isSubmitting ? (
-          <><Loader2 className="w-4 h-4 animate-spin ml-2" />در حال ارسال...</>
+          <><Loader2 className="w-4 h-4 animate-spin ml-2" />Sending...</>
         ) : (
-          <><Send className="w-4 h-4 ml-2" />ارسال پیام</>
+          <><Send className="w-4 h-4 ml-2" />Send Message</>
         )}
       </Button>
     </form>

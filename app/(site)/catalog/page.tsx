@@ -16,8 +16,8 @@ interface Catalog {
 }
 
 export const metadata: Metadata = {
-  title: 'کاتالوگ محصولات',
-  description: 'دانلود کاتالوگ محصولات کرمان هاتف ارتباط - تجهیزات مخابراتی، دوربین مداربسته، کنترل دسترسی',
+  title: 'Product Catalog',
+  description: 'Download Melisa product catalogs - Telecommunications equipment, CCTV cameras, Access control',
 }
 
 async function getCatalogs(): Promise<Catalog[]> {
@@ -31,12 +31,12 @@ export default async function CatalogPage() {
   const catalogs = await getCatalogs()
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'کاتالوگ', url: '/catalog' },
+    { name: 'Home', url: '/' },
+    { name: 'Catalog', url: '/catalog' },
   ]
 
   // Get unique categories for filter buttons
-  const categories = ['همه', ...Array.from(new Set(catalogs.map(c => c.category).filter((c): c is string => c !== null)))]
+  const categories = ['All', ...Array.from(new Set(catalogs.map(c => c.category).filter((c): c is string => c !== null)))]
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -48,8 +48,8 @@ export default async function CatalogPage() {
 
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">کاتالوگ محصولات</h1>
-          <p className="text-gray-500 text-center mt-3">دانلود کاتالوگ و بروشور محصولات</p>
+          <h1 className="text-3xl font-bold text-dark text-center">Product Catalog</h1>
+          <p className="text-gray-500 text-center mt-3">Download product catalogs and brochures</p>
         </div>
       </div>
 
@@ -61,7 +61,7 @@ export default async function CatalogPage() {
               <button
                 key={cat}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  cat === 'همه'
+                  cat === 'All'
                     ? 'bg-primary text-white'
                     : 'bg-white text-gray-600 hover:bg-gray-100'
                 }`}
@@ -75,7 +75,7 @@ export default async function CatalogPage() {
         {/* Catalogs Grid */}
         {catalogs.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">در حال حاضر کاتالوگی ثبت نشده است</p>
+            <p className="text-gray-500">No catalogs available at the moment</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -89,10 +89,10 @@ export default async function CatalogPage() {
                     <FileText className="w-8 h-8 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <span className="text-xs text-primary font-medium">{catalog.category || 'عمومی'}</span>
+                    <span className="text-xs text-primary font-medium">{catalog.category || 'General'}</span>
                     <h3 className="font-bold text-dark mt-1 mb-2">{catalog.title}</h3>
                     <p className="text-gray-600 text-sm mb-3">{catalog.description || ''}</p>
-                    <span className="text-xs text-gray-400">حجم فایل: {catalog.fileSize || '-'}</span>
+                    <span className="text-xs text-gray-400">File size: {catalog.fileSize || '-'}</span>
                   </div>
                 </div>
 
@@ -101,7 +101,7 @@ export default async function CatalogPage() {
                   className="flex items-center justify-center gap-2 w-full mt-4 bg-primary text-white py-2.5 rounded-lg font-medium hover:bg-primary-dark transition-colors"
                 >
                   <FileDown className="w-5 h-5" />
-                  دانلود کاتالوگ
+                  Download Catalog
                 </Link>
               </div>
             ))}
@@ -111,16 +111,16 @@ export default async function CatalogPage() {
         {/* Contact CTA */}
         <div className="mt-12 bg-white rounded-xl shadow-sm p-8 text-center">
           <h2 className="text-xl font-bold text-dark mb-3">
-            به کاتالوگ خاصی نیاز دارید؟
+            Need a specific catalog?
           </h2>
           <p className="text-gray-600 mb-6">
-            در صورت نیاز به کاتالوگ محصول خاصی با ما تماس بگیرید
+            Contact us if you need a catalog for a specific product
           </p>
           <Link
             href="/contact"
             className="inline-block bg-dark text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
           >
-            تماس با ما
+            Contact Us
           </Link>
         </div>
       </div>

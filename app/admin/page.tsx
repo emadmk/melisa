@@ -53,19 +53,14 @@ async function getStats() {
 }
 
 function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('fa-IR').format(date)
-}
-
-function toPersianNumber(num: number): string {
-  const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
-  return num.toString().replace(/\d/g, (d) => persianDigits[parseInt(d)])
+  return new Intl.DateTimeFormat('en-US').format(date)
 }
 
 const quickActions = [
-  { name: 'افزودن محصول', href: '/admin/products/new' },
-  { name: 'افزودن مقاله', href: '/admin/posts/new' },
-  { name: 'مشاهده استعلام‌ها', href: '/admin/inquiries' },
-  { name: 'تنظیمات سایت', href: '/admin/settings' },
+  { name: 'Add Product', href: '/admin/products/new' },
+  { name: 'Add Article', href: '/admin/posts/new' },
+  { name: 'View Inquiries', href: '/admin/inquiries' },
+  { name: 'Site Settings', href: '/admin/settings' },
 ]
 
 export default async function AdminDashboard() {
@@ -73,32 +68,32 @@ export default async function AdminDashboard() {
 
   const statCards = [
     {
-      name: 'کل محصولات',
-      value: toPersianNumber(stats.productCount),
+      name: 'Total Products',
+      value: stats.productCount,
       icon: Package,
       href: '/admin/products',
       color: 'text-blue-500',
       bgColor: 'bg-blue-50',
     },
     {
-      name: 'استعلام‌های جدید',
-      value: toPersianNumber(stats.pendingInquiries),
+      name: 'New Inquiries',
+      value: stats.pendingInquiries,
       icon: MessageSquare,
       href: '/admin/inquiries',
       color: 'text-orange-500',
       bgColor: 'bg-orange-50',
     },
     {
-      name: 'مقالات منتشر شده',
-      value: toPersianNumber(stats.postCount),
+      name: 'Published Articles',
+      value: stats.postCount,
       icon: FileText,
       href: '/admin/posts',
       color: 'text-green-500',
       bgColor: 'bg-green-50',
     },
     {
-      name: 'پروژه‌های انجام شده',
-      value: toPersianNumber(stats.projectCount),
+      name: 'Completed Projects',
+      value: stats.projectCount,
       icon: Briefcase,
       href: '/admin/projects',
       color: 'text-purple-500',
@@ -108,7 +103,7 @@ export default async function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-dark mb-6">داشبورد</h1>
+      <h1 className="text-2xl font-bold text-dark mb-6">Dashboard</h1>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -133,25 +128,25 @@ export default async function AdminDashboard() {
         {/* Recent Inquiries */}
         <div className="lg:col-span-2 bg-white rounded-xl shadow-sm">
           <div className="flex items-center justify-between p-6 border-b">
-            <h2 className="font-bold text-dark">آخرین استعلام‌ها</h2>
+            <h2 className="font-bold text-dark">Recent Inquiries</h2>
             <Link href="/admin/inquiries" className="text-sm text-primary hover:underline">
-              مشاهده همه
+              View All
             </Link>
           </div>
 
           <div className="divide-y">
             {stats.recentInquiries.length === 0 ? (
               <div className="p-6 text-center text-gray-500">
-                استعلامی ثبت نشده است
+                No inquiries recorded
               </div>
             ) : (
               stats.recentInquiries.map((inquiry) => (
                 <div key={inquiry.id} className="flex items-center justify-between p-4">
                   <div>
                     <h4 className="font-medium text-dark">{inquiry.name}</h4>
-                    <p className="text-sm text-gray-500">{inquiry.product?.titleFa || 'بدون محصول'}</p>
+                    <p className="text-sm text-gray-500">{inquiry.product?.titleFa || 'No product'}</p>
                   </div>
-                  <div className="text-left">
+                  <div className="text-right">
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${
                         inquiry.status === 'NEW'
@@ -161,7 +156,7 @@ export default async function AdminDashboard() {
                           : 'bg-gray-100 text-gray-700'
                       }`}
                     >
-                      {inquiry.status === 'NEW' ? 'جدید' : inquiry.status === 'ANSWERED' ? 'پاسخ داده شده' : 'بسته شده'}
+                      {inquiry.status === 'NEW' ? 'New' : inquiry.status === 'ANSWERED' ? 'Answered' : 'Closed'}
                     </span>
                     <p className="text-xs text-gray-400 mt-1">{formatDate(inquiry.createdAt)}</p>
                   </div>
@@ -173,7 +168,7 @@ export default async function AdminDashboard() {
 
         {/* Quick Actions */}
         <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="font-bold text-dark mb-4">دسترسی سریع</h2>
+          <h2 className="font-bold text-dark mb-4">Quick Access</h2>
 
           <div className="space-y-3">
             {quickActions.map((action) => (
@@ -188,11 +183,11 @@ export default async function AdminDashboard() {
           </div>
 
           <div className="mt-6 pt-6 border-t">
-            <h3 className="font-bold text-dark mb-3 text-sm">راهنما</h3>
+            <h3 className="font-bold text-dark mb-3 text-sm">Guide</h3>
             <ul className="space-y-2 text-sm text-gray-500">
-              <li>• برای افزودن محصول جدید از منوی محصولات استفاده کنید</li>
-              <li>• استعلام‌های جدید را سریعاً پاسخ دهید</li>
-              <li>• از پشتیبان‌گیری منظم غافل نشوید</li>
+              <li>- Use the products menu to add new products</li>
+              <li>- Respond to new inquiries promptly</li>
+              <li>- Remember to backup regularly</li>
             </ul>
           </div>
         </div>

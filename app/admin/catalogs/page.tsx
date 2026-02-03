@@ -37,7 +37,7 @@ export default function CatalogsPage() {
   }, [fetchCatalogs])
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این کاتالوگ مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this catalog?')) return
 
     setDeleting(id)
     try {
@@ -46,11 +46,11 @@ export default function CatalogsPage() {
       if (data.success) {
         fetchCatalogs()
       } else {
-        alert('خطا در حذف')
+        alert('Error deleting')
       }
     } catch (error) {
       console.error('Error deleting catalog:', error)
-      alert('خطا در حذف')
+      alert('Error deleting')
     } finally {
       setDeleting(null)
     }
@@ -76,39 +76,39 @@ export default function CatalogsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dark">کاتالوگ‌ها</h1>
+        <h1 className="text-2xl font-bold text-dark">Catalogs</h1>
         <button
           onClick={() => setShowModal(true)}
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن کاتالوگ
+          Add Catalog
         </button>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {catalogs.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            کاتالوگی یافت نشد
+            No catalogs found
           </div>
         ) : (
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  کاتالوگ
+                  Catalog
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  دسته‌بندی
+                  Category
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  دانلود
+                  Downloads
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  تاریخ
+                  Date
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  عملیات
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -129,7 +129,7 @@ export default function CatalogsPage() {
                     {catalog.category || '-'}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {catalog.downloads} بار
+                    {catalog.downloads} times
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
                     {formatDate(catalog.createdAt)}
@@ -142,14 +142,14 @@ export default function CatalogsPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                          title="دانلود"
+                          title="Download"
                         >
                           <Download className="w-4 h-4" />
                         </a>
                       )}
                       <button
                         className="p-2 text-gray-400 hover:text-primary transition-colors"
-                        title="ویرایش"
+                        title="Edit"
                       >
                         <Edit className="w-4 h-4" />
                       </button>
@@ -157,7 +157,7 @@ export default function CatalogsPage() {
                         onClick={() => handleDelete(catalog.id)}
                         disabled={deleting === catalog.id}
                         className="p-2 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
-                        title="حذف"
+                        title="Delete"
                       >
                         {deleting === catalog.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -179,7 +179,7 @@ export default function CatalogsPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg w-full max-w-md mx-4">
             <div className="flex items-center justify-between p-6 border-b">
-              <h2 className="font-bold text-dark">افزودن کاتالوگ</h2>
+              <h2 className="font-bold text-dark">Add Catalog</h2>
               <button
                 onClick={() => setShowModal(false)}
                 className="text-gray-400 hover:text-gray-600"
@@ -188,14 +188,14 @@ export default function CatalogsPage() {
               </button>
             </div>
             <div className="p-6 text-center text-gray-500">
-              فرم افزودن کاتالوگ در حال توسعه است
+              Add Catalog form is under development
             </div>
             <div className="p-6 border-t">
               <button
                 onClick={() => setShowModal(false)}
                 className="w-full py-2 border rounded-lg hover:bg-gray-50"
               >
-                بستن
+                Close
               </button>
             </div>
           </div>

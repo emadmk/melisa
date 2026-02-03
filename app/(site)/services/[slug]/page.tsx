@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = await getService(slug)
 
   if (!service) {
-    return { title: 'خدمت یافت نشد' }
+    return { title: 'Service not found' }
   }
 
   return {
@@ -79,8 +79,8 @@ export default async function ServicePage({ params }: PageProps) {
   const IconComponent = iconMap[service.icon || ''] || Shield
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'خدمات', url: '/services' },
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' },
     { name: service.titleFa, url: `/services/${service.slug}` },
   ]
 
@@ -126,7 +126,7 @@ export default async function ServicePage({ params }: PageProps) {
 
           {/* Sidebar - Other Services */}
           <div className="bg-gray-50 rounded-xl p-6">
-            <h3 className="font-bold text-dark mb-4">دیگر خدمات:</h3>
+            <h3 className="font-bold text-dark mb-4">Other Services:</h3>
             <div className="space-y-3">
               {otherServices.map((s) => {
                 const SvcIcon = iconMap[s.icon || ''] || Shield
@@ -154,9 +154,9 @@ export default async function ServicePage({ params }: PageProps) {
       <div className="bg-white py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-dark mb-2 text-center">درخواست خدمات</h2>
+            <h2 className="text-2xl font-bold text-dark mb-2 text-center">Request Service</h2>
             <p className="text-gray-500 text-center mb-8">
-              برای درخواست خدمات {service.titleFa}، فرم زیر را تکمیل کنید
+              Fill out the form below to request {service.titleFa} service
             </p>
             <ServiceRequestForm serviceTitle={service.titleFa} />
           </div>

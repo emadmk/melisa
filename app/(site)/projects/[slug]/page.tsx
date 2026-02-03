@@ -22,7 +22,7 @@ async function getProject(slug: string) {
 
 function formatDate(date: Date | null): string {
   if (!date) return ''
-  return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit' }).format(date)
+  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit' }).format(date)
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const project = await getProject(slug)
 
   if (!project) {
-    return { title: 'پروژه یافت نشد' }
+    return { title: 'Project Not Found' }
   }
 
   return {
@@ -48,8 +48,8 @@ export default async function ProjectPage({ params }: PageProps) {
   }
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'پروژه‌ها', url: '/projects' },
+    { name: 'Home', url: '/' },
+    { name: 'Projects', url: '/projects' },
     { name: project.title, url: `/projects/${project.slug}` },
   ]
 
@@ -86,7 +86,7 @@ export default async function ProjectPage({ params }: PageProps) {
                   <div key={index} className="relative aspect-video rounded-lg overflow-hidden">
                     <Image
                       src={image}
-                      alt={`${project.title} - تصویر ${index + 2}`}
+                      alt={`${project.title} - Image ${index + 2}`}
                       fill
                       className="object-cover"
                     />
@@ -131,30 +131,30 @@ export default async function ProjectPage({ params }: PageProps) {
           <div className="space-y-6">
             {/* Project Info */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">اطلاعات پروژه</h2>
+              <h2 className="font-bold text-dark mb-4">Project Information</h2>
 
               <div className="space-y-3">
                 {project.client && (
                   <div className="flex justify-between py-2 border-b">
-                    <span className="text-gray-500">کارفرما:</span>
+                    <span className="text-gray-500">Client:</span>
                     <span className="text-dark font-medium">{project.client}</span>
                   </div>
                 )}
                 {project.location && (
                   <div className="flex justify-between py-2 border-b">
-                    <span className="text-gray-500">موقعیت:</span>
+                    <span className="text-gray-500">Location:</span>
                     <span className="text-dark font-medium">{project.location}</span>
                   </div>
                 )}
                 {project.category && (
                   <div className="flex justify-between py-2 border-b">
-                    <span className="text-gray-500">دسته‌بندی:</span>
+                    <span className="text-gray-500">Category:</span>
                     <span className="text-dark font-medium">{project.category}</span>
                   </div>
                 )}
                 {project.completedAt && (
                   <div className="flex justify-between py-2">
-                    <span className="text-gray-500">تاریخ اتمام:</span>
+                    <span className="text-gray-500">Completion Date:</span>
                     <span className="text-dark font-medium">{formatDate(project.completedAt)}</span>
                   </div>
                 )}
@@ -164,7 +164,7 @@ export default async function ProjectPage({ params }: PageProps) {
             {/* Features */}
             {features.length > 0 && (
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="font-bold text-dark mb-4">ویژگی‌های پروژه</h2>
+                <h2 className="font-bold text-dark mb-4">Project Features</h2>
 
                 <ul className="space-y-3">
                   {features.map((feature, index) => (
@@ -179,15 +179,15 @@ export default async function ProjectPage({ params }: PageProps) {
 
             {/* CTA */}
             <div className="bg-primary rounded-xl p-6 text-white text-center">
-              <h3 className="font-bold text-lg mb-2">پروژه مشابه نیاز دارید؟</h3>
+              <h3 className="font-bold text-lg mb-2">Need a similar project?</h3>
               <p className="text-sm opacity-90 mb-4">
-                با کارشناسان ما مشورت کنید
+                Consult with our experts
               </p>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 bg-white text-primary px-6 py-2.5 rounded-lg font-medium hover:bg-gray-100 transition-colors"
               >
-                تماس با ما
+                Contact Us
                 <ArrowLeft className="w-4 h-4" />
               </Link>
             </div>

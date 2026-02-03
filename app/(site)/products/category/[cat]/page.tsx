@@ -114,12 +114,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const category = await getCategory(cat)
 
   if (!category) {
-    return { title: 'دسته‌بندی یافت نشد' }
+    return { title: 'Category not found' }
   }
 
   return {
     title: category.nameFa,
-    description: category.description || `مشاهده محصولات دسته ${category.nameFa}`,
+    description: category.description || `View products in ${category.nameFa} category`,
   }
 }
 
@@ -139,8 +139,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   }
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'محصولات', url: '/products' },
+    { name: 'Home', url: '/' },
+    { name: 'Products', url: '/products' },
     { name: category.nameFa, url: `/products/category/${category.slug}` },
   ]
 
@@ -158,7 +158,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold text-dark text-center">{category.nameFa}</h1>
           <p className="text-gray-500 text-center mt-2">
-            در این قسمت می‌توانید تمامی محصولات را مشاهده نمایید
+            Browse our complete product catalog
           </p>
         </div>
       </div>
@@ -180,7 +180,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-500">محصولی در این دسته‌بندی یافت نشد</p>
+                <p className="text-gray-500">No products found in this category</p>
               </div>
             )}
 

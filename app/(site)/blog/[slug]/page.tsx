@@ -28,7 +28,7 @@ async function getPost(slug: string) {
 
 function formatDate(date: Date | null): string {
   if (!date) return ''
-  return new Intl.DateTimeFormat('fa-IR').format(date)
+  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(date)
 }
 
 function formatDateISO(date: Date | null): string {
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getPost(slug)
 
   if (!post) {
-    return { title: 'مقاله یافت نشد' }
+    return { title: 'Article not found' }
   }
 
   return {
@@ -59,8 +59,8 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'وبلاگ', url: '/blog' },
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
     { name: post.titleFa, url: `/blog/${post.slug}` },
   ]
 
@@ -68,10 +68,10 @@ export default async function BlogPostPage({ params }: PageProps) {
     title: post.titleFa,
     description: post.excerpt || '',
     image: post.image || '/images/blog/default.jpg',
-    author: post.author || 'تیم فنی',
+    author: post.author || 'Technical Team',
     datePublished: formatDateISO(post.publishedAt),
     dateModified: formatDateISO(post.updatedAt),
-    url: `https://hatefertebat.ir/blog/${post.slug}`,
+    url: `https://melisa.ae/blog/${post.slug}`,
   })
 
   return (
@@ -103,7 +103,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               <div className="flex items-center gap-6 text-gray-500 text-sm">
                 <span className="flex items-center gap-1">
                   <User className="w-4 h-4" />
-                  {post.author || 'تیم فنی'}
+                  {post.author || 'Technical Team'}
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
@@ -138,7 +138,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 className="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors"
               >
                 <ArrowRight className="w-4 h-4" />
-                بازگشت به وبلاگ
+                Back to Blog
               </Link>
             </div>
           </div>

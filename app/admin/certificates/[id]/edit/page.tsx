@@ -67,10 +67,10 @@ export default function EditCertificatePage() {
       if (data.success) {
         router.push('/admin/certificates')
       } else {
-        alert(data.message || 'خطا در ذخیره')
+        alert(data.message || 'Error saving')
       }
     } catch {
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setLoading(false)
     }
@@ -93,14 +93,14 @@ export default function EditCertificatePage() {
         >
           <ArrowRight className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">ویرایش گواهینامه</h1>
+        <h1 className="text-2xl font-bold text-dark">Edit Certificate</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان فارسی *
+              Persian Title *
             </label>
             <input
               type="text"
@@ -113,7 +113,7 @@ export default function EditCertificatePage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان انگلیسی
+              English Title
             </label>
             <input
               type="text"
@@ -126,7 +126,7 @@ export default function EditCertificatePage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              اسلاگ
+              Slug
             </label>
             <input
               type="text"
@@ -139,7 +139,7 @@ export default function EditCertificatePage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              صادرکننده
+              Issuer
             </label>
             <input
               type="text"
@@ -151,7 +151,7 @@ export default function EditCertificatePage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              تاریخ صدور
+              Issue Date
             </label>
             <input
               type="date"
@@ -163,21 +163,21 @@ export default function EditCertificatePage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              وضعیت
+              Status
             </label>
             <select
               value={form.status}
               onChange={(e) => setForm({ ...form, status: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="DRAFT">پیش‌نویس</option>
-              <option value="PUBLISHED">منتشر شده</option>
+              <option value="DRAFT">Draft</option>
+              <option value="PUBLISHED">Published</option>
             </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              ترتیب
+              Order
             </label>
             <input
               type="number"
@@ -189,7 +189,7 @@ export default function EditCertificatePage() {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              توضیحات
+              Description
             </label>
             <textarea
               value={form.description}
@@ -204,7 +204,7 @@ export default function EditCertificatePage() {
               value={form.image || null}
               onChange={(url) => setForm({ ...form, image: url || '' })}
               folder="certificates"
-              label="تصویر گواهینامه"
+              label="Certificate Image"
             />
           </div>
         </div>
@@ -214,7 +214,7 @@ export default function EditCertificatePage() {
             href="/admin/certificates"
             className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
           >
-            انصراف
+            Cancel
           </Link>
           <button
             type="submit"
@@ -226,7 +226,7 @@ export default function EditCertificatePage() {
             ) : (
               <Save className="w-5 h-5" />
             )}
-            ذخیره
+            Save
           </button>
         </div>
       </form>

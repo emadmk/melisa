@@ -20,8 +20,8 @@ interface Project {
 }
 
 export const metadata: Metadata = {
-  title: 'پروژه‌های انجام شده',
-  description: 'نمونه پروژه‌های اجرا شده توسط کرمان هاتف ارتباط در زمینه سیستم‌های امنیتی و مخابراتی',
+  title: 'Completed Projects',
+  description: 'Sample projects implemented by Melisa in security and telecommunications systems',
 }
 
 async function getProjects(page: number = 1, limit: number = 9) {
@@ -59,7 +59,7 @@ async function getStats() {
 
 function formatDate(date: Date | null): string {
   if (!date) return ''
-  return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit' }).format(date)
+  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit' }).format(date)
 }
 
 export default async function ProjectsPage() {
@@ -69,8 +69,8 @@ export default async function ProjectsPage() {
   ])
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'پروژه‌ها', url: '/projects' },
+    { name: 'Home', url: '/' },
+    { name: 'Projects', url: '/projects' },
   ]
 
   return (
@@ -83,8 +83,8 @@ export default async function ProjectsPage() {
 
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">پروژه‌های انجام شده</h1>
-          <p className="text-gray-500 text-center mt-3">نمونه‌ای از پروژه‌های موفق ما</p>
+          <h1 className="text-3xl font-bold text-dark text-center">Completed Projects</h1>
+          <p className="text-gray-500 text-center mt-3">A sample of our successful projects</p>
         </div>
       </div>
 
@@ -94,19 +94,19 @@ export default async function ProjectsPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
             <div>
               <div className="text-3xl font-bold mb-1">+{stats.projects}</div>
-              <div className="text-sm opacity-80">پروژه موفق</div>
+              <div className="text-sm opacity-80">Successful Projects</div>
             </div>
             <div>
               <div className="text-3xl font-bold mb-1">+{stats.clients}</div>
-              <div className="text-sm opacity-80">مشتری راضی</div>
+              <div className="text-sm opacity-80">Satisfied Clients</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-1">+۱۵</div>
-              <div className="text-sm opacity-80">سال تجربه</div>
+              <div className="text-3xl font-bold mb-1">+15</div>
+              <div className="text-sm opacity-80">Years of Experience</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-1">+۳۰</div>
-              <div className="text-sm opacity-80">استان</div>
+              <div className="text-3xl font-bold mb-1">+7</div>
+              <div className="text-sm opacity-80">Emirates</div>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default async function ProjectsPage() {
         {/* Projects Grid */}
         {projects.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">در حال حاضر پروژه‌ای ثبت نشده است</p>
+            <p className="text-gray-500">No projects registered yet</p>
           </div>
         ) : (
           <>

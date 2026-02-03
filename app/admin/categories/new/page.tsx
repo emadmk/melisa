@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight, Loader2, Save } from 'lucide-react'
+import { ArrowLeft, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../components/ImageUpload'
 
 interface Category {
@@ -58,10 +58,10 @@ export default function NewCategoryPage() {
       if (data.success) {
         router.push('/admin/categories')
       } else {
-        alert(data.message || 'خطا در ذخیره')
+        alert(data.message || 'Error saving')
       }
     } catch {
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setLoading(false)
     }
@@ -74,16 +74,16 @@ export default function NewCategoryPage() {
           href="/admin/categories"
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <ArrowRight className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">دسته‌بندی جدید</h1>
+        <h1 className="text-2xl font-bold text-dark">New Category</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              نام فارسی *
+              Persian Name *
             </label>
             <input
               type="text"
@@ -96,7 +96,7 @@ export default function NewCategoryPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              نام انگلیسی
+              English Name
             </label>
             <input
               type="text"
@@ -109,7 +109,7 @@ export default function NewCategoryPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              اسلاگ
+              Slug
             </label>
             <input
               type="text"
@@ -117,20 +117,20 @@ export default function NewCategoryPage() {
               onChange={(e) => setForm({ ...form, slug: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               dir="ltr"
-              placeholder="خالی بگذارید تا خودکار ساخته شود"
+              placeholder="Leave empty to generate automatically"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              دسته‌بندی والد
+              Parent Category
             </label>
             <select
               value={form.parentId}
               onChange={(e) => setForm({ ...form, parentId: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="">بدون والد (دسته اصلی)</option>
+              <option value="">No parent (main category)</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.nameFa}
@@ -141,7 +141,7 @@ export default function NewCategoryPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              ترتیب
+              Order
             </label>
             <input
               type="number"
@@ -153,7 +153,7 @@ export default function NewCategoryPage() {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              توضیحات
+              Description
             </label>
             <textarea
               value={form.description}
@@ -168,13 +168,13 @@ export default function NewCategoryPage() {
               value={form.image || null}
               onChange={(url) => setForm({ ...form, image: url || '' })}
               folder="categories"
-              label="تصویر"
+              label="Image"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان متا
+              Meta Title
             </label>
             <input
               type="text"
@@ -186,7 +186,7 @@ export default function NewCategoryPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              توضیحات متا
+              Meta Description
             </label>
             <input
               type="text"
@@ -202,7 +202,7 @@ export default function NewCategoryPage() {
             href="/admin/categories"
             className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
           >
-            انصراف
+            Cancel
           </Link>
           <button
             type="submit"
@@ -214,7 +214,7 @@ export default function NewCategoryPage() {
             ) : (
               <Save className="w-5 h-5" />
             )}
-            ذخیره
+            Save
           </button>
         </div>
       </form>

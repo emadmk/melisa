@@ -84,12 +84,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const brand = await getBrand(slug)
 
   if (!brand) {
-    return { title: 'برند یافت نشد' }
+    return { title: 'Brand Not Found' }
   }
 
   return {
-    title: `محصولات ${brand.name}`,
-    description: `مشاهده تمامی محصولات برند ${brand.name}`,
+    title: `${brand.name} Products`,
+    description: `View all products from ${brand.name}`,
   }
 }
 
@@ -107,8 +107,8 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
   const { products, total, totalPages } = await getProductsByBrand(brand.id, currentPage)
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'برندها', url: '/brands' },
+    { name: 'Home', url: '/' },
+    { name: 'Brands', url: '/brands' },
     { name: brand.name, url: `/brands/${brand.slug}` },
   ]
 
@@ -128,16 +128,16 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
             </div>
           )}
           <h1 className="text-3xl font-bold text-dark mb-4">{brand.name}</h1>
-          <p className="text-gray-500">{total} محصول</p>
+          <p className="text-gray-500">{total} Products</p>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-dark mb-8">محصولات {brand.name}</h2>
+        <h2 className="text-2xl font-bold text-dark mb-8">{brand.name} Products</h2>
 
         {products.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            محصولی برای این برند یافت نشد
+            No products found for this brand
           </div>
         ) : (
           <>

@@ -26,7 +26,7 @@ export default function FloatingButtons() {
 
   const openWhatsApp = () => {
     window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('سلام، من از سایت شما پیام می‌دهم.')}`,
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hello, I am messaging from your website.')}`,
       '_blank'
     )
   }
@@ -42,7 +42,7 @@ export default function FloatingButtons() {
             exit={{ opacity: 0, scale: 0.5 }}
             onClick={scrollToTop}
             className="w-12 h-12 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 transition-colors flex items-center justify-center"
-            aria-label="بازگشت به بالا"
+            aria-label="Back to top"
           >
             <ArrowUp className="w-5 h-5" />
           </motion.button>

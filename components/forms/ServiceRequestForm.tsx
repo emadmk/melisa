@@ -8,8 +8,8 @@ import { Send, Loader2 } from 'lucide-react'
 import { Input, Textarea, Button } from '@/components/ui'
 
 const serviceRequestSchema = z.object({
-  name: z.string().min(2, 'نام الزامی است'),
-  phone: z.string().min(10, 'شماره تماس معتبر وارد کنید'),
+  name: z.string().min(2, 'Name is required'),
+  phone: z.string().min(10, 'Please enter a valid phone number'),
   serviceType: z.string().optional(),
   message: z.string().optional(),
 })
@@ -46,8 +46,8 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
         body: JSON.stringify({
           name: data.name,
           email: `${data.phone}@service.local`,
-          subject: `درخواست خدمت: ${data.serviceType}`,
-          message: `تلفن: ${data.phone}\n${data.message || ''}`,
+          subject: `Service request: ${data.serviceType}`,
+          message: `Phone: ${data.phone}\n${data.message || ''}`,
         }),
       })
 
@@ -84,10 +84,10 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
           </svg>
         </div>
         <h3 className="text-lg font-bold text-green-800 mb-2">
-          درخواست شما با موفقیت ثبت شد
+          Your request has been submitted successfully
         </h3>
         <p className="text-green-600">
-          کارشناسان ما در اسرع وقت با شما تماس خواهند گرفت
+          Our experts will contact you as soon as possible
         </p>
       </div>
     )
@@ -96,15 +96,15 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Input
-        label="نام و نام خانوادگی"
-        placeholder="نام خود را وارد کنید"
+        label="Full Name"
+        placeholder="Enter your name"
         error={errors.name?.message}
         required
         {...register('name')}
       />
 
       <Input
-        label="شماره تماس"
+        label="Phone Number"
         placeholder="09123456789"
         type="tel"
         dir="ltr"
@@ -115,22 +115,22 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
 
       <div>
         <label className="block text-sm font-medium text-dark mb-1.5">
-          نوع خدمت
+          Service Type
         </label>
         <select
           className="w-full px-4 py-2.5 text-dark bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           {...register('serviceType')}
         >
-          <option value="راه اندازی">راه اندازی</option>
-          <option value="تامین تجهیزات">تامین تجهیزات</option>
-          <option value="نصب">نصب</option>
-          <option value="مهندسی">مهندسی</option>
+          <option value="Setup">Setup</option>
+          <option value="Equipment Supply">Equipment Supply</option>
+          <option value="Installation">Installation</option>
+          <option value="Engineering">Engineering</option>
         </select>
       </div>
 
       <Textarea
-        label="توضیحات"
-        placeholder="توضیحات یا نیازمندی‌های خود را بنویسید..."
+        label="Description"
+        placeholder="Write your description or requirements..."
         rows={4}
         {...register('message')}
       />
@@ -139,12 +139,12 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
         {isSubmitting ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin ml-2" />
-            در حال ارسال...
+            Sending...
           </>
         ) : (
           <>
             <Send className="w-4 h-4 ml-2" />
-            ارسال درخواست
+            Submit Request
           </>
         )}
       </Button>

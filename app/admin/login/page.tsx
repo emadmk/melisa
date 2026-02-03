@@ -10,8 +10,8 @@ import { Lock, Mail, Loader2, AlertCircle } from 'lucide-react'
 import Image from 'next/image'
 
 const loginSchema = z.object({
-  email: z.string().email('ایمیل معتبر وارد کنید'),
-  password: z.string().min(6, 'رمز عبور حداقل ۶ کاراکتر'),
+  email: z.string().email('Enter a valid email'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 })
 
 type LoginFormData = z.infer<typeof loginSchema>
@@ -24,7 +24,7 @@ function LoginForm() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [loginError, setLoginError] = useState<string | null>(
-    error === 'CredentialsSignin' ? 'ایمیل یا رمز عبور اشتباه است' : null
+    error === 'CredentialsSignin' ? 'Email or password is incorrect' : null
   )
 
   const {
@@ -47,13 +47,13 @@ function LoginForm() {
       })
 
       if (result?.error) {
-        setLoginError('ایمیل یا رمز عبور اشتباه است')
+        setLoginError('Email or password is incorrect')
       } else {
         router.push(callbackUrl)
         router.refresh()
       }
     } catch {
-      setLoginError('خطا در ورود به سیستم')
+      setLoginError('Error logging in')
     } finally {
       setIsLoading(false)
     }
@@ -62,7 +62,7 @@ function LoginForm() {
   return (
     <div className="bg-white rounded-2xl shadow-2xl p-8">
       <h2 className="text-xl font-bold text-gray-800 mb-6 text-center">
-        ورود به پنل
+        Login to Panel
       </h2>
 
       {loginError && (
@@ -75,7 +75,7 @@ function LoginForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            ایمیل
+            Email
           </label>
           <div className="relative">
             <input
@@ -87,7 +87,7 @@ function LoginForm() {
               placeholder="admin@example.com"
               {...register('email')}
             />
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           </div>
           {errors.email && (
             <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
@@ -96,7 +96,7 @@ function LoginForm() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            رمز عبور
+            Password
           </label>
           <div className="relative">
             <input
@@ -105,10 +105,10 @@ function LoginForm() {
               className={`w-full px-4 py-3 pr-11 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors ${
                 errors.password ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="••••••••"
+              placeholder="********"
               {...register('password')}
             />
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           </div>
           {errors.password && (
             <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
@@ -123,10 +123,10 @@ function LoginForm() {
           {isLoading ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              در حال ورود...
+              Logging in...
             </>
           ) : (
-            'ورود به پنل'
+            'Login to Panel'
           )}
         </button>
       </form>
@@ -143,14 +143,14 @@ export default function AdminLoginPage() {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-lg mb-4">
             <Image
               src="/images/logo.png"
-              alt="کرمان هاتف ارتباط"
+              alt="Melisa"
               width={60}
               height={60}
               className="object-contain"
             />
           </div>
-          <h1 className="text-2xl font-bold text-white">پنل مدیریت</h1>
-          <p className="text-gray-400 mt-2">کرمان هاتف ارتباط</p>
+          <h1 className="text-2xl font-bold text-white">Admin Panel</h1>
+          <p className="text-gray-400 mt-2">Melisa</p>
         </div>
 
         {/* Login Form */}
@@ -160,7 +160,7 @@ export default function AdminLoginPage() {
 
         {/* Footer */}
         <p className="text-center text-gray-500 text-sm mt-6">
-          © ۱۴۰۳ کرمان هاتف ارتباط - تمامی حقوق محفوظ است
+          © 2024 Melisa - All Rights Reserved
         </p>
       </div>
     </div>

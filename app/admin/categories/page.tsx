@@ -81,18 +81,18 @@ export default function CategoriesPage() {
         setShowModal(false)
         fetchCategories()
       } else {
-        alert(data.error || 'خطا در ذخیره')
+        alert(data.error || 'Error saving')
       }
     } catch (error) {
       console.error('Error saving category:', error)
-      alert('خطا در ذخیره')
+      alert('Error saving')
     } finally {
       setSaving(false)
     }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('آیا از حذف این دسته‌بندی مطمئن هستید؟')) return
+    if (!confirm('Are you sure you want to delete this category?')) return
 
     setDeleting(id)
     try {
@@ -102,11 +102,11 @@ export default function CategoriesPage() {
       if (data.success) {
         fetchCategories()
       } else {
-        alert(data.error || 'خطا در حذف')
+        alert(data.error || 'Error deleting')
       }
     } catch (error) {
       console.error('Error deleting category:', error)
-      alert('خطا در حذف')
+      alert('Error deleting')
     } finally {
       setDeleting(null)
     }
@@ -123,42 +123,42 @@ export default function CategoriesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dark">دسته‌بندی‌ها</h1>
+        <h1 className="text-2xl font-bold text-dark">Categories</h1>
         <button
           onClick={openAddModal}
           className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <Plus className="w-5 h-5" />
-          افزودن دسته‌بندی
+          Add Category
         </button>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {categories.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-            دسته‌بندی‌ای یافت نشد
+            No categories found
           </div>
         ) : (
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase w-12">
-                  ترتیب
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-12">
+                  Order
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  نام فارسی
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Persian Name
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  نام انگلیسی
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  English Name
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  اسلاگ
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Slug
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  تعداد محصول
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Product Count
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  عملیات
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -180,14 +180,14 @@ export default function CategoriesPage() {
                     {category.slug}
                   </td>
                   <td className="px-6 py-4 text-gray-500">
-                    {category._count?.products || 0} محصول
+                    {category._count?.products || 0} product(s)
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => openEditModal(category)}
                         className="p-2 text-gray-400 hover:text-primary transition-colors"
-                        title="ویرایش"
+                        title="Edit"
                       >
                         <Edit className="w-4 h-4" />
                       </button>
@@ -195,7 +195,7 @@ export default function CategoriesPage() {
                         onClick={() => handleDelete(category.id)}
                         disabled={deleting === category.id}
                         className="p-2 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
-                        title="حذف"
+                        title="Delete"
                       >
                         {deleting === category.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -218,34 +218,34 @@ export default function CategoriesPage() {
           <div className="bg-white rounded-xl shadow-lg w-full max-w-md mx-4">
             <div className="flex items-center justify-between p-6 border-b">
               <h2 className="font-bold text-dark">
-                {editingCategory ? 'ویرایش دسته‌بندی' : 'افزودن دسته‌بندی'}
+                {editingCategory ? 'Edit Category' : 'Add Category'}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
                 className="text-gray-400 hover:text-gray-600"
               >
-                ×
+                x
               </button>
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  نام فارسی *
+                  Persian Name *
                 </label>
                 <input
                   type="text"
                   value={nameFa}
                   onChange={(e) => setNameFa(e.target.value)}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="دوربین مداربسته"
+                  placeholder="CCTV"
                   required
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  نام انگلیسی
+                  English Name
                 </label>
                 <input
                   type="text"
@@ -259,7 +259,7 @@ export default function CategoriesPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  اسلاگ
+                  Slug
                 </label>
                 <input
                   type="text"
@@ -278,14 +278,14 @@ export default function CategoriesPage() {
                   className="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-                  ذخیره
+                  Save
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
                   className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  انصراف
+                  Cancel
                 </button>
               </div>
             </form>

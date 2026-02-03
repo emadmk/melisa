@@ -9,10 +9,10 @@ import { Input, Textarea, Button } from '@/components/ui'
 import { trackInquirySubmit } from '@/lib/analytics'
 
 const inquirySchema = z.object({
-  name: z.string().min(2, 'نام و نام خانوادگی الزامی است'),
+  name: z.string().min(2, 'Full name is required'),
   company: z.string().optional(),
-  phone: z.string().min(10, 'شماره تماس معتبر وارد کنید'),
-  email: z.string().email('ایمیل معتبر وارد کنید'),
+  phone: z.string().min(10, 'Please enter a valid phone number'),
+  email: z.string().email('Please enter a valid email'),
   message: z.string().optional(),
 })
 
@@ -85,10 +85,10 @@ export default function InquiryForm({ productId, productTitle }: InquiryFormProp
           </svg>
         </div>
         <h3 className="text-lg font-bold text-green-800 mb-2">
-          درخواست شما با موفقیت ثبت شد
+          Your request has been submitted successfully
         </h3>
         <p className="text-green-600">
-          کارشناسان ما در اسرع وقت با شما تماس خواهند گرفت
+          Our experts will contact you as soon as possible
         </p>
       </div>
     )
@@ -98,23 +98,23 @@ export default function InquiryForm({ productId, productTitle }: InquiryFormProp
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
-          label="نام و نام خانوادگی"
-          placeholder="نام خود را وارد کنید"
+          label="Full Name"
+          placeholder="Enter your name"
           error={errors.name?.message}
           required
           {...register('name')}
         />
 
         <Input
-          label="شرکت / سازمان"
-          placeholder="نام شرکت (اختیاری)"
+          label="Company / Organization"
+          placeholder="Company name (optional)"
           {...register('company')}
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
-          label="شماره تماس"
+          label="Phone Number"
           placeholder="09123456789"
           type="tel"
           dir="ltr"
@@ -124,7 +124,7 @@ export default function InquiryForm({ productId, productTitle }: InquiryFormProp
         />
 
         <Input
-          label="ایمیل"
+          label="Email"
           placeholder="email@example.com"
           type="email"
           dir="ltr"
@@ -135,8 +135,8 @@ export default function InquiryForm({ productId, productTitle }: InquiryFormProp
       </div>
 
       <Textarea
-        label="توضیحات"
-        placeholder="توضیحات یا سوالات خود را بنویسید..."
+        label="Description"
+        placeholder="Write your description or questions..."
         rows={4}
         {...register('message')}
       />
@@ -149,12 +149,12 @@ export default function InquiryForm({ productId, productTitle }: InquiryFormProp
         {isSubmitting ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin ml-2" />
-            در حال ارسال...
+            Sending...
           </>
         ) : (
           <>
             <Send className="w-4 h-4 ml-2" />
-            ارسال درخواست
+            Submit Request
           </>
         )}
       </Button>

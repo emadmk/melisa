@@ -45,7 +45,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
             >
               <Image
                 src={getImageUrl(image)}
-                alt={`${title} - تصویر ${index + 1}`}
+                alt={`${title} - Image ${index + 1}`}
                 fill
                 className="object-contain p-2"
               />

@@ -24,7 +24,7 @@ export default function CategorySidebar({ categories, currentSlug }: CategorySid
     <div className="bg-white rounded-lg p-6 shadow-sm">
       <h3 className="font-bold text-lg text-dark mb-4 flex items-center gap-2">
         <ChevronLeft className="w-5 h-5 text-primary" />
-        دسته بندی محصولات
+        Product Categories
       </h3>
 
       <ul className="space-y-2">

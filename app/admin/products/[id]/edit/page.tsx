@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight, X, Plus, Loader2, Save } from 'lucide-react'
+import { ArrowLeft, X, Plus, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../../components/ImageUpload'
 import FileUpload from '../../../components/FileUpload'
 import SeoAnalyzer from '@/components/admin/SeoAnalyzer'
@@ -158,14 +158,14 @@ export default function EditProductPage() {
       const data = await res.json()
 
       if (data.success) {
-        alert('محصول با موفقیت ذخیره شد')
+        alert('Product saved successfully')
         router.push('/admin/products')
       } else {
-        alert(data.message || 'خطا در ذخیره محصول')
+        alert(data.message || 'Error saving product')
       }
     } catch (error) {
       console.error('Error saving product:', error)
-      alert('خطا در ذخیره محصول')
+      alert('Error saving product')
     } finally {
       setSaving(false)
     }
@@ -216,9 +216,9 @@ export default function EditProductPage() {
           href="/admin/products"
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <ArrowRight className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-dark">ویرایش محصول</h1>
+        <h1 className="text-2xl font-bold text-dark">Edit Product</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -227,13 +227,13 @@ export default function EditProductPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Basic Info */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">اطلاعات اصلی</h2>
+              <h2 className="font-bold text-dark mb-4">Basic Information</h2>
 
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      عنوان محصول (فارسی) *
+                      Product Title (Persian) *
                     </label>
                     <input
                       type="text"
@@ -246,7 +246,7 @@ export default function EditProductPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      عنوان محصول (انگلیسی)
+                      Product Title (English)
                     </label>
                     <input
                       type="text"
@@ -260,7 +260,7 @@ export default function EditProductPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    اسلاگ (URL)
+                    Slug (URL)
                   </label>
                   <input
                     type="text"
@@ -273,7 +273,7 @@ export default function EditProductPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات کوتاه
+                    Short Description
                   </label>
                   <textarea
                     rows={2}
@@ -285,7 +285,7 @@ export default function EditProductPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات کامل
+                    Full Description
                   </label>
                   <textarea
                     rows={6}
@@ -299,24 +299,24 @@ export default function EditProductPage() {
 
             {/* Main Image */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">تصویر اصلی</h2>
+              <h2 className="font-bold text-dark mb-4">Main Image</h2>
               <ImageUpload
                 value={formData.image || null}
                 onChange={(url) => setFormData({ ...formData, image: url || '' })}
                 folder="products"
-                label="تصویر اصلی محصول"
+                label="Main Product Image"
               />
             </div>
 
             {/* Gallery */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">گالری تصاویر</h2>
+              <h2 className="font-bold text-dark mb-4">Image Gallery</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 {formData.gallery.map((img, index) => (
                   <div key={index} className="relative">
                     <img
                       src={img}
-                      alt={`تصویر ${index + 1}`}
+                      alt={`Image ${index + 1}`}
                       className="w-full h-24 object-cover rounded-lg"
                     />
                     <button
@@ -333,21 +333,21 @@ export default function EditProductPage() {
                 value={null}
                 onChange={handleAddGalleryImage}
                 folder="products"
-                label="افزودن تصویر به گالری"
+                label="Add Image to Gallery"
               />
             </div>
 
             {/* Attributes */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="font-bold text-dark">مشخصات فنی</h2>
+                <h2 className="font-bold text-dark">Technical Specifications</h2>
                 <button
                   type="button"
                   onClick={addAttribute}
                   className="text-sm text-primary hover:underline flex items-center gap-1"
                 >
                   <Plus className="w-4 h-4" />
-                  افزودن مشخصه
+                  Add Attribute
                 </button>
               </div>
 
@@ -356,14 +356,14 @@ export default function EditProductPage() {
                   <div key={index} className="flex items-center gap-3">
                     <input
                       type="text"
-                      placeholder="نام مشخصه"
+                      placeholder="Attribute Name"
                       className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                       value={attr.key}
                       onChange={(e) => updateAttribute(index, 'key', e.target.value)}
                     />
                     <input
                       type="text"
-                      placeholder="مقدار"
+                      placeholder="Value"
                       className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                       value={attr.value}
                       onChange={(e) => updateAttribute(index, 'value', e.target.value)}
@@ -384,12 +384,12 @@ export default function EditProductPage() {
 
             {/* SEO */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">سئو</h2>
+              <h2 className="font-bold text-dark mb-4">SEO</h2>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    عنوان متا
-                    <span className={`mr-2 text-xs ${(formData.metaTitle?.length || 0) > 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                    Meta Title
+                    <span className={`ml-2 text-xs ${(formData.metaTitle?.length || 0) > 60 ? 'text-red-500' : 'text-gray-400'}`}>
                       ({formData.metaTitle?.length || 0}/60)
                     </span>
                   </label>
@@ -402,8 +402,8 @@ export default function EditProductPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    توضیحات متا
-                    <span className={`mr-2 text-xs ${(formData.metaDesc?.length || 0) > 160 ? 'text-red-500' : 'text-gray-400'}`}>
+                    Meta Description
+                    <span className={`ml-2 text-xs ${(formData.metaDesc?.length || 0) > 160 ? 'text-red-500' : 'text-gray-400'}`}>
                       ({formData.metaDesc?.length || 0}/160)
                     </span>
                   </label>
@@ -434,20 +434,20 @@ export default function EditProductPage() {
           <div className="space-y-6">
             {/* Publish */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">انتشار</h2>
+              <h2 className="font-bold text-dark mb-4">Publish</h2>
 
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    وضعیت
+                    Status
                   </label>
                   <select
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                   >
-                    <option value="DRAFT">پیش‌نویس</option>
-                    <option value="PUBLISHED">منتشر شده</option>
+                    <option value="DRAFT">Draft</option>
+                    <option value="PUBLISHED">Published</option>
                   </select>
                 </div>
 
@@ -460,7 +460,7 @@ export default function EditProductPage() {
                     className="w-4 h-4 text-primary rounded"
                   />
                   <label htmlFor="featured" className="text-sm text-gray-700">
-                    محصول ویژه
+                    Featured Product
                   </label>
                 </div>
 
@@ -474,21 +474,21 @@ export default function EditProductPage() {
                   ) : (
                     <Save className="w-5 h-5" />
                   )}
-                  ذخیره تغییرات
+                  Save Changes
                 </button>
               </div>
             </div>
 
             {/* Category */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">دسته‌بندی</h2>
+              <h2 className="font-bold text-dark mb-4">Category</h2>
 
               <select
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 value={formData.categoryId || ''}
                 onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
               >
-                <option value="">انتخاب دسته‌بندی</option>
+                <option value="">Select Category</option>
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.nameFa}
@@ -499,14 +499,14 @@ export default function EditProductPage() {
 
             {/* Brand */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">برند</h2>
+              <h2 className="font-bold text-dark mb-4">Brand</h2>
 
               <select
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 value={formData.brandId || ''}
                 onChange={(e) => setFormData({ ...formData, brandId: e.target.value })}
               >
-                <option value="">انتخاب برند</option>
+                <option value="">Select Brand</option>
                 {brands.map((brand) => (
                   <option key={brand.id} value={brand.id}>
                     {brand.name}
@@ -517,12 +517,12 @@ export default function EditProductPage() {
 
             {/* Catalog */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">کاتالوگ</h2>
+              <h2 className="font-bold text-dark mb-4">Catalog</h2>
               <FileUpload
                 value={formData.catalogFile || null}
                 onChange={(url) => setFormData({ ...formData, catalogFile: url || '' })}
                 folder="products/catalogs"
-                label="فایل کاتالوگ"
+                label="Catalog File"
                 accept=".pdf"
               />
             </div>

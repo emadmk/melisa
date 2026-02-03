@@ -19,8 +19,8 @@ interface Post {
 }
 
 export const metadata: Metadata = {
-  title: 'وبلاگ',
-  description: 'مقالات و اخبار کرمان هاتف ارتباط در زمینه تجهیزات مخابراتی و امنیتی',
+  title: 'Blog',
+  description: 'Melisa articles and news in the field of telecommunications and security equipment',
 }
 
 async function getPosts(page: number = 1, limit: number = 9) {
@@ -48,15 +48,15 @@ async function getPosts(page: number = 1, limit: number = 9) {
 
 function formatDate(date: Date | null): string {
   if (!date) return ''
-  return new Intl.DateTimeFormat('fa-IR').format(date)
+  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(date)
 }
 
 export default async function BlogPage() {
   const { posts, totalPages } = await getPosts()
 
   const breadcrumbItems = [
-    { name: 'خانه', url: '/' },
-    { name: 'وبلاگ', url: '/blog' },
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
   ]
 
   return (
@@ -69,15 +69,15 @@ export default async function BlogPage() {
 
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">وبلاگ</h1>
-          <p className="text-gray-500 text-center mt-3">آخرین مقالات و اخبار</p>
+          <h1 className="text-3xl font-bold text-dark text-center">Blog</h1>
+          <p className="text-gray-500 text-center mt-3">Latest articles and news</p>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-12">
         {posts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">در حال حاضر مقاله‌ای ثبت نشده است</p>
+            <p className="text-gray-500">No articles are currently available</p>
           </div>
         ) : (
           <>
@@ -115,7 +115,7 @@ export default async function BlogPage() {
                       <div className="flex items-center gap-4">
                         <span className="flex items-center gap-1">
                           <User className="w-4 h-4" />
-                          {post.author || 'تیم فنی'}
+                          {post.author || 'Technical Team'}
                         </span>
                         <span className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
@@ -125,7 +125,7 @@ export default async function BlogPage() {
                     </div>
 
                     <span className="inline-flex items-center gap-1 text-primary text-sm font-medium mt-4 group-hover:gap-2 transition-all">
-                      ادامه مطلب
+                      Read More
                       <ArrowLeft className="w-4 h-4" />
                     </span>
                   </div>

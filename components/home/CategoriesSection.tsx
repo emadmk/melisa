@@ -9,43 +9,43 @@ import { ArrowLeft } from 'lucide-react'
 const staticCategories = [
   {
     id: '1',
-    nameFa: 'دوربین مداربسته',
+    nameFa: 'CCTV Cameras',
     nameEn: 'CCTV',
     slug: 'cctv',
     image: '/images/cctv.webp',
-    description: 'دوربین‌های امنیتی و نظارتی با کیفیت بالا',
+    description: 'High quality security and surveillance cameras',
   },
   {
     id: '2',
-    nameFa: 'تجهیزات بی‌سیم',
+    nameFa: 'Wireless Equipment',
     nameEn: 'Wireless',
     slug: 'wireless',
     image: '/images/Microwave.webp',
-    description: 'تجهیزات مایکروویو و ارتباطات بی‌سیم',
+    description: 'Microwave and wireless communication equipment',
   },
   {
     id: '3',
-    nameFa: 'سیستم پیجینگ',
+    nameFa: 'Paging System',
     nameEn: 'Paging',
     slug: 'paging',
     image: '/images/paging.webp',
-    description: 'سیستم‌های اعلان و پیجینگ صنعتی',
+    description: 'Industrial announcement and paging systems',
   },
   {
     id: '4',
-    nameFa: 'بی‌سیم و رادیو',
+    nameFa: 'Wireless and Radio',
     nameEn: 'Radio',
     slug: 'radio',
     image: '/images/radio.webp',
-    description: 'تجهیزات رادیویی و بی‌سیم حرفه‌ای',
+    description: 'Professional radio and wireless equipment',
   },
   {
     id: '5',
-    nameFa: 'مخابرات',
+    nameFa: 'Telecommunications',
     nameEn: 'Telecommunication',
     slug: 'access-control',
     image: '/images/telecomunication.webp',
-    description: 'تجهیزات مخابراتی و کنترل دسترسی',
+    description: 'Telecommunications and access control equipment',
   },
 ]
 
@@ -80,7 +80,7 @@ export default function CategoriesSection() {
             viewport={{ once: true }}
             className="section-title"
           >
-            دسته‌بندی محصولات
+            Product Categories
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -89,7 +89,7 @@ export default function CategoriesSection() {
             transition={{ delay: 0.1 }}
             className="section-subtitle mx-auto"
           >
-            تجهیزات امنیتی و مخابراتی در دسته‌بندی‌های مختلف
+            Security and telecommunications equipment in various categories
           </motion.p>
         </div>
 
@@ -147,7 +147,7 @@ export default function CategoriesSection() {
             href="/products"
             className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-medium transition-colors"
           >
-            مشاهده همه محصولات
+            View All Products
             <ArrowLeft className="w-4 h-4" />
           </Link>
         </div>

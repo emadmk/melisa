@@ -58,33 +58,33 @@ export default function SeoHelper({
     if (!metaTitle) {
       items.push({
         id: 'meta-title-empty',
-        title: 'عنوان متا',
+        title: 'Meta Title',
         status: 'error',
-        message: 'عنوان متا وارد نشده است',
-        suggestion: 'عنوان متا را وارد کنید. طول ایده‌آل: ۳۰-۶۰ کاراکتر',
+        message: 'Meta title is not entered',
+        suggestion: 'Enter a meta title. Ideal length: 30-60 characters',
       })
     } else if (metaTitle.length < 30) {
       items.push({
         id: 'meta-title-short',
-        title: 'عنوان متا',
+        title: 'Meta Title',
         status: 'warning',
-        message: `عنوان متا کوتاه است (${metaTitle.length} کاراکتر)`,
-        suggestion: 'عنوان متا حداقل ۳۰ کاراکتر باشد',
+        message: `Meta title is too short (${metaTitle.length} characters)`,
+        suggestion: 'Meta title should be at least 30 characters',
       })
     } else if (metaTitle.length > 60) {
       items.push({
         id: 'meta-title-long',
-        title: 'عنوان متا',
+        title: 'Meta Title',
         status: 'warning',
-        message: `عنوان متا طولانی است (${metaTitle.length} کاراکتر)`,
-        suggestion: 'عنوان متا حداکثر ۶۰ کاراکتر باشد',
+        message: `Meta title is too long (${metaTitle.length} characters)`,
+        suggestion: 'Meta title should be maximum 60 characters',
       })
     } else {
       items.push({
         id: 'meta-title-ok',
-        title: 'عنوان متا',
+        title: 'Meta Title',
         status: 'good',
-        message: `طول عنوان متا مناسب است (${metaTitle.length} کاراکتر)`,
+        message: `Meta title length is appropriate (${metaTitle.length} characters)`,
       })
     }
 
@@ -92,33 +92,33 @@ export default function SeoHelper({
     if (!metaDescription) {
       items.push({
         id: 'meta-desc-empty',
-        title: 'توضیحات متا',
+        title: 'Meta Description',
         status: 'error',
-        message: 'توضیحات متا وارد نشده است',
-        suggestion: 'توضیحات متا را وارد کنید. طول ایده‌آل: ۱۲۰-۱۶۰ کاراکتر',
+        message: 'Meta description is not entered',
+        suggestion: 'Enter a meta description. Ideal length: 120-160 characters',
       })
     } else if (metaDescription.length < 120) {
       items.push({
         id: 'meta-desc-short',
-        title: 'توضیحات متا',
+        title: 'Meta Description',
         status: 'warning',
-        message: `توضیحات متا کوتاه است (${metaDescription.length} کاراکتر)`,
-        suggestion: 'توضیحات متا حداقل ۱۲۰ کاراکتر باشد',
+        message: `Meta description is too short (${metaDescription.length} characters)`,
+        suggestion: 'Meta description should be at least 120 characters',
       })
     } else if (metaDescription.length > 160) {
       items.push({
         id: 'meta-desc-long',
-        title: 'توضیحات متا',
+        title: 'Meta Description',
         status: 'warning',
-        message: `توضیحات متا طولانی است (${metaDescription.length} کاراکتر)`,
-        suggestion: 'توضیحات متا حداکثر ۱۶۰ کاراکتر باشد',
+        message: `Meta description is too long (${metaDescription.length} characters)`,
+        suggestion: 'Meta description should be maximum 160 characters',
       })
     } else {
       items.push({
         id: 'meta-desc-ok',
-        title: 'توضیحات متا',
+        title: 'Meta Description',
         status: 'good',
-        message: `طول توضیحات متا مناسب است (${metaDescription.length} کاراکتر)`,
+        message: `Meta description length is appropriate (${metaDescription.length} characters)`,
       })
     }
 
@@ -126,23 +126,23 @@ export default function SeoHelper({
     if (!slug) {
       items.push({
         id: 'slug-empty',
-        title: 'آدرس صفحه',
+        title: 'Page URL',
         status: 'error',
-        message: 'آدرس صفحه (slug) وارد نشده است',
+        message: 'Page URL (slug) is not entered',
       })
     } else if (/[^\w-]/.test(slug)) {
       items.push({
         id: 'slug-invalid',
-        title: 'آدرس صفحه',
+        title: 'Page URL',
         status: 'warning',
-        message: 'آدرس صفحه فقط شامل حروف انگلیسی، اعداد و خط تیره باشد',
+        message: 'Page URL should only contain English letters, numbers and hyphens',
       })
     } else {
       items.push({
         id: 'slug-ok',
-        title: 'آدرس صفحه',
+        title: 'Page URL',
         status: 'good',
-        message: 'آدرس صفحه مناسب است',
+        message: 'Page URL is appropriate',
       })
     }
 
@@ -150,27 +150,27 @@ export default function SeoHelper({
     if (!focusKeyword) {
       items.push({
         id: 'keyword-empty',
-        title: 'کلمه کلیدی',
+        title: 'Keyword',
         status: 'info',
-        message: 'کلمه کلیدی اصلی مشخص نشده است',
-        suggestion: 'یک کلمه کلیدی اصلی برای محتوا تعیین کنید',
+        message: 'Focus keyword is not specified',
+        suggestion: 'Set a focus keyword for your content',
       })
     } else {
       // Check keyword in title
       if (metaTitle.includes(focusKeyword)) {
         items.push({
           id: 'keyword-in-title',
-          title: 'کلمه کلیدی در عنوان',
+          title: 'Keyword in Title',
           status: 'good',
-          message: 'کلمه کلیدی در عنوان متا موجود است',
+          message: 'Keyword is present in meta title',
         })
       } else {
         items.push({
           id: 'keyword-not-in-title',
-          title: 'کلمه کلیدی در عنوان',
+          title: 'Keyword in Title',
           status: 'warning',
-          message: 'کلمه کلیدی در عنوان متا موجود نیست',
-          suggestion: 'کلمه کلیدی را در ابتدای عنوان قرار دهید',
+          message: 'Keyword is not present in meta title',
+          suggestion: 'Place the keyword at the beginning of the title',
         })
       }
 
@@ -178,16 +178,16 @@ export default function SeoHelper({
       if (metaDescription.includes(focusKeyword)) {
         items.push({
           id: 'keyword-in-desc',
-          title: 'کلمه کلیدی در توضیحات',
+          title: 'Keyword in Description',
           status: 'good',
-          message: 'کلمه کلیدی در توضیحات متا موجود است',
+          message: 'Keyword is present in meta description',
         })
       } else {
         items.push({
           id: 'keyword-not-in-desc',
-          title: 'کلمه کلیدی در توضیحات',
+          title: 'Keyword in Description',
           status: 'warning',
-          message: 'کلمه کلیدی در توضیحات متا موجود نیست',
+          message: 'Keyword is not present in meta description',
         })
       }
 
@@ -200,25 +200,25 @@ export default function SeoHelper({
         if (density < 0.5) {
           items.push({
             id: 'keyword-density-low',
-            title: 'تراکم کلمه کلیدی',
+            title: 'Keyword Density',
             status: 'warning',
-            message: `تراکم کلمه کلیدی کم است (${density.toFixed(1)}%)`,
-            suggestion: 'کلمه کلیدی را بیشتر در متن استفاده کنید',
+            message: `Keyword density is low (${density.toFixed(1)}%)`,
+            suggestion: 'Use the keyword more in the text',
           })
         } else if (density > 2.5) {
           items.push({
             id: 'keyword-density-high',
-            title: 'تراکم کلمه کلیدی',
+            title: 'Keyword Density',
             status: 'warning',
-            message: `تراکم کلمه کلیدی زیاد است (${density.toFixed(1)}%)`,
-            suggestion: 'از تکرار بیش از حد کلمه کلیدی خودداری کنید',
+            message: `Keyword density is high (${density.toFixed(1)}%)`,
+            suggestion: 'Avoid excessive keyword repetition',
           })
         } else {
           items.push({
             id: 'keyword-density-ok',
-            title: 'تراکم کلمه کلیدی',
+            title: 'Keyword Density',
             status: 'good',
-            message: `تراکم کلمه کلیدی مناسب است (${density.toFixed(1)}%)`,
+            message: `Keyword density is appropriate (${density.toFixed(1)}%)`,
           })
         }
       }
@@ -230,17 +230,17 @@ export default function SeoHelper({
       if (wordCount < 300) {
         items.push({
           id: 'content-short',
-          title: 'طول محتوا',
+          title: 'Content Length',
           status: 'warning',
-          message: `محتوا کوتاه است (${wordCount} کلمه)`,
-          suggestion: 'محتوای بیشتری اضافه کنید. حداقل ۳۰۰ کلمه توصیه می‌شود',
+          message: `Content is short (${wordCount} words)`,
+          suggestion: 'Add more content. At least 300 words is recommended',
         })
       } else {
         items.push({
           id: 'content-ok',
-          title: 'طول محتوا',
+          title: 'Content Length',
           status: 'good',
-          message: `طول محتوا مناسب است (${wordCount} کلمه)`,
+          message: `Content length is appropriate (${wordCount} words)`,
         })
       }
     }
@@ -251,17 +251,17 @@ export default function SeoHelper({
       if (imagesWithoutAlt.length > 0) {
         items.push({
           id: 'images-no-alt',
-          title: 'متن جایگزین تصاویر',
+          title: 'Image Alt Text',
           status: 'warning',
-          message: `${imagesWithoutAlt.length} تصویر بدون متن جایگزین (alt)`,
-          suggestion: 'برای همه تصاویر متن جایگزین تعریف کنید',
+          message: `${imagesWithoutAlt.length} image(s) without alt text`,
+          suggestion: 'Define alt text for all images',
         })
       } else {
         items.push({
           id: 'images-alt-ok',
-          title: 'متن جایگزین تصاویر',
+          title: 'Image Alt Text',
           status: 'good',
-          message: 'همه تصاویر دارای متن جایگزین هستند',
+          message: 'All images have alt text',
         })
       }
     }
@@ -305,7 +305,7 @@ export default function SeoHelper({
       >
         <div className="flex items-center gap-3">
           <Search className="w-5 h-5 text-primary" />
-          <span className="font-bold text-dark">راهنمای سئو</span>
+          <span className="font-bold text-dark">SEO Guide</span>
         </div>
         <div className="flex items-center gap-3">
           <span className={`text-2xl font-bold ${getScoreColor(analysis.score)}`}>
@@ -349,7 +349,7 @@ export default function SeoHelper({
                 <p className="font-medium text-dark text-sm">{item.title}</p>
                 <p className="text-sm text-gray-600">{item.message}</p>
                 {item.suggestion && (
-                  <p className="text-xs text-gray-400 mt-1">💡 {item.suggestion}</p>
+                  <p className="text-xs text-gray-400 mt-1">Tip: {item.suggestion}</p>
                 )}
               </div>
             </div>
@@ -357,27 +357,27 @@ export default function SeoHelper({
 
           {/* Tips */}
           <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-            <h4 className="font-bold text-blue-800 mb-2 text-sm">نکات سئو</h4>
+            <h4 className="font-bold text-blue-800 mb-2 text-sm">SEO Tips</h4>
             <ul className="text-xs text-blue-700 space-y-1">
               <li className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
-                عنوان متا بین ۳۰ تا ۶۰ کاراکتر باشد
+                Meta title should be between 30 and 60 characters
               </li>
               <li className="flex items-center gap-2">
                 <Globe className="w-4 h-4" />
-                توضیحات متا بین ۱۲۰ تا ۱۶۰ کاراکتر باشد
+                Meta description should be between 120 and 160 characters
               </li>
               <li className="flex items-center gap-2">
                 <Hash className="w-4 h-4" />
-                کلمه کلیدی در ابتدای عنوان قرار گیرد
+                Place the keyword at the beginning of the title
               </li>
               <li className="flex items-center gap-2">
                 <ImageIcon className="w-4 h-4" />
-                همه تصاویر دارای alt باشند
+                All images should have alt text
               </li>
               <li className="flex items-center gap-2">
                 <LinkIcon className="w-4 h-4" />
-                از لینک‌های داخلی استفاده کنید
+                Use internal links
               </li>
             </ul>
           </div>

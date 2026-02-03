@@ -20,7 +20,7 @@ export default function FaqAccordion({ faqs }: FaqAccordionProps) {
   if (faqs.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">سوالی ثبت نشده است</p>
+        <p className="text-gray-500">No questions have been submitted</p>
       </div>
     )
   }

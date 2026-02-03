@@ -37,7 +37,7 @@ export default function BrandsMarquee() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-4 mb-6">
           <div className="h-px bg-gray-200 flex-1" />
-          <span className="text-gray-500 text-sm font-medium">نمایندگی رسمی برندها</span>
+          <span className="text-gray-500 text-sm font-medium">Official Brand Representatives</span>
           <div className="h-px bg-gray-200 flex-1" />
         </div>
       </div>
