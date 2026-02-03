@@ -1,0 +1,6 @@
+export { default as HeroSection } from './HeroSection'
+export { default as BrandsSection } from './BrandsSection'
+export { default as ServicesSection } from './ServicesSection'
+export { default as WhoWeAreSection } from './WhoWeAreSection'
+export { default as CustomersSection } from './CustomersSection'
+export { default as LatestPosts } from './LatestPosts'
