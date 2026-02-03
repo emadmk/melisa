@@ -20,7 +20,7 @@ const config = {
     user: process.env.WP_DB_USER || 'wpuser',
     password: process.env.WP_DB_PASSWORD || 'wppass123',
     database: process.env.WP_DB_NAME || 'wordpress_temp',
-    tablePrefix: process.env.WP_TABLE_PREFIX || 'wp_',
+    tablePrefix: process.env.WP_TABLE_PREFIX || 'ml_',
   },
   uploadsSource: '/var/www/melisa/wordpress/uploads',
   uploadsTarget: '/var/www/melisa/uploads',
