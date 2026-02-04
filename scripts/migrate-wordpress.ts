@@ -1,11 +1,11 @@
 /**
  * WordPress to Next.js Migration Script
- * کرمان هاتف ارتباط
+ * Melisa - Dubai, UAE
  *
  * Usage:
  * 1. Import WordPress SQL to MySQL: mysql wordpress_temp < database.sql
  * 2. Set environment variables
- * 3. Run: npx ts-node scripts/migrate-wordpress.ts
+ * 3. Run: npx tsx scripts/migrate-wordpress.ts
  */
 
 import mysql from 'mysql2/promise'
@@ -62,16 +62,17 @@ async function getFeaturedImage(
   return null
 }
 
-// Migrate Categories
+// Migrate Categories (children of term_id=57 "Product" in products-category taxonomy)
 async function migrateCategories(wpConnection: mysql.Connection) {
   console.log('📁 Migrating categories...')
   const prefix = config.wordpress.tablePrefix
 
+  // Categories are children of term_id=57 (Product) in products-category taxonomy
   const [rows] = await wpConnection.execute<mysql.RowDataPacket[]>(
     `SELECT t.term_id, t.name, t.slug, tt.description, tt.parent
      FROM ${prefix}terms t
      INNER JOIN ${prefix}term_taxonomy tt ON t.term_id = tt.term_id
-     WHERE tt.taxonomy = 'products-category'`
+     WHERE tt.taxonomy = 'products-category' AND tt.parent = 57`
   )
 
   let count = 0
@@ -102,16 +103,17 @@ async function migrateCategories(wpConnection: mysql.Connection) {
   return count
 }
 
-// Migrate Brands
+// Migrate Brands (children of term_id=58 "brand" in products-category taxonomy)
 async function migrateBrands(wpConnection: mysql.Connection) {
   console.log('🏷️ Migrating brands...')
   const prefix = config.wordpress.tablePrefix
 
+  // Brands are children of term_id=58 (brand) in products-category taxonomy
   const [rows] = await wpConnection.execute<mysql.RowDataPacket[]>(
     `SELECT t.term_id, t.name, t.slug, tt.description
      FROM ${prefix}terms t
      INNER JOIN ${prefix}term_taxonomy tt ON t.term_id = tt.term_id
-     WHERE tt.taxonomy = 'brands'`
+     WHERE tt.taxonomy = 'products-category' AND tt.parent = 58`
   )
 
   let count = 0
@@ -157,12 +159,12 @@ async function migrateProducts(wpConnection: mysql.Connection) {
     try {
       const image = await getFeaturedImage(wpConnection, row.ID)
 
-      // Get product category
+      // Get product category (children of term_id=57 in products-category)
       const [catRows] = await wpConnection.execute<mysql.RowDataPacket[]>(
         `SELECT t.slug FROM ${prefix}terms t
          INNER JOIN ${prefix}term_taxonomy tt ON t.term_id = tt.term_id
          INNER JOIN ${prefix}term_relationships tr ON tt.term_taxonomy_id = tr.term_taxonomy_id
-         WHERE tr.object_id = ? AND tt.taxonomy = 'product-category'
+         WHERE tr.object_id = ? AND tt.taxonomy = 'products-category' AND tt.parent = 57
          LIMIT 1`,
         [row.ID]
       )
@@ -173,6 +175,24 @@ async function migrateProducts(wpConnection: mysql.Connection) {
           where: { slug: catRows[0].slug },
         })
         categoryId = category?.id
+      }
+
+      // Get product brand (children of term_id=58 in products-category)
+      const [brandRows] = await wpConnection.execute<mysql.RowDataPacket[]>(
+        `SELECT t.slug FROM ${prefix}terms t
+         INNER JOIN ${prefix}term_taxonomy tt ON t.term_id = tt.term_id
+         INNER JOIN ${prefix}term_relationships tr ON tt.term_taxonomy_id = tr.term_taxonomy_id
+         WHERE tr.object_id = ? AND tt.taxonomy = 'products-category' AND tt.parent = 58
+         LIMIT 1`,
+        [row.ID]
+      )
+
+      let brandId: string | undefined
+      if (brandRows.length > 0) {
+        const brand = await prisma.brand.findUnique({
+          where: { slug: brandRows[0].slug },
+        })
+        brandId = brand?.id
       }
 
       // Get product attributes
@@ -202,6 +222,7 @@ async function migrateProducts(wpConnection: mysql.Connection) {
           shortDesc: cleanHtml(row.post_excerpt),
           image: image || null,
           categoryId,
+          brandId,
           status: 'PUBLISHED',
           oldUrl: row.guid,
         },
@@ -213,6 +234,7 @@ async function migrateProducts(wpConnection: mysql.Connection) {
           shortDesc: cleanHtml(row.post_excerpt),
           image: image || null,
           categoryId,
+          brandId,
           status: 'PUBLISHED',
           oldUrl: row.guid,
           attributes: {
@@ -252,7 +274,7 @@ async function migratePosts(wpConnection: mysql.Connection) {
         `SELECT display_name FROM ${prefix}users WHERE ID = ?`,
         [row.post_author]
       )
-      const authorName = authorRows[0]?.display_name || 'تیم فنی هاتف ارتباط'
+      const authorName = authorRows[0]?.display_name || 'Melisa Team'
 
       const slug = row.post_name || `post-${row.ID}`
 
@@ -416,7 +438,7 @@ export const redirects = ${JSON.stringify(redirects, null, 2)}
 
 // Main migration function
 async function main() {
-  console.log('🚀 WordPress Migration - کرمان هاتف ارتباط')
+  console.log('🚀 WordPress Migration - Melisa')
   console.log('==========================================\n')
 
   let wpConnection: mysql.Connection | null = null
@@ -455,7 +477,7 @@ async function main() {
     console.log('')
     console.log('Next steps:')
     console.log('1. npm run build')
-    console.log('2. pm2 restart hatef-website')
+    console.log('2. pm2 restart melisa')
 
   } catch (error) {
     console.error('❌ Migration failed:', error)
