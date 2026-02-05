@@ -21,7 +21,7 @@ import { LanguageSwitcher } from '@/components/common'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 
 // Product categories based on Melisa structure
-const productCategories = [
+const productCategoriesEn = [
   {
     name: 'PAGA',
     slug: 'paga',
@@ -101,6 +101,86 @@ const productCategories = [
   },
 ]
 
+const productCategoriesAr = [
+  {
+    name: 'أنظمة النداء العام',
+    slug: 'paga',
+    children: [
+      {
+        name: 'وحدات التحكم والنظام',
+        slug: 'controllers-system-modules',
+        children: [
+          { name: 'DS-6', slug: 'ds-6-controllers' },
+          { name: 'DS-22', slug: 'ds-22-controllers' },
+        ]
+      },
+      {
+        name: 'محطات الاتصال',
+        slug: 'call-stations',
+        children: [
+          { name: 'DS-6', slug: 'ds-6-call-stations' },
+          { name: 'DS-22', slug: 'ds-22-call-stations' },
+        ]
+      },
+      { name: 'مكبرات الصوت والصفارات', slug: 'speakers-siren' },
+      { name: 'البرمجيات', slug: 'paga-software' },
+    ],
+  },
+  {
+    name: 'الراديو',
+    slug: 'radio',
+    children: [
+      {
+        name: 'DMR',
+        slug: 'dmr',
+        children: [
+          { name: 'MOTOTRBO', slug: 'mototrbo' }
+        ]
+      },
+      { name: 'TETRA', slug: 'tetra' },
+      {
+        name: 'راديو المشروع 25',
+        slug: 'project-25-radios',
+        children: [
+          { name: 'الراديو المتنقل', slug: 'mobile-radios' },
+          { name: 'الراديو المحمول', slug: 'portable-radios' },
+          { name: 'منتجات متوقفة', slug: 'discontinued' },
+        ]
+      },
+    ],
+  },
+  {
+    name: 'الميكروويف',
+    slug: 'microwave',
+    children: [
+      { name: 'المنتجات المادية', slug: 'hardware-products' },
+      { name: 'المنتجات البرمجية', slug: 'software-products' },
+    ],
+  },
+  {
+    name: 'اللاسلكي',
+    slug: 'wireless',
+    children: [
+      { name: 'نقطة إلى نقطة', slug: 'point-to-point' },
+      { name: 'نقطة إلى متعدد', slug: 'point-to-multipoint' },
+      { name: 'شبكة محلية لاسلكية', slug: 'wlan' },
+      { name: 'شبكة MESH', slug: 'mesh' },
+    ],
+  },
+  {
+    name: 'كاميرات المراقبة',
+    slug: 'cctv',
+    children: [
+      { name: 'التحكم في الوصول', slug: 'access-control' },
+      { name: 'كاميرات الأمن', slug: 'security-cameras' },
+    ],
+  },
+  {
+    name: 'نظام مراقبة الرادار',
+    slug: 'radar-surveillance-system',
+  },
+]
+
 const brands = [
   { name: 'Avigilon', slug: 'avigilon' },
   { name: 'Cambium Networks', slug: 'cambium-networks' },
@@ -145,6 +225,7 @@ export default function Header() {
   const localeContext = useLocale()
   const isArabic = localeContext?.locale === 'ar' || pathname.startsWith('/ar')
   const navigation = isArabic ? navigationAr : navigationEn
+  const productCategories = isArabic ? productCategoriesAr : productCategoriesEn
   const basePath = isArabic ? '/ar' : ''
 
   const handleMouseEnter = (itemName: string) => {

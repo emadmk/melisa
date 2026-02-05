@@ -3,9 +3,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ArrowLeft } from 'lucide-react'
+import { useLocale } from '@/lib/i18n/LocaleContext'
 
-const services = [
+const servicesEn = [
   {
     id: 1,
     title: 'Equipment supply',
@@ -36,6 +37,50 @@ const services = [
   },
 ]
 
+const servicesAr = [
+  {
+    id: 1,
+    title: 'توريد المعدات',
+    slug: 'equipment-supply',
+    description: 'تقدم الشركة مجموعة واسعة من المعدات عالية الجودة حسب احتياجات عملائها. وتشمل معدات الاتصالات والراديو والأمن.',
+    image: '/images/Equipment-supply-img.webp',
+  },
+  {
+    id: 2,
+    title: 'الهندسة',
+    slug: 'engineering',
+    description: 'تقدم الشركة مجموعة من الخدمات الهندسية، بما في ذلك التصميم والتطوير وتنفيذ الحلول المخصصة لتلبية الاحتياجات المحددة لعملائها.',
+    image: '/images/Engineering-image.webp',
+  },
+  {
+    id: 3,
+    title: 'التشغيل',
+    slug: 'commissioning',
+    description: 'تستخدم الشركة معدات التشغيل للتأكد من أنها تعمل بشكل صحيح ومتكاملة تماماً مع نظام العميل.',
+    image: '/images/Commissioning-image.webp',
+  },
+  {
+    id: 4,
+    title: 'التركيب',
+    slug: 'installation',
+    description: 'تقوم الشركة بتركيب معدات الاتصالات والراديو في موقع العميل، مع ضمان إعدادها بشكل صحيح.',
+    image: '/images/Installation-image.webp',
+  },
+]
+
+const translations = {
+  en: {
+    title: 'our services',
+    description: 'Our company offers a wide range of products in the field of telecommunications, radio, CCTV, and paging. We strive to provide high-quality and secure products that meet the needs of our customers.',
+    seeAll: 'see all service',
+  },
+  ar: {
+    title: 'خدماتنا',
+    description: 'تقدم شركتنا مجموعة واسعة من المنتجات في مجال الاتصالات والراديو وكاميرات المراقبة والنداء. نحن نسعى لتقديم منتجات عالية الجودة وآمنة تلبي احتياجات عملائنا.',
+    seeAll: 'عرض جميع الخدمات',
+  },
+}
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -56,6 +101,12 @@ const itemVariants = {
 }
 
 export default function ServicesSection() {
+  const localeContext = useLocale()
+  const isArabic = localeContext?.locale === 'ar'
+  const services = isArabic ? servicesAr : servicesEn
+  const t = translations[isArabic ? 'ar' : 'en']
+  const basePath = isArabic ? '/ar' : ''
+
   return (
     <section className="py-16 lg:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -68,10 +119,10 @@ export default function ServicesSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-4">
-            our services
+            {t.title}
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Our company offers a wide range of products in the field of telecommunications, radio, CCTV, and paging. We strive to provide high-quality and secure products that meet the needs of our customers.
+            {t.description}
           </p>
         </motion.div>
 
@@ -118,11 +169,11 @@ export default function ServicesSection() {
           className="text-center mt-10"
         >
           <Link
-            href="/services"
+            href={`${basePath}/services`}
             className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-dark transition-all hover:gap-3"
           >
-            see all service
-            <ArrowRight className="w-4 h-4" />
+            {t.seeAll}
+            {isArabic ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
           </Link>
         </motion.div>
       </div>

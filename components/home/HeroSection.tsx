@@ -4,8 +4,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useCallback } from 'react'
+import { useLocale } from '@/lib/i18n/LocaleContext'
 
-const slides = [
+const slidesEn = [
   {
     id: 1,
     image: '/images/slider1-1024x486.webp',
@@ -24,13 +25,49 @@ const slides = [
   },
 ]
 
+const slidesAr = [
+  {
+    id: 1,
+    image: '/images/slider1-1024x486.webp',
+    title: 'اتصال مستمر،',
+    subtitle: 'مستقبل بلا حدود.',
+    description: 'شركة اتصالات متخصصة في مشاريع الاتصالات والراديو وكاميرات المراقبة وأنظمة النداء. بتقنية متقدمة، تقدم الشركة خدمات اتصالات وتبادل معلومات عالية الجودة وآمنة لعملائها.',
+    showContent: true,
+  },
+  {
+    id: 2,
+    image: '/images/ezgif-3c0bebb5e6025f.gif',
+    title: '',
+    subtitle: '',
+    description: '',
+    showContent: false,
+  },
+]
+
+const translations = {
+  en: {
+    products: 'Products',
+    services: 'Services',
+  },
+  ar: {
+    products: 'المنتجات',
+    services: 'خدماتنا',
+  },
+}
+
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
+  const localeContext = useLocale()
+  const isArabic = localeContext?.locale === 'ar'
+  const slides = isArabic ? slidesAr : slidesEn
+  const t = translations[isArabic ? 'ar' : 'en']
+  const basePath = isArabic ? '/ar' : ''
+
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length)
-  }, [])
+  }, [slides.length])
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
@@ -116,16 +153,16 @@ export default function HeroSection() {
                   transition={{ delay: 0.6 }}
                 >
                   <Link
-                    href="/products"
+                    href={`${basePath}/products`}
                     className="bg-white text-primary px-8 py-3 rounded font-medium hover:bg-gray-100 transition-all hover:scale-105"
                   >
-                    Products
+                    {t.products}
                   </Link>
                   <Link
-                    href="/services"
+                    href={`${basePath}/services`}
                     className="border-2 border-white text-white px-8 py-3 rounded font-medium hover:bg-white hover:text-primary transition-all hover:scale-105"
                   >
-                    Services
+                    {t.services}
                   </Link>
                 </motion.div>
               </motion.div>
