@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils'
 import { siteConfig } from '@/lib/seo'
 import { trackPhoneClick } from '@/lib/analytics'
 
-// Product categories based on Melisa screenshot
+// Product categories based on Melisa structure
 const productCategories = [
   {
     name: 'PAGA',
@@ -29,25 +29,53 @@ const productCategories = [
     name: 'Radio',
     slug: 'radio',
     children: [
-      { name: 'DMR', slug: 'dmr', children: [{ name: 'MOTOTRBO', slug: 'mototrbo' }] },
+      {
+        name: 'DMR',
+        slug: 'dmr',
+        children: [
+          { name: 'MOTOTRBO', slug: 'mototrbo' }
+        ]
+      },
       { name: 'TETRA', slug: 'tetra' },
-      { name: 'Project 25 Radios', slug: 'project-25-radios' },
+      {
+        name: 'Project 25 Radios',
+        slug: 'project-25-radios',
+        children: [
+          { name: 'Mobile Radios', slug: 'mobile-radios' },
+          { name: 'Portable Radios', slug: 'portable-radios' },
+          { name: 'Discontinued', slug: 'discontinued' },
+        ]
+      },
     ],
   },
   {
     name: 'Microwave',
     slug: 'microwave',
+    children: [
+      { name: 'Hardware Products', slug: 'hardware-products' },
+      { name: 'Software Products', slug: 'software-products' },
+    ],
   },
   {
     name: 'Wireless',
     slug: 'wireless',
+    children: [
+      { name: 'Point to Point', slug: 'point-to-point' },
+      { name: 'Point to Multipoint', slug: 'point-to-multipoint' },
+      { name: 'WLAN', slug: 'wlan' },
+      { name: 'MESH', slug: 'mesh' },
+    ],
   },
   {
     name: 'CCTV',
     slug: 'cctv',
+    children: [
+      { name: 'Access Control', slug: 'access-control' },
+      { name: 'Security Cameras', slug: 'security-cameras' },
+    ],
   },
   {
-    name: 'Radar surveillance system',
+    name: 'Radar Surveillance System',
     slug: 'radar-surveillance-system',
   },
 ]
@@ -77,6 +105,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
+  const [openSubSubmenu, setOpenSubSubmenu] = useState<string | null>(null)
   const pathname = usePathname()
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -92,6 +121,7 @@ export default function Header() {
     dropdownTimeoutRef.current = setTimeout(() => {
       setOpenDropdown(null)
       setOpenSubmenu(null)
+      setOpenSubSubmenu(null)
     }, 150)
   }
 
@@ -108,6 +138,7 @@ export default function Header() {
     setIsMenuOpen(false)
     setOpenDropdown(null)
     setOpenSubmenu(null)
+    setOpenSubSubmenu(null)
   }, [pathname])
 
   const handlePhoneClick = () => {
@@ -241,7 +272,7 @@ export default function Header() {
                                 {category.children && <ChevronRight className="w-4 h-4" />}
                               </Link>
 
-                              {/* Submenu */}
+                              {/* Submenu Level 2 */}
                               <AnimatePresence>
                                 {category.children && openSubmenu === category.slug && (
                                   <motion.div
@@ -253,7 +284,12 @@ export default function Header() {
                                   >
                                     <div className="bg-white rounded-lg shadow-dropdown p-2 min-w-[180px] border border-gray-100">
                                       {category.children.map((child) => (
-                                        <div key={child.slug}>
+                                        <div
+                                          key={child.slug}
+                                          className="relative"
+                                          onMouseEnter={() => child.children && setOpenSubSubmenu(child.slug)}
+                                          onMouseLeave={() => !child.children && setOpenSubSubmenu(null)}
+                                        >
                                           <Link
                                             href={`/products/category/${child.slug}`}
                                             className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-primary-light rounded transition-colors"
@@ -261,6 +297,31 @@ export default function Header() {
                                             {child.name}
                                             {child.children && <ChevronRight className="w-4 h-4" />}
                                           </Link>
+
+                                          {/* Submenu Level 3 */}
+                                          <AnimatePresence>
+                                            {child.children && openSubSubmenu === child.slug && (
+                                              <motion.div
+                                                initial={{ opacity: 0, x: -10 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, x: -10 }}
+                                                transition={{ duration: 0.15 }}
+                                                className="absolute left-full top-0 ml-1"
+                                              >
+                                                <div className="bg-white rounded-lg shadow-dropdown p-2 min-w-[160px] border border-gray-100">
+                                                  {child.children.map((subChild) => (
+                                                    <Link
+                                                      key={subChild.slug}
+                                                      href={`/products/category/${subChild.slug}`}
+                                                      className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-primary-light rounded transition-colors"
+                                                    >
+                                                      {subChild.name}
+                                                    </Link>
+                                                  ))}
+                                                </div>
+                                              </motion.div>
+                                            )}
+                                          </AnimatePresence>
                                         </div>
                                       ))}
                                     </div>
