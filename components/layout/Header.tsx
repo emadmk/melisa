@@ -24,6 +24,26 @@ const productCategories = [
   {
     name: 'PAGA',
     slug: 'paga',
+    children: [
+      {
+        name: 'Controllers & System Modules',
+        slug: 'controllers-system-modules',
+        children: [
+          { name: 'DS-6', slug: 'ds-6-controllers' },
+          { name: 'DS-22', slug: 'ds-22-controllers' },
+        ]
+      },
+      {
+        name: 'Call Stations',
+        slug: 'call-stations',
+        children: [
+          { name: 'DS-6', slug: 'ds-6-call-stations' },
+          { name: 'DS-22', slug: 'ds-22-call-stations' },
+        ]
+      },
+      { name: 'Speakers & Siren', slug: 'speakers-siren' },
+      { name: 'Software', slug: 'paga-software' },
+    ],
   },
   {
     name: 'Radio',
