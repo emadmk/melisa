@@ -168,7 +168,7 @@ export default function Header() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <Image
-                src="/uploads/melisa-logo.webp"
+                src="/images/melisa-logo.webp"
                 alt="Melisa"
                 width={160}
                 height={50}

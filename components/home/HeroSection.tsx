@@ -8,7 +8,7 @@ import { useState, useEffect, useCallback } from 'react'
 const slides = [
   {
     id: 1,
-    image: '/uploads/slider1-1024x486.webp',
+    image: '/images/slider1-1024x486.webp',
     title: 'Uninterrupted Connection,',
     subtitle: 'Endless Future.',
     description: 'This telecommunications company specializes in telecommunications, radio, CCTV, and paging projects. With advanced technology, the company provides high-quality and secure communication and information exchange services to its customers.',
@@ -16,7 +16,7 @@ const slides = [
   },
   {
     id: 2,
-    image: '/uploads/ezgif-3c0bebb5e6025f.gif',
+    image: '/images/ezgif-3c0bebb5e6025f.gif',
     title: '',
     subtitle: '',
     description: '',

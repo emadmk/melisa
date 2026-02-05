@@ -11,28 +11,28 @@ const services = [
     title: 'Equipment supply',
     slug: 'equipment-supply',
     description: 'The company provides a wide range of high-quality equipment as per the needs of its clients. This includes telecommunications, radio, and security equipment.',
-    image: '/uploads/Equipment-supply-img.webp',
+    image: '/images/Equipment-supply-img.webp',
   },
   {
     id: 2,
     title: 'Engineering',
     slug: 'engineering',
     description: 'The company offers a range of engineering services, including design, development, and implementation of customized solutions to meet the specific needs of its clients.',
-    image: '/uploads/Engineering-image.webp',
+    image: '/images/Engineering-image.webp',
   },
   {
     id: 3,
     title: 'Commissioning',
     slug: 'commissioning',
     description: 'The company uses commission equipment to ensure that it is operating correctly with a fully integrated into a client\'s system.',
-    image: '/uploads/Commissioning-image.webp',
+    image: '/images/Commissioning-image.webp',
   },
   {
     id: 4,
     title: 'Installation',
     slug: 'installation',
     description: 'The company installs telecommunications and radio equipment at client site, ensuring that it is set up correctly.',
-    image: '/uploads/Installation-image.webp',
+    image: '/images/Installation-image.webp',
   },
 ]
 

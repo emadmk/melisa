@@ -69,10 +69,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/uploads/melisa-logo.webp', sizes: 'any' },
+      { url: '/images/melisa-logo.webp', sizes: 'any' },
     ],
     apple: [
-      { url: '/uploads/melisa-logo.webp' },
+      { url: '/images/melisa-logo.webp' },
     ],
   },
 }

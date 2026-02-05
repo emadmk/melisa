@@ -37,7 +37,7 @@ export default function Footer() {
             {/* Logo */}
             <Link href="/" className="inline-block mb-6">
               <Image
-                src="/uploads/melisa-logo.webp"
+                src="/images/melisa-logo.webp"
                 alt="Melisa"
                 width={160}
                 height={50}
