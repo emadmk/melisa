@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
-import { useLocale } from '@/lib/locale-context'
+import { useLocale } from '@/lib/i18n/LocaleContext'
 
 interface Brand {
   id: string
