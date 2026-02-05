@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     ])
 
     // Transform posts to use 'title' field (prefer English, fallback to Farsi)
-    const transformedPosts = posts.map(post => ({
+    const transformedPosts = posts.map((post: typeof posts[number]) => ({
       ...post,
       title: post.titleEn || post.titleFa,
       postCategory: post.postCategory ? {
