@@ -289,3 +289,60 @@
     page-break-before: always;
   }
 }
+
+/* RTL Support for Arabic */
+[dir="rtl"] {
+  /* Flip icons and arrows */
+  .rtl-flip {
+    transform: scaleX(-1);
+  }
+
+  /* Text alignment */
+  .prose blockquote {
+    @apply border-r-0 border-l-4 pr-0 pl-4;
+  }
+
+  .prose ul,
+  .prose ol {
+    @apply pr-0 pl-6;
+  }
+
+  .prose th,
+  .prose td {
+    @apply text-right;
+  }
+}
+
+/* Arabic Font */
+[lang="ar"] {
+  font-family: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* RTL specific overrides */
+html[dir="rtl"] {
+  /* Form elements */
+  input,
+  textarea,
+  select {
+    text-align: right;
+  }
+
+  /* Navigation */
+  .nav-arrow {
+    transform: scaleX(-1);
+  }
+
+  /* Cards and boxes */
+  .card-arrow {
+    transform: scaleX(-1);
+  }
+}
+
+/* LTR specific (default) */
+html[dir="ltr"] {
+  input,
+  textarea,
+  select {
+    text-align: left;
+  }
+}

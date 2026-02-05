@@ -1,0 +1,70 @@
+{
+  "common": {
+    "home": "Home",
+    "products": "Products",
+    "brands": "Brand",
+    "services": "Services",
+    "blog": "Blog",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "customerService": "Customer Service",
+    "search": "Search",
+    "readMore": "Read More",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "requestPrice": "Request Price",
+    "seeAllArticles": "See All Articles",
+    "loading": "Loading...",
+    "noResults": "No results found"
+  },
+  "home": {
+    "heroTitle": "Telecommunications & Security Solutions",
+    "heroSubtitle": "Professional solutions for your business",
+    "ourServices": "Our Services",
+    "servicesSubtitle": "With over 15 years of experience in telecommunications and security equipment, we offer comprehensive services to our customers.",
+    "whoWeAre": "WHO WE ARE?",
+    "whoWeAreText": "We strive to provide high-quality and secure products that meet the needs of our customers.",
+    "bestCustomers": "These Are Our Best Customers",
+    "customersSubtitle": "that enjoy to work with us",
+    "gladToHear": "WE ARE GLAD TO HEAR FROM YOU",
+    "latestBlog": "BLOG"
+  },
+  "products": {
+    "title": "Products",
+    "subtitle": "Browse our complete product catalog",
+    "categories": "Product Categories",
+    "relatedProducts": "Related Products",
+    "specifications": "Specifications",
+    "description": "Description",
+    "downloadCatalog": "Download Catalog"
+  },
+  "services": {
+    "title": "Our Services",
+    "equipmentSupply": "Equipment Supply",
+    "engineering": "Engineering",
+    "commissioning": "Commissioning"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with us",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "company": "Company",
+    "message": "Message",
+    "submit": "Send Message",
+    "location": "Location",
+    "address": "Office No. 42, UAE 0523, 33rd Floor, Metropolis"
+  },
+  "footer": {
+    "description": "Melisa is a telecommunications company specializing in telecommunications, radio, CCTV, and paging projects.",
+    "quickLinks": "Quick Links",
+    "contactInfo": "Contact Info",
+    "followUs": "Follow Us",
+    "allRightsReserved": "All Rights Reserved"
+  },
+  "meta": {
+    "defaultTitle": "Melisa | Telecommunications & Security Solutions",
+    "defaultDescription": "Melisa is a telecommunications company specializing in telecommunications, radio, CCTV, and paging projects. We provide high-quality and secure communication solutions in Dubai, UAE."
+  }
+}

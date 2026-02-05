@@ -68,16 +68,21 @@ model Product {
   id              String            @id @default(cuid())
   titleFa         String
   titleEn         String?
+  titleAr         String?           // Arabic title
   slug            String            @unique
   shortDesc       String?           @db.Text
+  shortDescAr     String?           @db.Text  // Arabic short description
   fullDesc        String?           @db.Text
+  fullDescAr      String?           @db.Text  // Arabic full description
   image           String?
   gallery         String[]
   catalogFile     String?
   status          ContentStatus     @default(DRAFT)
   featured        Boolean           @default(false)
   metaTitle       String?
+  metaTitleAr     String?           // Arabic meta title
   metaDesc        String?
+  metaDescAr      String?           // Arabic meta description
   focusKeyword    String?
   keywords        String[]
   categoryId      String?
@@ -100,7 +105,9 @@ model Product {
 model ProductAttribute {
   id        String  @id @default(cuid())
   key       String
+  keyAr     String? // Arabic key
   value     String
+  valueAr   String? // Arabic value
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   order     Int     @default(0)
@@ -111,21 +118,25 @@ model ProductAttribute {
 // ==================== Categories ====================
 
 model Category {
-  id          String     @id @default(cuid())
-  nameFa      String
-  nameEn      String?
-  slug        String     @unique
-  description String?    @db.Text
-  image       String?
-  parentId    String?
-  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
-  children    Category[] @relation("CategoryHierarchy")
-  products    Product[]
-  order       Int        @default(0)
-  metaTitle   String?
-  metaDesc    String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id            String     @id @default(cuid())
+  nameFa        String
+  nameEn        String?
+  nameAr        String?    // Arabic name
+  slug          String     @unique
+  description   String?    @db.Text
+  descriptionAr String?    @db.Text  // Arabic description
+  image         String?
+  parentId      String?
+  parent        Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children      Category[] @relation("CategoryHierarchy")
+  products      Product[]
+  order         Int        @default(0)
+  metaTitle     String?
+  metaTitleAr   String?    // Arabic meta title
+  metaDesc      String?
+  metaDescAr    String?    // Arabic meta description
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   @@index([parentId])
   @@index([slug])
@@ -134,17 +145,19 @@ model Category {
 // ==================== Brands ====================
 
 model Brand {
-  id          String    @id @default(cuid())
-  name        String
-  slug        String    @unique
-  logo        String?
-  description String?   @db.Text
-  website     String?
-  products    Product[]
-  featured    Boolean   @default(false)
-  order       Int       @default(0)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id            String    @id @default(cuid())
+  name          String
+  nameAr        String?   // Arabic name
+  slug          String    @unique
+  logo          String?
+  description   String?   @db.Text
+  descriptionAr String?   @db.Text  // Arabic description
+  website       String?
+  products      Product[]
+  featured      Boolean   @default(false)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@index([slug])
 }
@@ -155,15 +168,20 @@ model Service {
   id              String        @id @default(cuid())
   titleFa         String
   titleEn         String?
+  titleAr         String?       // Arabic title
   slug            String        @unique
   shortDesc       String?       @db.Text
+  shortDescAr     String?       @db.Text  // Arabic short description
   fullDesc        String?       @db.Text
+  fullDescAr      String?       @db.Text  // Arabic full description
   icon            String?
   image           String?
   status          ContentStatus @default(DRAFT)
   order           Int           @default(0)
   metaTitle       String?
+  metaTitleAr     String?       // Arabic meta title
   metaDesc        String?
+  metaDescAr      String?       // Arabic meta description
   focusKeyword    String?
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -177,9 +195,12 @@ model Post {
   id              String        @id @default(cuid())
   titleFa         String
   titleEn         String?
+  titleAr         String?       // Arabic title
   slug            String        @unique
   excerpt         String?       @db.Text
+  excerptAr       String?       @db.Text  // Arabic excerpt
   content         String?       @db.Text
+  contentAr       String?       @db.Text  // Arabic content
   image           String?
   status          ContentStatus @default(DRAFT)
   publishedAt     DateTime?
@@ -189,7 +210,9 @@ model Post {
   tags            String[]
   viewCount       Int           @default(0)
   metaTitle       String?
+  metaTitleAr     String?       // Arabic meta title
   metaDesc        String?
+  metaDescAr      String?       // Arabic meta description
   focusKeyword    String?
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -203,6 +226,7 @@ model PostCategory {
   id        String   @id @default(cuid())
   nameFa    String
   nameEn    String?
+  nameAr    String?  // Arabic name
   slug      String   @unique
   posts     Post[]
   createdAt DateTime @default(now())
@@ -217,17 +241,23 @@ model Project {
   id              String        @id @default(cuid())
   titleFa         String
   titleEn         String?
+  titleAr         String?       // Arabic title
   slug            String        @unique
   description     String?       @db.Text
+  descriptionAr   String?       @db.Text  // Arabic description
   images          String[]
   client          String?
+  clientAr        String?       // Arabic client name
   location        String?
+  locationAr      String?       // Arabic location
   year            String?
   status          ContentStatus @default(DRAFT)
   featured        Boolean       @default(false)
   order           Int           @default(0)
   metaTitle       String?
+  metaTitleAr     String?       // Arabic meta title
   metaDesc        String?
+  metaDescAr      String?       // Arabic meta description
   focusKeyword    String?
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -238,18 +268,21 @@ model Project {
 // ==================== Certificates ====================
 
 model Certificate {
-  id          String        @id @default(cuid())
-  titleFa     String
-  titleEn     String?
-  slug        String        @unique
-  description String?       @db.Text
-  image       String?
-  issuer      String?
-  issueDate   DateTime?
-  status      ContentStatus @default(DRAFT)
-  order       Int           @default(0)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id            String        @id @default(cuid())
+  titleFa       String
+  titleEn       String?
+  titleAr       String?       // Arabic title
+  slug          String        @unique
+  description   String?       @db.Text
+  descriptionAr String?       @db.Text  // Arabic description
+  image         String?
+  issuer        String?
+  issuerAr      String?       // Arabic issuer
+  issueDate     DateTime?
+  status        ContentStatus @default(DRAFT)
+  order         Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   @@index([slug])
 }
@@ -257,20 +290,22 @@ model Certificate {
 // ==================== Catalogs ====================
 
 model Catalog {
-  id          String        @id @default(cuid())
-  titleFa     String
-  titleEn     String?
-  slug        String        @unique
-  description String?       @db.Text
-  file        String
-  thumbnail   String?
-  categoryId  String?
-  category    CatalogCategory? @relation(fields: [categoryId], references: [id])
-  downloads   Int           @default(0)
-  status      ContentStatus @default(DRAFT)
-  order       Int           @default(0)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id            String        @id @default(cuid())
+  titleFa       String
+  titleEn       String?
+  titleAr       String?       // Arabic title
+  slug          String        @unique
+  description   String?       @db.Text
+  descriptionAr String?       @db.Text  // Arabic description
+  file          String
+  thumbnail     String?
+  categoryId    String?
+  category      CatalogCategory? @relation(fields: [categoryId], references: [id])
+  downloads     Int           @default(0)
+  status        ContentStatus @default(DRAFT)
+  order         Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   @@index([categoryId])
   @@index([slug])
@@ -280,6 +315,7 @@ model CatalogCategory {
   id        String    @id @default(cuid())
   nameFa    String
   nameEn    String?
+  nameAr    String?   // Arabic name
   slug      String    @unique
   catalogs  Catalog[]
   order     Int       @default(0)
@@ -294,7 +330,9 @@ model CatalogCategory {
 model Faq {
   id         String        @id @default(cuid())
   question   String
+  questionAr String?       // Arabic question
   answer     String        @db.Text
+  answerAr   String?       @db.Text  // Arabic answer
   categoryId String?
   category   FaqCategory?  @relation(fields: [categoryId], references: [id])
   status     ContentStatus @default(DRAFT)
@@ -309,6 +347,7 @@ model FaqCategory {
   id        String   @id @default(cuid())
   nameFa    String
   nameEn    String?
+  nameAr    String?  // Arabic name
   slug      String   @unique
   faqs      Faq[]
   order     Int      @default(0)
