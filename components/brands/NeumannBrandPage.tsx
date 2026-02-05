@@ -408,7 +408,7 @@ export default function NeumannBrandPage({ products, categories, total }: Neuman
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="fixed inset-0 z-40 bg-black overflow-y-auto"
+        className="fixed inset-0 z-[60] bg-black overflow-y-auto"
       >
         {/* Dark Header */}
         <DarkHeader
