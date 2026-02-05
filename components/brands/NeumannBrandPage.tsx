@@ -204,7 +204,7 @@ function DarkHeader({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: {
 }
 
 // Dark Footer Component
-function DarkFooter({ brand, onNavigate }: { brand: NeumannBrandPageProps['brand']; onNavigate: (url: string) => void }) {
+function DarkFooter({ onNavigate }: { onNavigate: (url: string) => void }) {
   return (
     <footer className="bg-zinc-950 border-t border-zinc-800">
       {/* Main Footer */}
@@ -620,7 +620,7 @@ export default function NeumannBrandPage({ brand, products, categories, total }:
         </div>
 
         {/* Dark Footer */}
-        <DarkFooter brand={brand} onNavigate={handleNavigate} />
+        <DarkFooter onNavigate={handleNavigate} />
       </motion.div>
     </>
   )
