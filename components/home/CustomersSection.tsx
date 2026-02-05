@@ -1,43 +1,74 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Quote } from 'lucide-react'
 
-const testimonial = {
-  quote: 'The new TETRA system from Motorola Solutions meets our high demands for 24/7 service.',
-  author: 'Ivan Perita',
-  position: 'Director of the Power System Control Center',
-}
+const brandLogos = [
+  { name: 'SIAE microelettronica', logo: '/images/sm-logo.webp' },
+  { name: 'Industronic', logo: '/images/inoustronic-logo.webp' },
+  { name: 'Cambium Networks', logo: '/images/combium-network-logo.webp' },
+  { name: 'Avigilon', logo: '/images/avigilon-logo.webp' },
+  { name: 'Motorola', logo: '/images/motorola-logo.webp' },
+]
 
 export default function CustomersSection() {
   return (
-    <section className="py-16 lg:py-20 bg-white">
+    <section className="py-16 lg:py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto text-center"
+          className="text-center mb-12"
         >
-          {/* Quote Icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
-            <Quote className="w-8 h-8 text-primary" />
-          </div>
+          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-4">
+            These Are Our Best Customers
+          </h2>
+          <p className="text-gray-600">
+            that enjoy to work with us
+          </p>
+        </motion.div>
 
-          {/* Quote Text */}
-          <blockquote className="text-xl lg:text-2xl text-gray-700 font-medium mb-8 leading-relaxed">
-            &ldquo;{testimonial.quote}&rdquo;
-          </blockquote>
+        {/* Brand Logos */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-wrap items-center justify-center gap-8 lg:gap-12"
+        >
+          {brandLogos.map((brand, index) => (
+            <motion.div
+              key={brand.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              className="grayscale hover:grayscale-0 transition-all duration-300"
+            >
+              <Image
+                src={brand.logo}
+                alt={brand.name}
+                width={120}
+                height={60}
+                className="h-12 w-auto object-contain"
+              />
+            </motion.div>
+          ))}
+        </motion.div>
 
-          {/* Author */}
-          <div className="flex items-center justify-center gap-4">
-            <div className="w-1 h-12 bg-primary rounded-full" />
-            <div className="text-left">
-              <p className="font-bold text-dark">{testimonial.author}</p>
-              <p className="text-gray-500 text-sm">{testimonial.position}</p>
-            </div>
-          </div>
+        {/* CTA Text */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center mt-16"
+        >
+          <p className="text-2xl lg:text-3xl font-bold text-primary">
+            WE ARE GLAD TO HEAR FROM YOU
+          </p>
         </motion.div>
       </div>
     </section>
