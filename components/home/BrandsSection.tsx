@@ -10,16 +10,16 @@ const brands = [
     name: 'Avigilon',
     slug: 'avigilon',
     description: 'Avigilon is a company that offers a range of surveillance and security products',
-    image: '/images/brands/avigilon.jpg',
-    logo: '/images/brands/avigilon-logo.png',
+    image: '/uploads/Avignon-image.webp',
+    logo: '/uploads/avigilon-logo.webp',
     bgColor: 'bg-white',
   },
   {
     name: 'Motorola',
     slug: 'motorola',
     description: 'Motorola offers a range of wireless DMR (Digital Mobile Radio) products',
-    image: '/images/brands/motorola.jpg',
-    logo: '/images/brands/motorola-logo.png',
+    image: '/uploads/Motorola-image.webp',
+    logo: '/uploads/motorola-logo.webp',
     bgColor: 'bg-primary',
     textColor: 'text-white',
   },
@@ -27,8 +27,8 @@ const brands = [
     name: 'Cambium Networks',
     slug: 'cambium-networks',
     description: 'Cambium Networks is a global leading provider of wireless broadband solutions that connect the unconnected.',
-    image: '/images/brands/cambium.jpg',
-    logo: '/images/brands/cambium-logo.png',
+    image: '/uploads/Cambium-Networks-image.webp',
+    logo: '/uploads/combium-network-logo.webp',
     bgColor: 'bg-[#4a9fd4]',
     textColor: 'text-white',
   },
@@ -36,8 +36,8 @@ const brands = [
     name: 'SIAE microelettronica',
     slug: 'siae-microelettronica',
     description: 'SIAE microelettronica is an Italian company specializing in wireless communication technology, exclusively designing and manufacturing wireless communication systems.',
-    image: '/images/brands/siae.jpg',
-    logo: '/images/brands/siae-logo.png',
+    image: '/uploads/SIAE-microelettronica-image.webp',
+    logo: '/uploads/sm-logo.webp',
     bgColor: 'bg-primary',
     textColor: 'text-white',
   },
@@ -103,7 +103,13 @@ export default function BrandsSection() {
                 />
                 {/* Logo overlay */}
                 <div className="absolute bottom-4 left-4 bg-white/90 px-4 py-2 rounded">
-                  <span className="font-bold text-gray-800">{brand.name}</span>
+                  <Image
+                    src={brand.logo}
+                    alt={`${brand.name} logo`}
+                    width={100}
+                    height={40}
+                    className="h-8 w-auto object-contain"
+                  />
                 </div>
               </div>
             </motion.div>

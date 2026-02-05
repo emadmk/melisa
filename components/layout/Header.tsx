@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import {
   Menu,
   X,
@@ -165,16 +166,15 @@ export default function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-3">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3">
-              <div className="flex items-center">
-                <div className="text-accent font-bold text-2xl mr-1">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 8L20 20L8 32" stroke="#C41E3A" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M20 8L32 20L20 32" stroke="#C41E3A" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <span className="text-white text-2xl font-light tracking-wider">MELISA</span>
-              </div>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/uploads/melisa-logo.webp"
+                alt="Melisa"
+                width={160}
+                height={50}
+                className="h-12 w-auto"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation */}
