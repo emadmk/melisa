@@ -63,13 +63,13 @@ const brands = [
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Product', href: '/products', hasMegaMenu: 'products' },
-  { name: 'brand', href: '/brands', hasMegaMenu: 'brands' },
+  { name: 'Products', href: '/products', hasMegaMenu: 'products' },
+  { name: 'Brand', href: '/brands', hasMegaMenu: 'brands' },
   { name: 'Services', href: '/services' },
   { name: 'Blog', href: '/blog' },
-  { name: 'about us', href: '/about' },
-  { name: 'Contact us', href: '/contact' },
-  { name: 'customer service', href: '/customer-service' },
+  { name: 'About Us', href: '/about' },
+  { name: 'Contact Us', href: '/contact' },
+  { name: 'Customer Service', href: 'https://crm.melisa.ae/', external: true },
 ]
 
 export default function Header() {
@@ -189,20 +189,31 @@ export default function Header() {
                   onMouseEnter={() => item.hasMegaMenu && handleMouseEnter(item.name)}
                   onMouseLeave={() => item.hasMegaMenu && handleMouseLeave()}
                 >
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      'px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1 rounded',
-                      pathname === item.href || pathname.startsWith(item.href + '/')
-                        ? 'text-white bg-white/10'
-                        : 'text-white/90 hover:text-white hover:bg-white/10'
-                    )}
-                  >
-                    {item.name}
-                    {item.hasMegaMenu && (
-                      <ChevronDown className="w-3.5 h-3.5" />
-                    )}
-                  </Link>
+                  {item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1 rounded text-white/90 hover:text-white hover:bg-white/10"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        'px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1 rounded',
+                        pathname === item.href || pathname.startsWith(item.href + '/')
+                          ? 'text-white bg-white/10'
+                          : 'text-white/90 hover:text-white hover:bg-white/10'
+                      )}
+                    >
+                      {item.name}
+                      {item.hasMegaMenu && (
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      )}
+                    </Link>
+                  )}
 
                   {/* Products Mega Menu */}
                   <AnimatePresence>
@@ -320,17 +331,28 @@ export default function Header() {
             <nav className="container mx-auto px-4 py-4 space-y-1">
               {navigation.map((item) => (
                 <div key={item.name}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      'block px-4 py-3 rounded-lg font-medium transition-colors',
-                      pathname === item.href
-                        ? 'bg-primary-light text-primary'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    )}
-                  >
-                    {item.name}
-                  </Link>
+                  {item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-4 py-3 rounded-lg font-medium transition-colors text-gray-700 hover:bg-gray-50"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        'block px-4 py-3 rounded-lg font-medium transition-colors',
+                        pathname === item.href
+                          ? 'bg-primary-light text-primary'
+                          : 'text-gray-700 hover:bg-gray-50'
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
 
                   {/* Mobile Products Menu */}
                   {item.hasMegaMenu === 'products' && (
