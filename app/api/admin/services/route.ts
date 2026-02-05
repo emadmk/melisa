@@ -8,9 +8,12 @@ export const dynamic = 'force-dynamic'
 const serviceSchema = z.object({
   titleFa: z.string().min(2),
   titleEn: z.string().optional(),
+  titleAr: z.string().optional(),
   slug: z.string().optional(),
   shortDesc: z.string().optional(),
+  shortDescAr: z.string().optional(),
   fullDesc: z.string().optional(),
+  fullDescAr: z.string().optional(),
   icon: z.string().optional(),
   image: z.string().optional(),
   status: z.enum(['DRAFT', 'PUBLISHED']).optional(),

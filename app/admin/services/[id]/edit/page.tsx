@@ -22,9 +22,12 @@ export default function EditServicePage() {
   const [formData, setFormData] = useState({
     titleFa: '',
     titleEn: '',
+    titleAr: '',
     slug: '',
     shortDesc: '',
+    shortDescAr: '',
     fullDesc: '',
+    fullDescAr: '',
     icon: '',
     image: '',
     status: 'DRAFT',
@@ -44,9 +47,12 @@ export default function EditServicePage() {
         setFormData({
           titleFa: service.titleFa || '',
           titleEn: service.titleEn || '',
+          titleAr: service.titleAr || '',
           slug: service.slug || '',
           shortDesc: service.shortDesc || '',
+          shortDescAr: service.shortDescAr || '',
           fullDesc: service.fullDesc || '',
+          fullDescAr: service.fullDescAr || '',
           icon: service.icon || '',
           image: service.image || '',
           status: service.status || 'DRAFT',
@@ -124,29 +130,44 @@ export default function EditServicePage() {
               <h2 className="font-bold text-dark mb-4">Main Information</h2>
 
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Service Title (Persian) *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.titleFa}
-                    onChange={(e) => setFormData({ ...formData, titleFa: e.target.value })}
-                  />
-                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Service Title (Persian) *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.titleFa}
+                      onChange={(e) => setFormData({ ...formData, titleFa: e.target.value })}
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Service Title (English)
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.titleEn}
-                    onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
-                  />
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Service Title (English)
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.titleEn}
+                      onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Service Title (Arabic)
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.titleAr}
+                      onChange={(e) => setFormData({ ...formData, titleAr: e.target.value })}
+                      dir="rtl"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -162,28 +183,56 @@ export default function EditServicePage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Short Description
-                  </label>
-                  <textarea
-                    rows={2}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.shortDesc}
-                    onChange={(e) => setFormData({ ...formData, shortDesc: e.target.value })}
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Short Description (English)
+                    </label>
+                    <textarea
+                      rows={2}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.shortDesc}
+                      onChange={(e) => setFormData({ ...formData, shortDesc: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Short Description (Arabic)
+                    </label>
+                    <textarea
+                      rows={2}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.shortDescAr}
+                      onChange={(e) => setFormData({ ...formData, shortDescAr: e.target.value })}
+                      dir="rtl"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Description
-                  </label>
-                  <textarea
-                    rows={6}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.fullDesc}
-                    onChange={(e) => setFormData({ ...formData, fullDesc: e.target.value })}
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Full Description (English)
+                    </label>
+                    <textarea
+                      rows={6}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.fullDesc}
+                      onChange={(e) => setFormData({ ...formData, fullDesc: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Full Description (Arabic)
+                    </label>
+                    <textarea
+                      rows={6}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.fullDescAr}
+                      onChange={(e) => setFormData({ ...formData, fullDescAr: e.target.value })}
+                      dir="rtl"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

@@ -46,9 +46,12 @@ export async function PUT(
       data: {
         titleFa: body.titleFa,
         titleEn: body.titleEn || null,
+        titleAr: body.titleAr || null,
         slug: body.slug,
         excerpt: body.excerpt || null,
+        excerptAr: body.excerptAr || null,
         content: body.content || null,
+        contentAr: body.contentAr || null,
         image: body.image || null,
         status: body.status || 'DRAFT',
         publishedAt: body.publishedAt ? new Date(body.publishedAt) : null,

@@ -23,9 +23,12 @@ export default function EditPostPage() {
   const [form, setForm] = useState({
     titleFa: '',
     titleEn: '',
+    titleAr: '',
     slug: '',
     excerpt: '',
+    excerptAr: '',
     content: '',
+    contentAr: '',
     image: '',
     status: 'DRAFT',
     author: '',
@@ -47,9 +50,12 @@ export default function EditPostPage() {
           setForm({
             titleFa: post.titleFa || '',
             titleEn: post.titleEn || '',
+            titleAr: post.titleAr || '',
             slug: post.slug || '',
             excerpt: post.excerpt || '',
+            excerptAr: post.excerptAr || '',
             content: post.content || '',
+            contentAr: post.contentAr || '',
             image: post.image || '',
             status: post.status || 'DRAFT',
             author: post.author || '',
@@ -118,7 +124,7 @@ export default function EditPostPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Persian Title *
@@ -142,6 +148,19 @@ export default function EditPostPage() {
               onChange={(e) => setForm({ ...form, titleEn: e.target.value })}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               dir="ltr"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Arabic Title
+            </label>
+            <input
+              type="text"
+              value={form.titleAr}
+              onChange={(e) => setForm({ ...form, titleAr: e.target.value })}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              dir="rtl"
             />
           </div>
 
@@ -202,7 +221,7 @@ export default function EditPostPage() {
             </select>
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Tags
             </label>
@@ -215,31 +234,59 @@ export default function EditPostPage() {
             />
           </div>
 
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Excerpt
-            </label>
-            <textarea
-              value={form.excerpt}
-              onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
+          <div className="md:col-span-3 grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Excerpt (English)
+              </label>
+              <textarea
+                value={form.excerpt}
+                onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
+                rows={3}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Excerpt (Arabic)
+              </label>
+              <textarea
+                value={form.excerptAr}
+                onChange={(e) => setForm({ ...form, excerptAr: e.target.value })}
+                rows={3}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                dir="rtl"
+              />
+            </div>
           </div>
 
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Content
-            </label>
-            <textarea
-              value={form.content}
-              onChange={(e) => setForm({ ...form, content: e.target.value })}
-              rows={10}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
+          <div className="md:col-span-3 grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Content (English)
+              </label>
+              <textarea
+                value={form.content}
+                onChange={(e) => setForm({ ...form, content: e.target.value })}
+                rows={10}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Content (Arabic)
+              </label>
+              <textarea
+                value={form.contentAr}
+                onChange={(e) => setForm({ ...form, contentAr: e.target.value })}
+                rows={10}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                dir="rtl"
+              />
+            </div>
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <ImageUpload
               value={form.image || null}
               onChange={(url) => setForm({ ...form, image: url || '' })}
@@ -279,7 +326,7 @@ export default function EditPostPage() {
           </div>
 
           {/* SEO Analyzer */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <SeoAnalyzer
               title={form.titleFa}
               metaTitle={form.metaTitle}

@@ -24,9 +24,12 @@ interface ProductData {
   id: string
   titleFa: string
   titleEn: string | null
+  titleAr: string | null
   slug: string
   shortDesc: string | null
+  shortDescAr: string | null
   fullDesc: string | null
+  fullDescAr: string | null
   image: string | null
   gallery: string[]
   catalogFile: string | null
@@ -54,9 +57,12 @@ export default function EditProductPage() {
     id: '',
     titleFa: '',
     titleEn: '',
+    titleAr: '',
     slug: '',
     shortDesc: '',
+    shortDescAr: '',
     fullDesc: '',
+    fullDescAr: '',
     image: '',
     gallery: [],
     catalogFile: '',
@@ -81,9 +87,12 @@ export default function EditProductPage() {
           id: product.id,
           titleFa: product.titleFa || '',
           titleEn: product.titleEn || '',
+          titleAr: product.titleAr || '',
           slug: product.slug || '',
           shortDesc: product.shortDesc || '',
+          shortDescAr: product.shortDescAr || '',
           fullDesc: product.fullDesc || '',
+          fullDescAr: product.fullDescAr || '',
           image: product.image || '',
           gallery: product.gallery || [],
           catalogFile: product.catalogFile || '',
@@ -138,9 +147,12 @@ export default function EditProductPage() {
           id: productId,
           titleFa: formData.titleFa,
           titleEn: formData.titleEn || null,
+          titleAr: formData.titleAr || null,
           slug: formData.slug,
           shortDesc: formData.shortDesc || null,
+          shortDescAr: formData.shortDescAr || null,
           fullDesc: formData.fullDesc || null,
+          fullDescAr: formData.fullDescAr || null,
           image: formData.image || null,
           gallery: formData.gallery,
           catalogFile: formData.catalogFile || null,
@@ -230,7 +242,7 @@ export default function EditProductPage() {
               <h2 className="font-bold text-dark mb-4">Basic Information</h2>
 
               <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Product Title (Persian) *
@@ -256,6 +268,19 @@ export default function EditProductPage() {
                       dir="ltr"
                     />
                   </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Product Title (Arabic)
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.titleAr || ''}
+                      onChange={(e) => setFormData({ ...formData, titleAr: e.target.value })}
+                      dir="rtl"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -271,28 +296,56 @@ export default function EditProductPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Short Description
-                  </label>
-                  <textarea
-                    rows={2}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.shortDesc || ''}
-                    onChange={(e) => setFormData({ ...formData, shortDesc: e.target.value })}
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Short Description (English)
+                    </label>
+                    <textarea
+                      rows={2}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.shortDesc || ''}
+                      onChange={(e) => setFormData({ ...formData, shortDesc: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Short Description (Arabic)
+                    </label>
+                    <textarea
+                      rows={2}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.shortDescAr || ''}
+                      onChange={(e) => setFormData({ ...formData, shortDescAr: e.target.value })}
+                      dir="rtl"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Description
-                  </label>
-                  <textarea
-                    rows={6}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.fullDesc || ''}
-                    onChange={(e) => setFormData({ ...formData, fullDesc: e.target.value })}
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Full Description (English)
+                    </label>
+                    <textarea
+                      rows={6}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.fullDesc || ''}
+                      onChange={(e) => setFormData({ ...formData, fullDesc: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Full Description (Arabic)
+                    </label>
+                    <textarea
+                      rows={6}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.fullDescAr || ''}
+                      onChange={(e) => setFormData({ ...formData, fullDescAr: e.target.value })}
+                      dir="rtl"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
