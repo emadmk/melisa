@@ -35,14 +35,17 @@ export default function Footer() {
           {/* Logo & About Section */}
           <motion.div {...fadeInUp}>
             {/* Logo */}
-            <Link href="/" className="inline-block mb-6">
+            <Link href="/" className="flex items-center gap-3 mb-6">
               <Image
                 src="/images/melisa-logo.webp"
                 alt="Melisa"
-                width={160}
+                width={50}
                 height={50}
-                className="h-12 w-auto"
+                className="h-10 w-auto"
               />
+              <span className="text-white text-2xl font-bold tracking-widest">
+                M E L I S A
+              </span>
             </Link>
 
             <h3 className="font-bold text-lg mb-4">About US</h3>

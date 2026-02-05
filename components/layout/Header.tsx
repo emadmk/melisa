@@ -166,15 +166,18 @@ export default function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-3">
             {/* Logo */}
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center gap-3">
               <Image
                 src="/images/melisa-logo.webp"
                 alt="Melisa"
-                width={160}
+                width={50}
                 height={50}
-                className="h-12 w-auto"
+                className="h-10 w-auto"
                 priority
               />
+              <span className="text-white text-2xl font-bold tracking-widest">
+                M E L I S A
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
