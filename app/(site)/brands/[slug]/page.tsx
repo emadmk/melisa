@@ -3,9 +3,13 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { Breadcrumb, Pagination } from '@/components/common'
 import ProductCard from '@/components/products/ProductCard'
+import NeumannBrandPage from '@/components/brands/NeumannBrandPage'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
+
+// List of brands with special themed pages
+const THEMED_BRANDS = ['neumann']
 
 interface Product {
   id: string
@@ -79,6 +83,52 @@ async function getProductsByBrand(brandId: string, page: number = 1, limit: numb
   return { products, total, totalPages: Math.ceil(total / limit) }
 }
 
+async function getAllProductsByBrand(brandId: string) {
+  const rawProducts = await prisma.product.findMany({
+    where: {
+      brandId,
+      status: 'PUBLISHED',
+    },
+    include: {
+      category: { select: { nameFa: true, slug: true } },
+      brand: { select: { name: true, slug: true, logo: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+  })
+
+  const products: Product[] = (rawProducts as RawProduct[]).map((p) => ({
+    id: p.id,
+    titleFa: p.titleFa,
+    titleEn: p.titleEn,
+    slug: p.slug,
+    shortDesc: p.shortDesc,
+    image: p.image,
+    category: p.category,
+    brand: p.brand,
+  }))
+
+  // Get unique categories with counts
+  const categoryMap = new Map<string, { name: string; slug: string; count: number }>()
+  products.forEach(p => {
+    if (p.category) {
+      const existing = categoryMap.get(p.category.slug)
+      if (existing) {
+        existing.count++
+      } else {
+        categoryMap.set(p.category.slug, {
+          name: p.category.nameFa,
+          slug: p.category.slug,
+          count: 1
+        })
+      }
+    }
+  })
+
+  const categories = Array.from(categoryMap.values())
+
+  return { products, total: products.length, categories }
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const brand = await getBrand(slug)
@@ -104,6 +154,29 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
     notFound()
   }
 
+  // Check if this is a themed brand (like Neumann)
+  const isThemedBrand = THEMED_BRANDS.includes(brand.slug.toLowerCase())
+
+  if (isThemedBrand && brand.slug.toLowerCase() === 'neumann') {
+    // Get all products for themed page (no pagination, client-side filtering)
+    const { products, total, categories } = await getAllProductsByBrand(brand.id)
+
+    return (
+      <NeumannBrandPage
+        brand={{
+          name: brand.name,
+          slug: brand.slug,
+          logo: brand.logo,
+          description: brand.description,
+        }}
+        products={products}
+        categories={categories}
+        total={total}
+      />
+    )
+  }
+
+  // Regular brand page
   const { products, total, totalPages } = await getProductsByBrand(brand.id, currentPage)
 
   const breadcrumbItems = [
