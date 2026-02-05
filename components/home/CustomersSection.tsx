@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
+import { useLocale } from '@/lib/locale-context'
 
 interface Brand {
   id: string
@@ -13,7 +14,7 @@ interface Brand {
   _count?: { products: number }
 }
 
-const testimonials = [
+const testimonialsEn = [
   {
     id: 1,
     name: 'Ahmed Al Mansouri',
@@ -56,7 +57,70 @@ const testimonials = [
   },
 ]
 
+const testimonialsAr = [
+  {
+    id: 1,
+    name: 'أحمد المنصوري',
+    position: 'مدير العمليات',
+    company: 'حلول الخليج للأمن',
+    text: 'قدمت لنا ميليسا أنظمة مراقبة وكاميرات استثنائية. خبرتهم التقنية ودعمهم بعد البيع كانا متميزين. نوصي بهم بشدة لأي مشروع أمني.',
+    avatar: '/images/avatar-1.webp',
+  },
+  {
+    id: 2,
+    name: 'سارة طومسون',
+    position: 'مديرة تقنية المعلومات',
+    company: 'مجموعة الإمارات الصناعية',
+    text: 'نعمل مع ميليسا لتلبية احتياجاتنا في مجال الاتصالات اللاسلكية منذ أكثر من 3 سنوات. حلول موتورولا التي قدموها حسّنت كفاءتنا التشغيلية بشكل كبير.',
+    avatar: '/images/avatar-2.webp',
+  },
+  {
+    id: 3,
+    name: 'محمد الهاشمي',
+    position: 'المدير التقني',
+    company: 'خدمات موانئ دبي',
+    text: 'حلول وصلات الميكروويف من ميليسا غيّرت بنيتنا التحتية للاتصالات. فريق محترف يمتلك معرفة تقنية عميقة.',
+    avatar: '/images/avatar-3.webp',
+  },
+  {
+    id: 4,
+    name: 'فاطمة الزعابي',
+    position: 'رئيسة المشتريات',
+    company: 'شركة أبوظبي للإنشاءات',
+    text: 'خدمة ممتازة وأسعار تنافسية. سلّمت ميليسا نظام الإعلان والنداء العام الخاص بنا في الوقت المحدد وضمن الميزانية. فريق الدعم لديهم متجاوب دائماً.',
+    avatar: '/images/avatar-4.webp',
+  },
+  {
+    id: 5,
+    name: 'جيمس ويلسون',
+    position: 'مدير المشاريع',
+    company: 'حلول الشارقة للاتصالات',
+    text: 'من الاستشارة إلى التركيب، أظهرت ميليسا احترافية في كل خطوة. حلولهم اللاسلكية تجاوزت توقعاتنا.',
+    avatar: '/images/avatar-5.webp',
+  },
+]
+
+const translations = {
+  en: {
+    customersTitle: 'These Are Our Best Customers',
+    customersSubtitle: 'that enjoy to work with us',
+    testimonialsTitle: 'WE ARE GLAD TO HEAR FROM YOU',
+    noBrands: 'No brands available',
+  },
+  ar: {
+    customersTitle: 'هؤلاء هم أفضل عملائنا',
+    customersSubtitle: 'الذين يستمتعون بالعمل معنا',
+    testimonialsTitle: 'يسعدنا سماع آرائكم',
+    noBrands: 'لا توجد علامات تجارية متاحة',
+  },
+}
+
 export default function CustomersSection() {
+  const localeContext = useLocale()
+  const isArabic = localeContext?.locale === 'ar'
+  const t = translations[isArabic ? 'ar' : 'en']
+  const testimonials = isArabic ? testimonialsAr : testimonialsEn
+
   const [brands, setBrands] = useState<Brand[]>([])
   const [loading, setLoading] = useState(true)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
@@ -112,10 +176,10 @@ export default function CustomersSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-4">
-            These Are Our Best Customers
+            {t.customersTitle}
           </h2>
           <p className="text-gray-600">
-            that enjoy to work with us
+            {t.customersSubtitle}
           </p>
         </motion.div>
 
@@ -154,7 +218,7 @@ export default function CustomersSection() {
               </motion.div>
             ))
           ) : (
-            <p className="text-gray-500">No brands available</p>
+            <p className="text-gray-500">{t.noBrands}</p>
           )}
         </motion.div>
 
@@ -167,7 +231,7 @@ export default function CustomersSection() {
           className="mt-20"
         >
           <h3 className="text-2xl lg:text-3xl font-bold text-primary text-center mb-12">
-            WE ARE GLAD TO HEAR FROM YOU
+            {t.testimonialsTitle}
           </h3>
 
           {/* Testimonial Slider */}
