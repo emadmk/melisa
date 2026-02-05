@@ -11,13 +11,13 @@ import {
   Phone,
   ChevronDown,
   ChevronRight,
-  Globe,
   Linkedin,
   Instagram,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { siteConfig } from '@/lib/seo'
 import { trackPhoneClick } from '@/lib/analytics'
+import { LanguageSwitcher } from '@/components/common'
 
 // Product categories based on Melisa structure
 const productCategories = [
@@ -192,16 +192,7 @@ export default function Header() {
                 </a>
               </div>
 
-              <div className="flex items-center gap-2 border-l border-white/20 pl-4">
-                <button className="flex items-center gap-1 hover:text-gray-200 transition-colors">
-                  <Globe className="w-4 h-4" />
-                  <span>العربية(Arabic)</span>
-                </button>
-                <span className="text-white/40">|</span>
-                <button className="flex items-center gap-1 text-white/80 hover:text-white transition-colors">
-                  <span>English</span>
-                </button>
-              </div>
+              <LanguageSwitcher />
             </div>
           </div>
         </div>
