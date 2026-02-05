@@ -60,6 +60,16 @@ const nextConfig = {
         ],
       },
       {
+        // Cache uploaded files
+        source: '/uploads/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=2592000',
+          },
+        ],
+      },
+      {
         // Cache fonts
         source: '/:path*.woff2',
         headers: [

@@ -2,16 +2,39 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
-const brandLogos = [
-  { name: 'SIAE microelettronica', logo: '/images/sm-logo.webp' },
-  { name: 'Industronic', logo: '/images/inoustronic-logo.webp' },
-  { name: 'Cambium Networks', logo: '/images/combium-network-logo.webp' },
-  { name: 'Avigilon', logo: '/images/avigilon-logo.webp' },
-  { name: 'Motorola', logo: '/images/motorola-logo.webp' },
-]
+interface Brand {
+  id: string
+  name: string
+  slug: string
+  logo: string | null
+  _count?: { products: number }
+}
 
 export default function CustomersSection() {
+  const [brands, setBrands] = useState<Brand[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchBrands() {
+      try {
+        const response = await fetch('/api/brands')
+        const data = await response.json()
+        if (data.success && data.data) {
+          // Filter brands that have logos
+          const brandsWithLogos = data.data.filter((brand: Brand) => brand.logo)
+          setBrands(brandsWithLogos)
+        }
+      } catch (error) {
+        console.error('Error fetching brands:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchBrands()
+  }, [])
+
   return (
     <section className="py-16 lg:py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -38,24 +61,35 @@ export default function CustomersSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-wrap items-center justify-center gap-8 lg:gap-12"
         >
-          {brandLogos.map((brand, index) => (
-            <motion.div
-              key={brand.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="grayscale hover:grayscale-0 transition-all duration-300"
-            >
-              <Image
-                src={brand.logo}
-                alt={brand.name}
-                width={120}
-                height={60}
-                className="h-12 w-auto object-contain"
-              />
-            </motion.div>
-          ))}
+          {loading ? (
+            <div className="flex gap-8">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="w-24 h-12 bg-gray-200 animate-pulse rounded" />
+              ))}
+            </div>
+          ) : brands.length > 0 ? (
+            brands.map((brand, index) => (
+              <motion.div
+                key={brand.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="grayscale hover:grayscale-0 transition-all duration-300"
+              >
+                <Image
+                  src={brand.logo || '/images/placeholder.webp'}
+                  alt={brand.name}
+                  width={120}
+                  height={60}
+                  className="h-12 w-auto object-contain"
+                  unoptimized
+                />
+              </motion.div>
+            ))
+          ) : (
+            <p className="text-gray-500">No brands available</p>
+          )}
         </motion.div>
 
         {/* CTA Text */}
