@@ -24,10 +24,20 @@ export async function GET(request: NextRequest) {
       prisma.post.count({ where: { status: 'PUBLISHED' } }),
     ])
 
+    // Transform posts to use 'title' field (prefer English, fallback to Farsi)
+    const transformedPosts = posts.map(post => ({
+      ...post,
+      title: post.titleEn || post.titleFa,
+      postCategory: post.postCategory ? {
+        name: post.postCategory.nameFa,
+        slug: post.postCategory.slug,
+      } : null,
+    }))
+
     return NextResponse.json({
       success: true,
       data: {
-        posts,
+        posts: transformedPosts,
         pagination: {
           page,
           limit,
