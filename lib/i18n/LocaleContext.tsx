@@ -30,15 +30,20 @@ export function LocaleProvider({ children, locale, dictionary }: LocaleProviderP
 
 export function useLocale() {
   const context = useContext(LocaleContext)
+  return context // Returns null if not in a LocaleProvider (e.g., English pages)
+}
+
+export function useLocaleRequired() {
+  const context = useContext(LocaleContext)
 
   if (!context) {
-    throw new Error('useLocale must be used within a LocaleProvider')
+    throw new Error('useLocaleRequired must be used within a LocaleProvider')
   }
 
   return context
 }
 
 export function useTranslation() {
-  const { dictionary } = useLocale()
-  return dictionary
+  const context = useLocale()
+  return context?.dictionary ?? null
 }

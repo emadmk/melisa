@@ -15,16 +15,19 @@ interface Category {
 interface CategorySidebarProps {
   categories: Category[]
   currentSlug?: string
+  locale?: 'en' | 'ar'
 }
 
-export default function CategorySidebar({ categories, currentSlug }: CategorySidebarProps) {
+export default function CategorySidebar({ categories, currentSlug, locale = 'en' }: CategorySidebarProps) {
   const pathname = usePathname()
+  const isArabic = locale === 'ar'
+  const basePath = isArabic ? '/ar/products/category' : '/products/category'
 
   return (
     <div className="bg-white rounded-lg p-6 shadow-sm">
       <h3 className="font-bold text-lg text-dark mb-4 flex items-center gap-2">
-        <ChevronLeft className="w-5 h-5 text-primary" />
-        Product Categories
+        <ChevronLeft className={cn('w-5 h-5 text-primary', isArabic && 'rotate-180')} />
+        {isArabic ? 'فئات المنتجات' : 'Product Categories'}
       </h3>
 
       <ul className="space-y-2">
@@ -34,7 +37,7 @@ export default function CategorySidebar({ categories, currentSlug }: CategorySid
           return (
             <li key={category.id}>
               <Link
-                href={`/products/category/${category.slug}`}
+                href={`${basePath}/${category.slug}`}
                 className={cn(
                   'flex items-center justify-between py-2 px-3 rounded-lg transition-colors',
                   isActive

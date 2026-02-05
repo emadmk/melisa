@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils'
 import { siteConfig } from '@/lib/seo'
 import { trackPhoneClick } from '@/lib/analytics'
 import { LanguageSwitcher } from '@/components/common'
+import { useLocale } from '@/lib/i18n/LocaleContext'
 
 // Product categories based on Melisa structure
 const productCategories = [
@@ -109,7 +110,7 @@ const brands = [
   { name: 'NEUMANN', slug: 'neumann' },
 ]
 
-const navigation = [
+const navigationEn = [
   { name: 'Home', href: '/' },
   { name: 'Products', href: '/products', hasMegaMenu: 'products' },
   { name: 'Brand', href: '/brands', hasMegaMenu: 'brands' },
@@ -120,6 +121,17 @@ const navigation = [
   { name: 'Customer Service', href: 'https://crm.melisa.ae/', external: true },
 ]
 
+const navigationAr = [
+  { name: 'الرئيسية', href: '/ar' },
+  { name: 'المنتجات', href: '/ar/products', hasMegaMenu: 'products' },
+  { name: 'العلامات التجارية', href: '/ar/brands', hasMegaMenu: 'brands' },
+  { name: 'خدماتنا', href: '/ar/services' },
+  { name: 'المدونة', href: '/ar/blog' },
+  { name: 'من نحن', href: '/ar/about' },
+  { name: 'اتصل بنا', href: '/ar/contact' },
+  { name: 'خدمة العملاء', href: 'https://crm.melisa.ae/', external: true },
+]
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -128,6 +140,12 @@ export default function Header() {
   const [openSubSubmenu, setOpenSubSubmenu] = useState<string | null>(null)
   const pathname = usePathname()
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Get locale from context or pathname
+  const localeContext = useLocale()
+  const isArabic = localeContext?.locale === 'ar' || pathname.startsWith('/ar')
+  const navigation = isArabic ? navigationAr : navigationEn
+  const basePath = isArabic ? '/ar' : ''
 
   const handleMouseEnter = (itemName: string) => {
     if (dropdownTimeoutRef.current) {
@@ -265,7 +283,10 @@ export default function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 pt-2"
+                        className={cn(
+                          "absolute top-full pt-2",
+                          isArabic ? "right-0" : "left-0"
+                        )}
                       >
                         <div className="bg-white rounded-lg shadow-dropdown p-2 min-w-[200px] border border-gray-100">
                           {productCategories.map((category) => (
@@ -276,22 +297,28 @@ export default function Header() {
                               onMouseLeave={() => setOpenSubmenu(null)}
                             >
                               <Link
-                                href={`/products/category/${category.slug}`}
-                                className="flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 hover:text-primary hover:bg-primary-light rounded transition-colors"
+                                href={`${basePath}/products/category/${category.slug}`}
+                                className={cn(
+                                  "flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 hover:text-primary hover:bg-primary-light rounded transition-colors",
+                                  isArabic && "flex-row-reverse"
+                                )}
                               >
                                 {category.name}
-                                {category.children && <ChevronRight className="w-4 h-4" />}
+                                {category.children && <ChevronRight className={cn("w-4 h-4", isArabic && "rotate-180")} />}
                               </Link>
 
                               {/* Submenu Level 2 */}
                               <AnimatePresence>
                                 {category.children && openSubmenu === category.slug && (
                                   <motion.div
-                                    initial={{ opacity: 0, x: -10 }}
+                                    initial={{ opacity: 0, x: isArabic ? 10 : -10 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -10 }}
+                                    exit={{ opacity: 0, x: isArabic ? 10 : -10 }}
                                     transition={{ duration: 0.15 }}
-                                    className="absolute left-full top-0 ml-1"
+                                    className={cn(
+                                      "absolute top-0",
+                                      isArabic ? "right-full mr-1" : "left-full ml-1"
+                                    )}
                                   >
                                     <div className="bg-white rounded-lg shadow-dropdown p-2 min-w-[180px] border border-gray-100">
                                       {category.children.map((child) => (
@@ -302,28 +329,34 @@ export default function Header() {
                                           onMouseLeave={() => !child.children && setOpenSubSubmenu(null)}
                                         >
                                           <Link
-                                            href={`/products/category/${child.slug}`}
-                                            className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-primary-light rounded transition-colors"
+                                            href={`${basePath}/products/category/${child.slug}`}
+                                            className={cn(
+                                              "flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-primary-light rounded transition-colors",
+                                              isArabic && "flex-row-reverse"
+                                            )}
                                           >
                                             {child.name}
-                                            {child.children && <ChevronRight className="w-4 h-4" />}
+                                            {child.children && <ChevronRight className={cn("w-4 h-4", isArabic && "rotate-180")} />}
                                           </Link>
 
                                           {/* Submenu Level 3 */}
                                           <AnimatePresence>
                                             {child.children && openSubSubmenu === child.slug && (
                                               <motion.div
-                                                initial={{ opacity: 0, x: -10 }}
+                                                initial={{ opacity: 0, x: isArabic ? 10 : -10 }}
                                                 animate={{ opacity: 1, x: 0 }}
-                                                exit={{ opacity: 0, x: -10 }}
+                                                exit={{ opacity: 0, x: isArabic ? 10 : -10 }}
                                                 transition={{ duration: 0.15 }}
-                                                className="absolute left-full top-0 ml-1"
+                                                className={cn(
+                                                  "absolute top-0",
+                                                  isArabic ? "right-full mr-1" : "left-full ml-1"
+                                                )}
                                               >
                                                 <div className="bg-white rounded-lg shadow-dropdown p-2 min-w-[160px] border border-gray-100">
                                                   {child.children.map((subChild) => (
                                                     <Link
                                                       key={subChild.slug}
-                                                      href={`/products/category/${subChild.slug}`}
+                                                      href={`${basePath}/products/category/${subChild.slug}`}
                                                       className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-primary-light rounded transition-colors"
                                                     >
                                                       {subChild.name}
@@ -354,13 +387,16 @@ export default function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 pt-2 w-56"
+                        className={cn(
+                          "absolute top-full pt-2 w-56",
+                          isArabic ? "right-0" : "left-0"
+                        )}
                       >
                         <div className="bg-white rounded-lg shadow-dropdown py-2 border border-gray-100">
                           {brands.map((brand) => (
                             <Link
                               key={brand.slug}
-                              href={`/brands/${brand.slug}`}
+                              href={`${basePath}/brands/${brand.slug}`}
                               className="block px-4 py-2.5 text-sm text-gray-700 hover:text-primary hover:bg-primary-light transition-colors"
                             >
                               {brand.name}
@@ -428,11 +464,14 @@ export default function Header() {
 
                   {/* Mobile Products Menu */}
                   {item.hasMegaMenu === 'products' && (
-                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-primary-light pl-4">
+                    <div className={cn(
+                      "mt-1 space-y-1 border-primary-light",
+                      isArabic ? "mr-4 border-r-2 pr-4" : "ml-4 border-l-2 pl-4"
+                    )}>
                       {productCategories.map((category) => (
                         <Link
                           key={category.slug}
-                          href={`/products/category/${category.slug}`}
+                          href={`${basePath}/products/category/${category.slug}`}
                           className="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors"
                         >
                           {category.name}
@@ -443,11 +482,14 @@ export default function Header() {
 
                   {/* Mobile Brands Menu */}
                   {item.hasMegaMenu === 'brands' && (
-                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-primary-light pl-4">
+                    <div className={cn(
+                      "mt-1 space-y-1 border-primary-light",
+                      isArabic ? "mr-4 border-r-2 pr-4" : "ml-4 border-l-2 pl-4"
+                    )}>
                       {brands.map((brand) => (
                         <Link
                           key={brand.slug}
-                          href={`/brands/${brand.slug}`}
+                          href={`${basePath}/brands/${brand.slug}`}
                           className="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors"
                         >
                           {brand.name}

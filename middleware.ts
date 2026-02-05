@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getToken } from 'next-auth/jwt'
-import { locales, defaultLocale, type Locale } from '@/lib/i18n/config'
 
 // Rate limiting store (in production, use Redis)
 const rateLimit = new Map<string, { count: number; timestamp: number }>()
@@ -45,30 +44,6 @@ setInterval(() => {
     }
   })
 }, RATE_LIMIT_WINDOW)
-
-// Get locale from pathname
-function getLocaleFromPathname(pathname: string): Locale | null {
-  const segments = pathname.split('/')
-  const potentialLocale = segments[1] as Locale
-
-  if (locales.includes(potentialLocale)) {
-    return potentialLocale
-  }
-
-  return null
-}
-
-// Check if pathname should skip locale handling
-function shouldSkipLocale(pathname: string): boolean {
-  return (
-    pathname.startsWith('/api') ||
-    pathname.startsWith('/admin') ||
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/images') ||
-    pathname.startsWith('/uploads') ||
-    pathname.includes('.') // Static files
-  )
-}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -158,40 +133,14 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // i18n locale handling (skip for API, admin, static files)
-  if (!shouldSkipLocale(pathname)) {
-    const pathnameLocale = getLocaleFromPathname(pathname)
+  // Set locale cookie based on path
+  const isArabic = pathname.startsWith('/ar')
+  const locale = isArabic ? 'ar' : 'en'
 
-    // If no locale in pathname, check user preference
-    if (!pathnameLocale) {
-      // Check cookie for saved preference
-      const savedLocale = request.cookies.get('NEXT_LOCALE')?.value as Locale
-
-      // Check Accept-Language header
-      const acceptLanguage = request.headers.get('accept-language') || ''
-      const preferredLocale = acceptLanguage.includes('ar') ? 'ar' : defaultLocale
-
-      // Use saved locale or detect from header
-      const locale = savedLocale && locales.includes(savedLocale)
-        ? savedLocale
-        : preferredLocale
-
-      // For default locale (English), don't redirect - serve from root
-      // For Arabic, redirect to /ar/...
-      if (locale === 'ar') {
-        const newUrl = new URL(`/ar${pathname}`, request.url)
-        newUrl.search = request.nextUrl.search
-        return NextResponse.redirect(newUrl)
-      }
-    }
-
-    // Set locale cookie based on current path
-    const currentLocale = pathnameLocale || defaultLocale
-    response.cookies.set('NEXT_LOCALE', currentLocale, {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 365, // 1 year
-    })
-  }
+  response.cookies.set('NEXT_LOCALE', locale, {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+  })
 
   return response
 }

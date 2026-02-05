@@ -18,9 +18,48 @@ type ServiceRequestFormData = z.infer<typeof serviceRequestSchema>
 
 interface ServiceRequestFormProps {
   serviceTitle?: string
+  locale?: 'en' | 'ar'
 }
 
-export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormProps) {
+const translations = {
+  en: {
+    successTitle: 'Your request has been submitted successfully',
+    successMessage: 'Our experts will contact you as soon as possible',
+    fullName: 'Full Name',
+    fullNamePlaceholder: 'Enter your name',
+    phone: 'Phone Number',
+    phonePlaceholder: '09123456789',
+    serviceType: 'Service Type',
+    setup: 'Setup',
+    equipmentSupply: 'Equipment Supply',
+    installation: 'Installation',
+    engineering: 'Engineering',
+    description: 'Description',
+    descriptionPlaceholder: 'Write your description or requirements...',
+    sending: 'Sending...',
+    submit: 'Submit Request',
+  },
+  ar: {
+    successTitle: 'تم إرسال طلبك بنجاح',
+    successMessage: 'سيتصل بك خبراؤنا في أقرب وقت ممكن',
+    fullName: 'الاسم الكامل',
+    fullNamePlaceholder: 'أدخل اسمك',
+    phone: 'رقم الهاتف',
+    phonePlaceholder: '09123456789',
+    serviceType: 'نوع الخدمة',
+    setup: 'التشغيل',
+    equipmentSupply: 'توريد المعدات',
+    installation: 'التركيب',
+    engineering: 'الهندسة',
+    description: 'الوصف',
+    descriptionPlaceholder: 'اكتب وصفك أو متطلباتك...',
+    sending: 'جاري الإرسال...',
+    submit: 'إرسال الطلب',
+  },
+}
+
+export default function ServiceRequestForm({ serviceTitle, locale = 'en' }: ServiceRequestFormProps) {
+  const t = translations[locale]
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
@@ -84,10 +123,10 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
           </svg>
         </div>
         <h3 className="text-lg font-bold text-green-800 mb-2">
-          Your request has been submitted successfully
+          {t.successTitle}
         </h3>
         <p className="text-green-600">
-          Our experts will contact you as soon as possible
+          {t.successMessage}
         </p>
       </div>
     )
@@ -96,16 +135,16 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Input
-        label="Full Name"
-        placeholder="Enter your name"
+        label={t.fullName}
+        placeholder={t.fullNamePlaceholder}
         error={errors.name?.message}
         required
         {...register('name')}
       />
 
       <Input
-        label="Phone Number"
-        placeholder="09123456789"
+        label={t.phone}
+        placeholder={t.phonePlaceholder}
         type="tel"
         dir="ltr"
         error={errors.phone?.message}
@@ -115,22 +154,22 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
 
       <div>
         <label className="block text-sm font-medium text-dark mb-1.5">
-          Service Type
+          {t.serviceType}
         </label>
         <select
           className="w-full px-4 py-2.5 text-dark bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           {...register('serviceType')}
         >
-          <option value="Setup">Setup</option>
-          <option value="Equipment Supply">Equipment Supply</option>
-          <option value="Installation">Installation</option>
-          <option value="Engineering">Engineering</option>
+          <option value="Setup">{t.setup}</option>
+          <option value="Equipment Supply">{t.equipmentSupply}</option>
+          <option value="Installation">{t.installation}</option>
+          <option value="Engineering">{t.engineering}</option>
         </select>
       </div>
 
       <Textarea
-        label="Description"
-        placeholder="Write your description or requirements..."
+        label={t.description}
+        placeholder={t.descriptionPlaceholder}
         rows={4}
         {...register('message')}
       />
@@ -139,12 +178,12 @@ export default function ServiceRequestForm({ serviceTitle }: ServiceRequestFormP
         {isSubmitting ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin ml-2" />
-            Sending...
+            {t.sending}
           </>
         ) : (
           <>
             <Send className="w-4 h-4 ml-2" />
-            Submit Request
+            {t.submit}
           </>
         )}
       </Button>
