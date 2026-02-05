@@ -107,7 +107,7 @@ function DarkHeader({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: {
             className="cursor-pointer flex items-center gap-3"
           >
             <Image
-              src="/images/logo.png"
+              src="/images/melisa-logo.webp"
               alt="Melisa"
               width={140}
               height={40}
@@ -214,23 +214,20 @@ function DarkFooter({ brand, onNavigate }: { brand: NeumannBrandPageProps['brand
           <div className="lg:col-span-2">
             <div className="flex items-center gap-4 mb-6">
               <Image
-                src="/images/logo.png"
+                src="/images/melisa-logo.webp"
                 alt="Melisa"
                 width={120}
                 height={36}
                 className="brightness-0 invert opacity-80"
               />
               <span className="text-zinc-700">×</span>
-              {brand.logo && (
-                <Image
-                  src={brand.logo}
-                  alt={brand.name}
-                  width={100}
-                  height={30}
-                  className="opacity-80"
-                  unoptimized
-                />
-              )}
+              <Image
+                src="/images/neumann-logo-white.svg"
+                alt="NEUMANN"
+                width={100}
+                height={30}
+                className="opacity-80"
+              />
             </div>
             <p className="text-zinc-500 mb-6 max-w-md">
               Official distributor of NEUMANN Elektronik products in the UAE.
@@ -329,7 +326,7 @@ function LoadingScreen({ onComplete, isExiting = false }: { onComplete: () => vo
           className="mb-8"
         >
           <Image
-            src="/images/logo.png"
+            src="/images/melisa-logo.webp"
             alt="Melisa"
             width={200}
             height={60}
@@ -406,12 +403,12 @@ export default function NeumannBrandPage({ brand, products, categories, total }:
         {isExiting && <LoadingScreen onComplete={handleExitComplete} isExiting />}
       </AnimatePresence>
 
-      {/* Main Content */}
+      {/* Main Content - Fixed position to cover default layout */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="min-h-screen bg-black"
+        className="fixed inset-0 z-40 bg-black overflow-y-auto"
       >
         {/* Dark Header */}
         <DarkHeader
@@ -443,17 +440,14 @@ export default function NeumannBrandPage({ brand, products, categories, total }:
                   transition={{ delay: 0.5, duration: 0.8 }}
                 >
                   {/* Neumann Logo */}
-                  {brand.logo && (
-                    <div className="relative w-64 h-20 mb-8 mx-auto lg:mx-0">
-                      <Image
-                        src={brand.logo}
-                        alt={brand.name}
-                        fill
-                        className="object-contain object-left"
-                        unoptimized
-                      />
-                    </div>
-                  )}
+                  <div className="relative w-64 h-16 mb-8 mx-auto lg:mx-0">
+                    <Image
+                      src="/images/neumann-logo-white.svg"
+                      alt="NEUMANN"
+                      fill
+                      className="object-contain object-left"
+                    />
+                  </div>
 
                   <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4">
                     Professional
