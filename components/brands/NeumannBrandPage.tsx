@@ -360,7 +360,7 @@ function LoadingScreen({ onComplete, isExiting = false }: { onComplete: () => vo
   )
 }
 
-export default function NeumannBrandPage({ brand, products, categories, total }: NeumannBrandPageProps) {
+export default function NeumannBrandPage({ products, categories, total }: NeumannBrandPageProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [isExiting, setIsExiting] = useState(false)
