@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowRight, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../components/ImageUpload'
 import SeoAnalyzer from '@/components/admin/SeoAnalyzer'
+import { cn } from '@/lib/utils'
 
 interface PostCategory {
   id: string
@@ -16,20 +17,26 @@ export default function NewPostPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState<PostCategory[]>([])
+  const [activeTab, setActiveTab] = useState<'en' | 'ar'>('en')
 
   const [form, setForm] = useState({
     titleFa: '',
     titleEn: '',
+    titleAr: '',
     slug: '',
     excerpt: '',
+    excerptAr: '',
     content: '',
+    contentAr: '',
     image: '',
     status: 'DRAFT',
     author: '',
     postCategoryId: '',
     tags: '',
     metaTitle: '',
+    metaTitleAr: '',
     metaDesc: '',
+    metaDescAr: '',
     focusKeyword: '',
   })
 
@@ -86,47 +93,132 @@ export default function NewPostPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
+        {/* Language Tabs */}
+        <div className="flex border-b border-gray-200 mb-6">
+          <button
+            type="button"
+            onClick={() => setActiveTab('en')}
+            className={cn(
+              'px-4 py-2 text-sm font-medium transition-colors',
+              activeTab === 'en'
+                ? 'border-b-2 border-primary text-primary'
+                : 'text-gray-500 hover:text-gray-700'
+            )}
+          >
+            English
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('ar')}
+            className={cn(
+              'px-4 py-2 text-sm font-medium transition-colors',
+              activeTab === 'ar'
+                ? 'border-b-2 border-primary text-primary'
+                : 'text-gray-500 hover:text-gray-700'
+            )}
+          >
+            العربية
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Persian Title *
-            </label>
-            <input
-              type="text"
-              value={form.titleFa}
-              onChange={(e) => setForm({ ...form, titleFa: e.target.value })}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              required
-            />
-          </div>
+          {activeTab === 'en' ? (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  English Title *
+                </label>
+                <input
+                  type="text"
+                  value={form.titleEn}
+                  onChange={(e) => setForm({ ...form, titleEn: e.target.value })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  required
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              English Title
-            </label>
-            <input
-              type="text"
-              value={form.titleEn}
-              onChange={(e) => setForm({ ...form, titleEn: e.target.value })}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              dir="ltr"
-            />
-          </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Slug
+                </label>
+                <input
+                  type="text"
+                  value={form.slug}
+                  onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  dir="ltr"
+                  placeholder="Leave empty for auto-generation"
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Slug
-            </label>
-            <input
-              type="text"
-              value={form.slug}
-              onChange={(e) => setForm({ ...form, slug: e.target.value })}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              dir="ltr"
-              placeholder="Leave empty for auto-generation"
-            />
-          </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Excerpt (English)
+                </label>
+                <textarea
+                  value={form.excerpt}
+                  onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
+                  rows={3}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
 
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Content (English)
+                </label>
+                <textarea
+                  value={form.content}
+                  onChange={(e) => setForm({ ...form, content: e.target.value })}
+                  rows={10}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  العنوان (العربية)
+                </label>
+                <input
+                  type="text"
+                  value={form.titleAr}
+                  onChange={(e) => setForm({ ...form, titleAr: e.target.value })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                  dir="rtl"
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  المقتطف (العربية)
+                </label>
+                <textarea
+                  value={form.excerptAr}
+                  onChange={(e) => setForm({ ...form, excerptAr: e.target.value })}
+                  rows={3}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                  dir="rtl"
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  المحتوى (العربية)
+                </label>
+                <textarea
+                  value={form.contentAr}
+                  onChange={(e) => setForm({ ...form, contentAr: e.target.value })}
+                  rows={10}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                  dir="rtl"
+                />
+              </div>
+            </>
+          )}
+
+          {/* Common fields shown in both tabs */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Author
@@ -171,7 +263,7 @@ export default function NewPostPage() {
             </select>
           </div>
 
-          <div className="md:col-span-2">
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Tags
             </label>
@@ -185,30 +277,6 @@ export default function NewPostPage() {
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Excerpt
-            </label>
-            <textarea
-              value={form.excerpt}
-              onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Content
-            </label>
-            <textarea
-              value={form.content}
-              onChange={(e) => setForm({ ...form, content: e.target.value })}
-              rows={10}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-          </div>
-
-          <div className="md:col-span-2">
             <ImageUpload
               value={form.image || null}
               onChange={(url) => setForm({ ...form, image: url || '' })}
@@ -217,47 +285,120 @@ export default function NewPostPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Meta Title
-              <span className={`mr-2 text-xs ${form.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
-                ({form.metaTitle.length}/60)
-              </span>
-            </label>
-            <input
-              type="text"
-              value={form.metaTitle}
-              onChange={(e) => setForm({ ...form, metaTitle: e.target.value })}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-          </div>
+          {/* SEO Section */}
+          <div className="md:col-span-2 border-t pt-6 mt-4">
+            <h3 className="font-bold text-dark mb-4">SEO Settings</h3>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Meta Description
-              <span className={`mr-2 text-xs ${form.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
-                ({form.metaDesc.length}/160)
-              </span>
-            </label>
-            <textarea
-              rows={2}
-              value={form.metaDesc}
-              onChange={(e) => setForm({ ...form, metaDesc: e.target.value })}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
+            {/* SEO Language Tabs */}
+            <div className="flex border-b border-gray-200 mb-4">
+              <button
+                type="button"
+                onClick={() => setActiveTab('en')}
+                className={cn(
+                  'px-4 py-2 text-sm font-medium transition-colors',
+                  activeTab === 'en'
+                    ? 'border-b-2 border-primary text-primary'
+                    : 'text-gray-500 hover:text-gray-700'
+                )}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('ar')}
+                className={cn(
+                  'px-4 py-2 text-sm font-medium transition-colors',
+                  activeTab === 'ar'
+                    ? 'border-b-2 border-primary text-primary'
+                    : 'text-gray-500 hover:text-gray-700'
+                )}
+              >
+                العربية
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {activeTab === 'en' ? (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Meta Title (English)
+                      <span className={`ml-2 text-xs ${form.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ({form.metaTitle.length}/60)
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={form.metaTitle}
+                      onChange={(e) => setForm({ ...form, metaTitle: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Meta Description (English)
+                      <span className={`ml-2 text-xs ${form.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ({form.metaDesc.length}/160)
+                      </span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={form.metaDesc}
+                      onChange={(e) => setForm({ ...form, metaDesc: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      عنوان الميتا (العربية)
+                      <span className={`ml-2 text-xs ${form.metaTitleAr.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ({form.metaTitleAr.length}/60)
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={form.metaTitleAr}
+                      onChange={(e) => setForm({ ...form, metaTitleAr: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                      dir="rtl"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      وصف الميتا (العربية)
+                      <span className={`ml-2 text-xs ${form.metaDescAr.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ({form.metaDescAr.length}/160)
+                      </span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={form.metaDescAr}
+                      onChange={(e) => setForm({ ...form, metaDescAr: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                      dir="rtl"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           {/* SEO Analyzer */}
           <div className="md:col-span-2">
             <SeoAnalyzer
-              title={form.titleFa}
+              title={form.titleEn}
               metaTitle={form.metaTitle}
               metaDesc={form.metaDesc}
               content={form.content}
               slug={form.slug}
               focusKeyword={form.focusKeyword}
               onFocusKeywordChange={(keyword) => setForm({ ...form, focusKeyword: keyword })}
-              baseUrl="https://hatefertebat.ir/blog"
+              baseUrl="https://melisa.ae/blog"
             />
           </div>
         </div>

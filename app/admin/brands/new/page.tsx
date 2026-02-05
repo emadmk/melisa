@@ -5,16 +5,19 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../components/ImageUpload'
+import { cn } from '@/lib/utils'
 
 export default function NewBrandPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [activeTab, setActiveTab] = useState<'en' | 'ar'>('en')
 
   const [form, setForm] = useState({
     name: '',
     slug: '',
     logo: '',
     description: '',
+    descriptionAr: '',
     website: '',
     featured: false,
     order: 0,
@@ -114,16 +117,61 @@ export default function NewBrandPage() {
             />
           </div>
 
+          {/* Description with Language Tabs */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
-            <textarea
-              value={form.description}
-              onChange={(e) => setForm({ ...form, description: e.target.value })}
-              rows={4}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
+            <div className="flex border-b border-gray-200 mb-4">
+              <button
+                type="button"
+                onClick={() => setActiveTab('en')}
+                className={cn(
+                  'px-4 py-2 text-sm font-medium transition-colors',
+                  activeTab === 'en'
+                    ? 'border-b-2 border-primary text-primary'
+                    : 'text-gray-500 hover:text-gray-700'
+                )}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('ar')}
+                className={cn(
+                  'px-4 py-2 text-sm font-medium transition-colors',
+                  activeTab === 'ar'
+                    ? 'border-b-2 border-primary text-primary'
+                    : 'text-gray-500 hover:text-gray-700'
+                )}
+              >
+                العربية
+              </button>
+            </div>
+
+            {activeTab === 'en' ? (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Description (English)
+                </label>
+                <textarea
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  rows={4}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+            ) : (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  الوصف (العربية)
+                </label>
+                <textarea
+                  value={form.descriptionAr}
+                  onChange={(e) => setForm({ ...form, descriptionAr: e.target.value })}
+                  rows={4}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                  dir="rtl"
+                />
+              </div>
+            )}
           </div>
 
           <div className="md:col-span-2">

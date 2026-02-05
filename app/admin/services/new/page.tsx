@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowRight, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../components/ImageUpload'
 import SeoAnalyzer from '@/components/admin/SeoAnalyzer'
+import { cn } from '@/lib/utils'
 
 const iconOptions = [
   'Camera', 'Radio', 'Shield', 'Headphones', 'Network',
@@ -15,18 +16,24 @@ const iconOptions = [
 export default function NewServicePage() {
   const router = useRouter()
   const [saving, setSaving] = useState(false)
+  const [activeTab, setActiveTab] = useState<'en' | 'ar'>('en')
   const [formData, setFormData] = useState({
     titleFa: '',
     titleEn: '',
+    titleAr: '',
     slug: '',
     shortDesc: '',
+    shortDescAr: '',
     fullDesc: '',
+    fullDescAr: '',
     icon: '',
     image: '',
     status: 'DRAFT',
     order: 0,
     metaTitle: '',
+    metaTitleAr: '',
     metaDesc: '',
+    metaDescAr: '',
     focusKeyword: '',
   })
 
@@ -75,31 +82,116 @@ export default function NewServicePage() {
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="font-bold text-dark mb-4">Main Information</h2>
 
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Service Title (Persian) *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.titleFa}
-                    onChange={(e) => setFormData({ ...formData, titleFa: e.target.value })}
-                  />
-                </div>
+              {/* Language Tabs */}
+              <div className="flex border-b border-gray-200 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('en')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium transition-colors',
+                    activeTab === 'en'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-gray-500 hover:text-gray-700'
+                  )}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('ar')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium transition-colors',
+                    activeTab === 'ar'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-gray-500 hover:text-gray-700'
+                  )}
+                >
+                  العربية
+                </button>
+              </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Service Title (English)
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.titleEn}
-                    onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
-                  />
-                </div>
+              <div className="space-y-4">
+                {activeTab === 'en' ? (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Service Title (English) *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        value={formData.titleEn}
+                        onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Short Description (English)
+                      </label>
+                      <textarea
+                        rows={2}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        value={formData.shortDesc}
+                        onChange={(e) => setFormData({ ...formData, shortDesc: e.target.value })}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Full Description (English)
+                      </label>
+                      <textarea
+                        rows={6}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        value={formData.fullDesc}
+                        onChange={(e) => setFormData({ ...formData, fullDesc: e.target.value })}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        عنوان الخدمة (العربية)
+                      </label>
+                      <input
+                        type="text"
+                        dir="rtl"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        value={formData.titleAr}
+                        onChange={(e) => setFormData({ ...formData, titleAr: e.target.value })}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        وصف قصير (العربية)
+                      </label>
+                      <textarea
+                        rows={2}
+                        dir="rtl"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        value={formData.shortDescAr}
+                        onChange={(e) => setFormData({ ...formData, shortDescAr: e.target.value })}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        الوصف الكامل (العربية)
+                      </label>
+                      <textarea
+                        rows={6}
+                        dir="rtl"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        value={formData.fullDescAr}
+                        onChange={(e) => setFormData({ ...formData, fullDescAr: e.target.value })}
+                      />
+                    </div>
+                  </>
+                )}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -112,30 +204,6 @@ export default function NewServicePage() {
                     onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                     dir="ltr"
                     placeholder="Leave empty for auto-generation"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Short Description
-                  </label>
-                  <textarea
-                    rows={2}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.shortDesc}
-                    onChange={(e) => setFormData({ ...formData, shortDesc: e.target.value })}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Description
-                  </label>
-                  <textarea
-                    rows={6}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.fullDesc}
-                    onChange={(e) => setFormData({ ...formData, fullDesc: e.target.value })}
                   />
                 </div>
               </div>
@@ -218,48 +286,114 @@ export default function NewServicePage() {
             {/* SEO */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="font-bold text-dark mb-4">SEO</h2>
+
+              {/* SEO Language Tabs */}
+              <div className="flex border-b border-gray-200 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('en')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium transition-colors',
+                    activeTab === 'en'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-gray-500 hover:text-gray-700'
+                  )}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('ar')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium transition-colors',
+                    activeTab === 'ar'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-gray-500 hover:text-gray-700'
+                  )}
+                >
+                  العربية
+                </button>
+              </div>
+
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Meta Title
-                    <span className={`mr-2 text-xs ${formData.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
-                      ({formData.metaTitle.length}/60)
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.metaTitle}
-                    onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Meta Description
-                    <span className={`mr-2 text-xs ${formData.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
-                      ({formData.metaDesc.length}/160)
-                    </span>
-                  </label>
-                  <textarea
-                    rows={3}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    value={formData.metaDesc}
-                    onChange={(e) => setFormData({ ...formData, metaDesc: e.target.value })}
-                  />
-                </div>
+                {activeTab === 'en' ? (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Meta Title (English)
+                        <span className={`ml-2 text-xs ${formData.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                          ({formData.metaTitle.length}/60)
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        value={formData.metaTitle}
+                        onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Meta Description (English)
+                        <span className={`ml-2 text-xs ${formData.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
+                          ({formData.metaDesc.length}/160)
+                        </span>
+                      </label>
+                      <textarea
+                        rows={3}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        value={formData.metaDesc}
+                        onChange={(e) => setFormData({ ...formData, metaDesc: e.target.value })}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        عنوان الميتا (العربية)
+                        <span className={`ml-2 text-xs ${formData.metaTitleAr.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                          ({formData.metaTitleAr.length}/60)
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        dir="rtl"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        value={formData.metaTitleAr}
+                        onChange={(e) => setFormData({ ...formData, metaTitleAr: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        وصف الميتا (العربية)
+                        <span className={`ml-2 text-xs ${formData.metaDescAr.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
+                          ({formData.metaDescAr.length}/160)
+                        </span>
+                      </label>
+                      <textarea
+                        rows={3}
+                        dir="rtl"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        value={formData.metaDescAr}
+                        onChange={(e) => setFormData({ ...formData, metaDescAr: e.target.value })}
+                      />
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
             {/* SEO Analyzer */}
             <SeoAnalyzer
-              title={formData.titleFa}
+              title={formData.titleEn}
               metaTitle={formData.metaTitle}
               metaDesc={formData.metaDesc}
               content={formData.fullDesc}
               slug={formData.slug}
               focusKeyword={formData.focusKeyword}
               onFocusKeywordChange={(keyword) => setFormData({ ...formData, focusKeyword: keyword })}
-              baseUrl="https://hatefertebat.ir/services"
+              baseUrl="https://melisa.ae/services"
             />
           </div>
         </div>

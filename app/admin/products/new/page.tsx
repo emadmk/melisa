@@ -7,6 +7,7 @@ import { ArrowLeft, Plus, X, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../components/ImageUpload'
 import FileUpload from '../../components/FileUpload'
 import SeoAnalyzer from '@/components/admin/SeoAnalyzer'
+import { cn } from '@/lib/utils'
 
 interface Category {
   id: string
@@ -23,13 +24,17 @@ export default function NewProductPage() {
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
   const [brands, setBrands] = useState<Brand[]>([])
+  const [activeTab, setActiveTab] = useState<'en' | 'ar'>('en')
 
   const [form, setForm] = useState({
     titleFa: '',
     titleEn: '',
+    titleAr: '',
     slug: '',
     shortDesc: '',
+    shortDescAr: '',
     fullDesc: '',
+    fullDescAr: '',
     image: '',
     gallery: [] as string[],
     catalogFile: '',
@@ -38,11 +43,13 @@ export default function NewProductPage() {
     categoryId: '',
     brandId: '',
     metaTitle: '',
+    metaTitleAr: '',
     metaDesc: '',
+    metaDescAr: '',
     focusKeyword: '',
   })
 
-  const [attributes, setAttributes] = useState([{ key: '', value: '' }])
+  const [attributes, setAttributes] = useState([{ key: '', keyAr: '', value: '', valueAr: '' }])
 
   useEffect(() => {
     Promise.all([
@@ -57,7 +64,7 @@ export default function NewProductPage() {
   }, [])
 
   const addAttribute = () => {
-    setAttributes([...attributes, { key: '', value: '' }])
+    setAttributes([...attributes, { key: '', keyAr: '', value: '', valueAr: '' }])
   }
 
   const removeAttribute = (index: number) => {
@@ -121,77 +128,143 @@ export default function NewProductPage() {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Basic Info */}
+            {/* Basic Info with Language Tabs */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="font-bold text-dark mb-4">Basic Information</h2>
 
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              {/* Language Tabs */}
+              <div className="flex border-b border-gray-200 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('en')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium transition-colors',
+                    activeTab === 'en'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-gray-500 hover:text-gray-700'
+                  )}
+                >
+                  🇬🇧 English
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('ar')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium transition-colors',
+                    activeTab === 'ar'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-gray-500 hover:text-gray-700'
+                  )}
+                >
+                  🇦🇪 العربية
+                </button>
+              </div>
+
+              {/* English Content */}
+              {activeTab === 'en' && (
+                <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Product Title (Persian) *
+                      Product Title (English) *
                     </label>
                     <input
                       type="text"
-                      value={form.titleFa}
-                      onChange={(e) => setForm({ ...form, titleFa: e.target.value })}
+                      value={form.titleEn}
+                      onChange={(e) => setForm({ ...form, titleEn: e.target.value, titleFa: e.target.value })}
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      dir="ltr"
                       required
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Product Title (English)
+                      Slug (URL)
                     </label>
                     <input
                       type="text"
-                      value={form.titleEn}
-                      onChange={(e) => setForm({ ...form, titleEn: e.target.value })}
+                      value={form.slug}
+                      onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      dir="ltr"
+                      placeholder="Leave empty to generate automatically"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Short Description (English)
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={form.shortDesc}
+                      onChange={(e) => setForm({ ...form, shortDesc: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      dir="ltr"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Full Description (English)
+                    </label>
+                    <textarea
+                      rows={6}
+                      value={form.fullDesc}
+                      onChange={(e) => setForm({ ...form, fullDesc: e.target.value })}
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                       dir="ltr"
                     />
                   </div>
                 </div>
+              )}
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Slug (URL)
-                  </label>
-                  <input
-                    type="text"
-                    value={form.slug}
-                    onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    dir="ltr"
-                    placeholder="Leave empty to generate automatically"
-                  />
-                </div>
+              {/* Arabic Content */}
+              {activeTab === 'ar' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      عنوان المنتج (العربية)
+                    </label>
+                    <input
+                      type="text"
+                      value={form.titleAr}
+                      onChange={(e) => setForm({ ...form, titleAr: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                      dir="rtl"
+                      style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Short Description
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={form.shortDesc}
-                    onChange={(e) => setForm({ ...form, shortDesc: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
-                </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      وصف قصير (العربية)
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={form.shortDescAr}
+                      onChange={(e) => setForm({ ...form, shortDescAr: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                      dir="rtl"
+                      style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Description
-                  </label>
-                  <textarea
-                    rows={6}
-                    value={form.fullDesc}
-                    onChange={(e) => setForm({ ...form, fullDesc: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      الوصف الكامل (العربية)
+                    </label>
+                    <textarea
+                      rows={6}
+                      value={form.fullDescAr}
+                      onChange={(e) => setForm({ ...form, fullDescAr: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                      dir="rtl"
+                      style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Images */}
@@ -249,88 +322,184 @@ export default function NewProductPage() {
 
               <div className="space-y-3">
                 {attributes.map((attr, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <input
-                      type="text"
-                      placeholder="Attribute Name"
-                      className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                      value={attr.key}
-                      onChange={(e) => {
-                        const newAttrs = [...attributes]
-                        newAttrs[index].key = e.target.value
-                        setAttributes(newAttrs)
-                      }}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Value"
-                      className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                      value={attr.value}
-                      onChange={(e) => {
-                        const newAttrs = [...attributes]
-                        newAttrs[index].value = e.target.value
-                        setAttributes(newAttrs)
-                      }}
-                    />
-                    {attributes.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeAttribute(index)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
-                    )}
+                  <div key={index} className="p-3 bg-gray-50 rounded-lg space-y-2">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="text"
+                        placeholder="Attribute Name (English)"
+                        className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        value={attr.key}
+                        onChange={(e) => {
+                          const newAttrs = [...attributes]
+                          newAttrs[index].key = e.target.value
+                          setAttributes(newAttrs)
+                        }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Value (English)"
+                        className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        value={attr.value}
+                        onChange={(e) => {
+                          const newAttrs = [...attributes]
+                          newAttrs[index].value = e.target.value
+                          setAttributes(newAttrs)
+                        }}
+                      />
+                      {attributes.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeAttribute(index)}
+                          className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="text"
+                        placeholder="اسم الخاصية (العربية)"
+                        className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        dir="rtl"
+                        value={attr.keyAr}
+                        onChange={(e) => {
+                          const newAttrs = [...attributes]
+                          newAttrs[index].keyAr = e.target.value
+                          setAttributes(newAttrs)
+                        }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="القيمة (العربية)"
+                        className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        dir="rtl"
+                        value={attr.valueAr}
+                        onChange={(e) => {
+                          const newAttrs = [...attributes]
+                          newAttrs[index].valueAr = e.target.value
+                          setAttributes(newAttrs)
+                        }}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* SEO */}
+            {/* SEO with Language Tabs */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="font-bold text-dark mb-4">SEO</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Meta Title
-                    <span className={`ml-2 text-xs ${form.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
-                      ({form.metaTitle.length}/60)
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    value={form.metaTitle}
-                    onChange={(e) => setForm({ ...form, metaTitle: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Meta Description
-                    <span className={`ml-2 text-xs ${form.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
-                      ({form.metaDesc.length}/160)
-                    </span>
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={form.metaDesc}
-                    onChange={(e) => setForm({ ...form, metaDesc: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
-                </div>
+
+              {/* Language Tabs */}
+              <div className="flex border-b border-gray-200 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('en')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium transition-colors',
+                    activeTab === 'en'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-gray-500 hover:text-gray-700'
+                  )}
+                >
+                  🇬🇧 English
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('ar')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium transition-colors',
+                    activeTab === 'ar'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-gray-500 hover:text-gray-700'
+                  )}
+                >
+                  🇦🇪 العربية
+                </button>
               </div>
+
+              {activeTab === 'en' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Meta Title (English)
+                      <span className={`ml-2 text-xs ${form.metaTitle.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ({form.metaTitle.length}/60)
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={form.metaTitle}
+                      onChange={(e) => setForm({ ...form, metaTitle: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      dir="ltr"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Meta Description (English)
+                      <span className={`ml-2 text-xs ${form.metaDesc.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ({form.metaDesc.length}/160)
+                      </span>
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={form.metaDesc}
+                      onChange={(e) => setForm({ ...form, metaDesc: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      dir="ltr"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'ar' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      عنوان الميتا (العربية)
+                      <span className={`ml-2 text-xs ${form.metaTitleAr.length > 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ({form.metaTitleAr.length}/60)
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={form.metaTitleAr}
+                      onChange={(e) => setForm({ ...form, metaTitleAr: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                      dir="rtl"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      وصف الميتا (العربية)
+                      <span className={`ml-2 text-xs ${form.metaDescAr.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ({form.metaDescAr.length}/160)
+                      </span>
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={form.metaDescAr}
+                      onChange={(e) => setForm({ ...form, metaDescAr: e.target.value })}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                      dir="rtl"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* SEO Analyzer */}
             <SeoAnalyzer
-              title={form.titleFa}
+              title={form.titleEn || form.titleFa}
               metaTitle={form.metaTitle}
               metaDesc={form.metaDesc}
               content={form.fullDesc}
               slug={form.slug}
               focusKeyword={form.focusKeyword}
               onFocusKeywordChange={(keyword) => setForm({ ...form, focusKeyword: keyword })}
-              baseUrl="https://hatefertebat.ir/products"
+              baseUrl="https://melisa.ae/products"
             />
           </div>
 
