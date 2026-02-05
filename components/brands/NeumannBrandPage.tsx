@@ -109,10 +109,11 @@ function DarkHeader({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: {
             <Image
               src="/images/melisa-logo.webp"
               alt="Melisa"
-              width={140}
-              height={40}
+              width={45}
+              height={45}
               className="brightness-0 invert"
             />
+            <span className="text-white font-light tracking-[0.3em] text-lg">M E L I S A</span>
           </div>
 
           {/* Desktop Navigation */}
