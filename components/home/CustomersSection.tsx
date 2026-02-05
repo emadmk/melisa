@@ -1,8 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState, useCallback } from 'react'
+import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
 
 interface Brand {
   id: string
@@ -12,9 +13,54 @@ interface Brand {
   _count?: { products: number }
 }
 
+const testimonials = [
+  {
+    id: 1,
+    name: 'Ahmed Al Mansouri',
+    position: 'Operations Director',
+    company: 'Gulf Security Solutions',
+    text: 'Melisa provided us with exceptional CCTV and surveillance systems. Their technical expertise and after-sales support have been outstanding. Highly recommended for any security project.',
+    avatar: '/images/avatar-1.webp',
+  },
+  {
+    id: 2,
+    name: 'Sarah Thompson',
+    position: 'IT Manager',
+    company: 'Emirates Industrial Group',
+    text: 'We have been working with Melisa for our radio communication needs for over 3 years. Their Motorola solutions have significantly improved our operational efficiency.',
+    avatar: '/images/avatar-2.webp',
+  },
+  {
+    id: 3,
+    name: 'Mohammad Al Hashimi',
+    position: 'Technical Manager',
+    company: 'Dubai Port Services',
+    text: 'The microwave link solutions from Melisa have transformed our connectivity infrastructure. Professional team with deep technical knowledge.',
+    avatar: '/images/avatar-3.webp',
+  },
+  {
+    id: 4,
+    name: 'Fatima Al Zaabi',
+    position: 'Procurement Head',
+    company: 'Abu Dhabi Construction LLC',
+    text: 'Excellent service and competitive pricing. Melisa delivered our complete PAGA system on time and within budget. Their support team is always responsive.',
+    avatar: '/images/avatar-4.webp',
+  },
+  {
+    id: 5,
+    name: 'James Wilson',
+    position: 'Project Manager',
+    company: 'Sharjah Telecom Solutions',
+    text: 'From consultation to installation, Melisa demonstrated professionalism at every step. Their wireless solutions have exceeded our expectations.',
+    avatar: '/images/avatar-5.webp',
+  },
+]
+
 export default function CustomersSection() {
   const [brands, setBrands] = useState<Brand[]>([])
   const [loading, setLoading] = useState(true)
+  const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
   useEffect(() => {
     async function fetchBrands() {
@@ -22,7 +68,6 @@ export default function CustomersSection() {
         const response = await fetch('/api/brands')
         const data = await response.json()
         if (data.success && data.data) {
-          // Filter brands that have logos
           const brandsWithLogos = data.data.filter((brand: Brand) => brand.logo)
           setBrands(brandsWithLogos)
         }
@@ -34,6 +79,27 @@ export default function CustomersSection() {
     }
     fetchBrands()
   }, [])
+
+  const nextTestimonial = useCallback(() => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+  }, [])
+
+  const prevTestimonial = useCallback(() => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }, [])
+
+  useEffect(() => {
+    if (!isAutoPlaying) return
+    const interval = setInterval(nextTestimonial, 5000)
+    return () => clearInterval(interval)
+  }, [isAutoPlaying, nextTestimonial])
+
+  const handleManualNavigation = (direction: 'prev' | 'next') => {
+    setIsAutoPlaying(false)
+    if (direction === 'prev') prevTestimonial()
+    else nextTestimonial()
+    setTimeout(() => setIsAutoPlaying(true), 10000)
+  }
 
   return (
     <section className="py-16 lg:py-20 bg-gray-50">
@@ -92,17 +158,95 @@ export default function CustomersSection() {
           )}
         </motion.div>
 
-        {/* CTA Text */}
+        {/* Testimonials Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-16"
+          className="mt-20"
         >
-          <p className="text-2xl lg:text-3xl font-bold text-primary">
+          <h3 className="text-2xl lg:text-3xl font-bold text-primary text-center mb-12">
             WE ARE GLAD TO HEAR FROM YOU
-          </p>
+          </h3>
+
+          {/* Testimonial Slider */}
+          <div className="relative max-w-4xl mx-auto">
+            {/* Navigation Buttons */}
+            <button
+              onClick={() => handleManualNavigation('prev')}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-12 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => handleManualNavigation('next')}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-12 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            {/* Testimonial Card */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-12 relative overflow-hidden">
+              <Quote className="absolute top-6 left-6 w-12 h-12 text-primary/10" />
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentTestimonial}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center"
+                >
+                  {/* Avatar */}
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
+                    {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-gray-600 text-lg lg:text-xl leading-relaxed mb-6 italic">
+                    &ldquo;{testimonials[currentTestimonial].text}&rdquo;
+                  </p>
+
+                  {/* Author Info */}
+                  <div>
+                    <p className="font-bold text-primary text-lg">
+                      {testimonials[currentTestimonial].name}
+                    </p>
+                    <p className="text-gray-500">
+                      {testimonials[currentTestimonial].position}
+                    </p>
+                    <p className="text-gray-400 text-sm">
+                      {testimonials[currentTestimonial].company}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Dots Navigation */}
+            <div className="flex justify-center gap-2 mt-6">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setCurrentTestimonial(index)
+                    setIsAutoPlaying(false)
+                    setTimeout(() => setIsAutoPlaying(true), 10000)
+                  }}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    index === currentTestimonial
+                      ? 'bg-primary w-8'
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
