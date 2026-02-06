@@ -9,28 +9,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Modern Crimson Red - matches logo
         primary: {
-          DEFAULT: '#1e3a5f',
-          dark: '#0f2744',
-          light: '#e8f4fc',
-          50: '#f0f7ff',
-          100: '#e0efff',
-          200: '#b9dfff',
-          300: '#7cc4ff',
-          400: '#36a7ff',
-          500: '#1e3a5f',
-          600: '#0f2744',
-          700: '#0a1c33',
-          800: '#071525',
-          900: '#040d17',
+          DEFAULT: '#DC2626',
+          dark: '#B91C1C',
+          light: '#FEE2E2',
+          50: '#FEF2F2',
+          100: '#FEE2E2',
+          200: '#FECACA',
+          300: '#FCA5A5',
+          400: '#F87171',
+          500: '#EF4444',
+          600: '#DC2626',
+          700: '#B91C1C',
+          800: '#991B1B',
+          900: '#7F1D1D',
         },
+        // Professional slate gray
         accent: {
-          DEFAULT: '#C41E3A',
-          dark: '#9b1830',
-          light: '#f8e0e4',
+          DEFAULT: '#475569',
+          dark: '#334155',
+          light: '#F1F5F9',
         },
         dark: {
-          DEFAULT: '#1E293B',
+          DEFAULT: '#0F172A',
           50: '#F8FAFC',
           100: '#F1F5F9',
           200: '#E2E8F0',
@@ -81,6 +83,7 @@ const config: Config = {
         'scale-in': 'scaleIn 0.3s ease-out',
         'float': 'float 3s ease-in-out infinite',
         'marquee': 'marquee 30s linear infinite',
+        'pulse-slow': 'pulse 3s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -112,6 +115,7 @@ const config: Config = {
         'card': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
         'card-hover': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
         'dropdown': '0 10px 40px -10px rgb(0 0 0 / 0.2)',
+        'glow-red': '0 0 40px -10px rgba(220, 38, 38, 0.5)',
       },
     },
   },
