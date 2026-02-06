@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Calendar, User, ArrowLeft } from 'lucide-react'
-import { Breadcrumb, Pagination } from '@/components/common'
+import { Calendar, User, ArrowRight, FileText } from 'lucide-react'
+import { PageHero, Pagination } from '@/components/common'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
@@ -19,8 +19,12 @@ interface Post {
 }
 
 export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Melisa articles and news in the field of telecommunications and security equipment',
+  title: 'Blog | Melisa Trading',
+  description: 'Latest articles and news in the field of telecommunications and security equipment',
+}
+
+interface PageProps {
+  searchParams: Promise<{ page?: string }>
 }
 
 async function getPosts(page: number = 1, limit: number = 9) {
@@ -51,91 +55,101 @@ function formatDate(date: Date | null): string {
   return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(date)
 }
 
-export default async function BlogPage() {
-  const { posts, totalPages } = await getPosts()
+export default async function BlogPage({ searchParams }: PageProps) {
+  const params = await searchParams
+  const currentPage = parseInt(params.page || '1', 10)
+  const { posts, total, totalPages } = await getPosts(currentPage)
 
   const breadcrumbItems = [
-    { name: 'Home', url: '/' },
     { name: 'Blog', url: '/blog' },
   ]
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-3">
-          <Breadcrumb items={breadcrumbItems} />
-        </div>
-      </div>
+      {/* Hero Section */}
+      <PageHero
+        title="Our Blog"
+        subtitle={`Stay updated with ${total}+ articles on telecommunications, security, and industry insights`}
+        breadcrumbItems={breadcrumbItems}
+        iconName="Newspaper"
+      />
 
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">Blog</h1>
-          <p className="text-gray-500 text-center mt-3">Latest articles and news</p>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-12">
+      {/* Blog Grid */}
+      <div className="container mx-auto px-4 py-8 sm:py-12">
         {posts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500">No articles are currently available</p>
+          <div className="text-center py-16">
+            <FileText className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-slate-900 mb-2">No articles found</h3>
+            <p className="text-slate-500">Check back later for new articles.</p>
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {posts.map((post) => (
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all"
+                  className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-primary/20"
                 >
-                  <div className="relative aspect-video">
+                  {/* Image */}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
                     <Image
                       src={post.image || '/images/blog/default.jpg'}
                       alt={post.titleFa}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+
+                    {/* Category Badge */}
                     {post.postCategory && (
-                      <span className="absolute top-4 right-4 bg-primary text-white text-xs px-3 py-1 rounded-full">
+                      <span className="absolute top-4 left-4 bg-primary text-white text-xs font-medium px-3 py-1.5 rounded-full">
                         {post.postCategory.nameFa}
                       </span>
                     )}
                   </div>
 
+                  {/* Content */}
                   <div className="p-6">
-                    <h2 className="text-lg font-bold text-dark mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                    {/* Meta */}
+                    <div className="flex items-center gap-4 text-xs text-slate-400 mb-3">
+                      <span className="flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5" />
+                        {post.author || 'Technical Team'}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5" />
+                        {formatDate(post.publishedAt)}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h2 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-primary transition-colors line-clamp-2">
                       {post.titleFa}
                     </h2>
 
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                      {post.excerpt || ''}
-                    </p>
+                    {/* Excerpt */}
+                    {post.excerpt && (
+                      <p className="text-slate-500 text-sm mb-4 line-clamp-2">
+                        {post.excerpt}
+                      </p>
+                    )}
 
-                    <div className="flex items-center justify-between text-sm text-gray-400">
-                      <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-1">
-                          <User className="w-4 h-4" />
-                          {post.author || 'Technical Team'}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {formatDate(post.publishedAt)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <span className="inline-flex items-center gap-1 text-primary text-sm font-medium mt-4 group-hover:gap-2 transition-all">
+                    {/* CTA */}
+                    <span className="inline-flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
                       Read More
-                      <ArrowLeft className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4" />
                     </span>
                   </div>
                 </Link>
               ))}
             </div>
 
+            {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12">
-                <Pagination currentPage={1} totalPages={totalPages} baseUrl="/blog" />
+              <div className="mt-10">
+                <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/blog" />
               </div>
             )}
           </>

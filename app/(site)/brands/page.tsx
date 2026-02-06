@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowLeft } from 'lucide-react'
-import { Breadcrumb } from '@/components/common'
+import { ArrowRight, Award, Package } from 'lucide-react'
+import { PageHero } from '@/components/common'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
@@ -17,7 +17,7 @@ interface Brand {
 }
 
 export const metadata: Metadata = {
-  title: 'Brands',
+  title: 'Brands | Melisa Trading',
   description: 'Official distributor of Motorola, Avigilon, Cambium Networks and Industronic brands in the UAE',
 }
 
@@ -37,64 +37,70 @@ export default async function BrandsPage() {
   const brands = await getBrands()
 
   const breadcrumbItems = [
-    { name: 'Home', url: '/' },
     { name: 'Brands', url: '/brands' },
   ]
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-3">
-          <Breadcrumb items={breadcrumbItems} />
-        </div>
-      </div>
+      {/* Hero Section */}
+      <PageHero
+        title="Our Brands"
+        subtitle="Official distributor of leading global telecommunications and security brands in the UAE"
+        breadcrumbItems={breadcrumbItems}
+        iconName="Award"
+      />
 
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-dark text-center">Brands</h1>
-          <p className="text-gray-500 text-center mt-3 max-w-2xl mx-auto">
-            Official distributor of leading global brands in the UAE
-          </p>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-12">
+      {/* Brands Grid */}
+      <div className="container mx-auto px-4 py-8 sm:py-12">
         {brands.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500">No brands registered yet</p>
+          <div className="text-center py-16">
+            <Award className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-slate-900 mb-2">No brands found</h3>
+            <p className="text-slate-500">Check back later for brand updates.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {brands.map((brand) => (
               <Link
                 key={brand.id}
                 href={`/brands/${brand.slug}`}
-                className="group bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center"
+                className="group bg-white rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-primary/20"
               >
-                <div className="relative w-40 h-24 mb-6 grayscale group-hover:grayscale-0 transition-all">
+                {/* Logo */}
+                <div className="relative w-full h-20 sm:h-24 mb-6 flex items-center justify-center">
                   <Image
                     src={brand.logo || '/images/brands/default.png'}
                     alt={brand.name}
                     fill
-                    className="object-contain"
+                    className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                     unoptimized
                   />
                 </div>
 
-                <h2 className="text-xl font-bold text-dark mb-2 group-hover:text-primary transition-colors">
-                  {brand.name}
-                </h2>
+                {/* Content */}
+                <div className="text-center">
+                  <h2 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
+                    {brand.name}
+                  </h2>
 
-                <p className="text-gray-600 mb-4">{brand.description || ''}</p>
+                  {brand.description && (
+                    <p className="text-slate-500 text-sm mb-4 line-clamp-2">
+                      {brand.description}
+                    </p>
+                  )}
 
-                <span className="text-sm text-gray-400 mb-4">
-                  {brand._count.products} Products
-                </span>
+                  {/* Product Count */}
+                  <div className="flex items-center justify-center gap-2 text-sm text-slate-400 mb-4">
+                    <Package className="w-4 h-4" />
+                    <span>{brand._count.products} Products</span>
+                  </div>
 
-                <span className="inline-flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all">
-                  View Products
-                  <ArrowLeft className="w-4 h-4" />
-                </span>
+                  {/* CTA */}
+                  <span className="inline-flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
+                    View Products
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
               </Link>
             ))}
           </div>

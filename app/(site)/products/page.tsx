@@ -1,12 +1,13 @@
 import { Metadata } from 'next'
 import ProductCard from '@/components/products/ProductCard'
-import { Breadcrumb, Pagination } from '@/components/common'
+import { PageHero, Pagination } from '@/components/common'
 import CategorySidebar from '@/components/products/CategorySidebar'
 import { prisma } from '@/lib/db'
+import { Package } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Products',
-  description: 'View all Melisa products including security cameras, access control, wireless equipment and paging systems',
+  title: 'Products | Melisa Trading',
+  description: 'Browse our complete catalog of telecommunications equipment, security cameras, radio systems, and wireless solutions.',
 }
 
 export const dynamic = 'force-dynamic'
@@ -73,6 +74,7 @@ async function getProducts(page: number = 1, limit: number = 12) {
   return {
     products: mappedProducts,
     totalPages: Math.ceil(total / limit),
+    total,
   }
 }
 
@@ -96,54 +98,67 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   const params = await searchParams
   const currentPage = parseInt(params.page || '1', 10)
 
-  const [{ products, totalPages }, categories] = await Promise.all([
+  const [{ products, totalPages, total }, categories] = await Promise.all([
     getProducts(currentPage),
     getCategories(),
   ])
 
   const breadcrumbItems = [
-    { name: 'Home', url: '/' },
     { name: 'Products', url: '/products' },
   ]
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Breadcrumb */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-3">
-          <Breadcrumb items={breadcrumbItems} />
-        </div>
-      </div>
+      {/* Hero Section */}
+      <PageHero
+        title="Our Products"
+        subtitle={`Explore our comprehensive catalog of ${total}+ telecommunications and security products`}
+        breadcrumbItems={breadcrumbItems}
+        iconName="Package"
+      />
 
-      {/* Page Header */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-dark text-center">Products</h1>
-          <p className="text-gray-500 text-center mt-2">
-            Browse our complete product catalog
-          </p>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-8">
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <aside className="lg:w-72 flex-shrink-0">
-            <CategorySidebar categories={categories} />
+            <div className="lg:sticky lg:top-32">
+              <CategorySidebar categories={categories} />
+            </div>
           </aside>
 
           {/* Products Grid */}
           <main className="flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            {/* Results Info */}
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-slate-600 text-sm">
+                Showing <span className="font-medium text-slate-900">{products.length}</span> of{' '}
+                <span className="font-medium text-slate-900">{total}</span> products
+              </p>
+            </div>
+
+            {/* Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} showCompare={false} />
               ))}
             </div>
 
+            {/* Empty State */}
+            {products.length === 0 && (
+              <div className="text-center py-16">
+                <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-slate-900 mb-2">No products found</h3>
+                <p className="text-slate-500">Check back later for new products.</p>
+              </div>
+            )}
+
             {/* Pagination */}
-            <div className="mt-8">
-              <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/products" />
-            </div>
+            {totalPages > 1 && (
+              <div className="mt-10">
+                <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/products" />
+              </div>
+            )}
           </main>
         </div>
       </div>

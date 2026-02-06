@@ -136,10 +136,10 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm mb-8 ${isArabic ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm mb-6 sm:mb-8 ${isArabic ? 'flex-row-reverse' : ''}`}
             >
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-primary text-sm font-medium">{t.badge}</span>
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0" />
+              <span className="text-primary text-xs sm:text-sm font-medium">{t.badge}</span>
             </motion.div>
 
             {/* Title */}
@@ -147,7 +147,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-4 sm:mb-6"
             >
               <span className="text-white">{t.title1}</span>
               <br />
@@ -163,7 +163,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="text-slate-400 text-lg lg:text-xl leading-relaxed mb-10 max-w-xl"
+              className="text-slate-400 text-sm sm:text-base lg:text-xl leading-relaxed mb-8 sm:mb-10 max-w-xl"
             >
               {t.description}
             </motion.p>
@@ -173,25 +173,25 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className={`flex flex-wrap gap-4 ${isArabic ? 'justify-end' : ''}`}
+              className={`flex flex-col sm:flex-row gap-3 sm:gap-4 ${isArabic ? 'sm:justify-end' : ''}`}
             >
               <Link
                 href={`${basePath}/products`}
-                className="group relative px-8 py-4 bg-primary rounded-xl font-semibold text-white overflow-hidden transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105"
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-primary rounded-xl font-semibold text-white overflow-hidden transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 text-center sm:text-left text-sm sm:text-base"
               >
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="relative z-10 flex items-center justify-center sm:justify-start gap-2">
                   {t.exploreProducts}
-                  {isArabic ? <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" /> : <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+                  {isArabic ? <ArrowLeft className="w-4 sm:w-5 h-4 sm:h-5 group-hover:-translate-x-1 transition-transform" /> : <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 transition-transform" />}
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-dark to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
 
               <Link
                 href={`${basePath}/services`}
-                className="group px-8 py-4 rounded-xl font-semibold text-white border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all flex items-center gap-2"
+                className="group px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-white border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all flex items-center justify-center sm:justify-start gap-2 text-sm sm:text-base"
               >
                 {t.ourServices}
-                {isArabic ? <ArrowLeft className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+                {isArabic ? <ArrowLeft className="w-4 sm:w-5 h-4 sm:h-5" /> : <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />}
               </Link>
             </motion.div>
 
@@ -200,7 +200,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className={`grid grid-cols-4 gap-4 mt-14 pt-10 border-t border-white/10 ${isArabic ? 'text-right' : ''}`}
+              className={`grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mt-10 sm:mt-14 pt-8 sm:pt-10 border-t border-white/10 ${isArabic ? 'text-right' : ''}`}
             >
               {[
                 { value: '500+', label: t.stats.projects },
@@ -213,9 +213,10 @@ export default function HeroSection() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.9 + i * 0.1 }}
+                  className="text-center sm:text-left"
                 >
-                  <div className="text-2xl lg:text-3xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-slate-500 text-xs lg:text-sm">{stat.label}</div>
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1">{stat.value}</div>
+                  <div className="text-slate-500 text-[10px] sm:text-xs lg:text-sm leading-tight">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
@@ -229,7 +230,7 @@ export default function HeroSection() {
             className="relative"
           >
             {/* Bento Grid */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {t.features.map((feature, index) => {
                 const Icon = iconMap[feature.icon as keyof typeof iconMap]
                 return (
@@ -239,22 +240,22 @@ export default function HeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 + index * 0.1 }}
                     whileHover={{ y: -5, scale: 1.02 }}
-                    className={`group relative p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all cursor-pointer ${
+                    className={`group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all cursor-pointer ${
                       index === 0 ? 'col-span-2' : ''
                     }`}
                   >
-                    <div className={`flex items-start gap-4 ${isArabic ? 'flex-row-reverse text-right' : ''}`}>
-                      <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                        <Icon className="w-6 h-6" />
+                    <div className={`flex items-start gap-3 sm:gap-4 ${isArabic ? 'flex-row-reverse text-right' : ''}`}>
+                      <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all shrink-0">
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
-                      <div>
-                        <h3 className="text-white font-semibold text-lg mb-1">{feature.title}</h3>
-                        <p className="text-slate-400 text-sm">{feature.desc}</p>
+                      <div className="min-w-0">
+                        <h3 className="text-white font-semibold text-sm sm:text-lg mb-0.5 sm:mb-1 truncate">{feature.title}</h3>
+                        <p className="text-slate-400 text-xs sm:text-sm line-clamp-2">{feature.desc}</p>
                       </div>
                     </div>
 
                     {/* Hover Glow */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                   </motion.div>
                 )
               })}

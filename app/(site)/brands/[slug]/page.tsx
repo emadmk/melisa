@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
-import { Breadcrumb, Pagination } from '@/components/common'
+import Link from 'next/link'
+import { Package, ArrowRight, ChevronRight, Home } from 'lucide-react'
+import { Pagination } from '@/components/common'
 import ProductCard from '@/components/products/ProductCard'
 import NeumannBrandPage from '@/components/brands/NeumannBrandPage'
 import { prisma } from '@/lib/db'
@@ -138,8 +140,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${brand.name} Products`,
-    description: `View all products from ${brand.name}`,
+    title: `${brand.name} Products | Melisa Trading`,
+    description: brand.description || `View all products from ${brand.name}`,
   }
 }
 
@@ -179,38 +181,86 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
   // Regular brand page
   const { products, total, totalPages } = await getProductsByBrand(brand.id, currentPage)
 
-  const breadcrumbItems = [
-    { name: 'Home', url: '/' },
-    { name: 'Brands', url: '/brands' },
-    { name: brand.name, url: `/brands/${brand.slug}` },
-  ]
-
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-3">
-          <Breadcrumb items={breadcrumbItems} />
+      {/* Hero Header */}
+      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
+              backgroundSize: '32px 32px',
+            }}
+          />
         </div>
-      </div>
 
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-12 text-center">
-          {brand.logo && (
-            <div className="relative w-48 h-24 mx-auto mb-6">
-              <Image src={brand.logo} alt={brand.name} fill className="object-contain" unoptimized />
+        {/* Gradient Orbs */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+
+        <div className="container mx-auto px-4 py-4 relative z-10">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-sm mb-8">
+            <Link href="/" className="text-slate-400 hover:text-primary transition-colors flex items-center gap-1">
+              <Home className="w-4 h-4" />
+              Home
+            </Link>
+            <ChevronRight className="w-4 h-4 text-slate-600" />
+            <Link href="/brands" className="text-slate-400 hover:text-primary transition-colors">
+              Brands
+            </Link>
+            <ChevronRight className="w-4 h-4 text-slate-600" />
+            <span className="text-white font-medium">{brand.name}</span>
+          </nav>
+
+          {/* Brand Info */}
+          <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10 py-8 sm:py-12">
+            {brand.logo && (
+              <div className="relative w-40 h-24 sm:w-56 sm:h-32 bg-white rounded-2xl p-4 shadow-xl">
+                <Image src={brand.logo} alt={brand.name} fill className="object-contain p-2" unoptimized />
+              </div>
+            )}
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3">{brand.name}</h1>
+              {brand.description && (
+                <p className="text-slate-300 max-w-xl mb-4">{brand.description}</p>
+              )}
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white">
+                <Package className="w-5 h-5 text-primary" />
+                <span className="font-medium">{total} Products</span>
+              </div>
             </div>
-          )}
-          <h1 className="text-3xl font-bold text-dark mb-4">{brand.name}</h1>
-          <p className="text-gray-500">{total} Products</p>
+          </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-dark mb-8">{brand.name} Products</h2>
+      {/* Products Grid */}
+      <div className="container mx-auto px-4 py-8 sm:py-12">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">{brand.name} Products</h2>
+          <Link
+            href="/products"
+            className="hidden sm:inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+          >
+            All Products
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
 
         {products.length === 0 ? (
-          <div className="text-center py-12 text-gray-500">
-            No products found for this brand
+          <div className="text-center py-16">
+            <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-slate-900 mb-2">No products found</h3>
+            <p className="text-slate-500 mb-6">Check back later for new products from {brand.name}</p>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl font-medium hover:bg-primary-dark transition-colors"
+            >
+              Browse All Products
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         ) : (
           <>
@@ -221,7 +271,7 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
             </div>
 
             {totalPages > 1 && (
-              <div className="mt-8">
+              <div className="mt-10">
                 <Pagination
                   currentPage={currentPage}
                   totalPages={totalPages}
@@ -232,6 +282,25 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
           </>
         )}
       </div>
+
+      {/* CTA Section */}
+      <section className="py-12 sm:py-16 bg-slate-900">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+            Need Help with {brand.name} Products?
+          </h2>
+          <p className="text-slate-400 max-w-xl mx-auto mb-8">
+            Our team of experts can help you choose the right equipment for your needs
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary-dark transition-colors"
+          >
+            Contact Us
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }

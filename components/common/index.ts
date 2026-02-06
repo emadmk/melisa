@@ -1,4 +1,5 @@
 export { default as Breadcrumb } from './Breadcrumb'
+export { default as PageHero } from './PageHero'
 export { default as Pagination } from './Pagination'
 export { default as WhatsAppButton } from './WhatsAppButton'
 export { default as BackToTop } from './BackToTop'
