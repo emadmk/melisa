@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import HeroSection from '@/components/home/HeroSection'
+import BrandsMarquee from '@/components/home/BrandsMarquee'
 import ServicesSection from '@/components/home/ServicesSection'
 import WhoWeAreSection from '@/components/home/WhoWeAreSection'
 import CustomersSection from '@/components/home/CustomersSection'
@@ -27,6 +28,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <BrandsMarquee />
       <ServicesSection />
       <WhoWeAreSection />
       <CustomersSection />

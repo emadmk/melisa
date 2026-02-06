@@ -1,18 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState, useCallback } from 'react'
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
+import { useState, useCallback, useEffect } from 'react'
+import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react'
 import { useLocale } from '@/lib/i18n/LocaleContext'
-
-interface Brand {
-  id: string
-  name: string
-  slug: string
-  logo: string | null
-  _count?: { products: number }
-}
 
 const testimonialsEn = [
   {
@@ -21,7 +12,7 @@ const testimonialsEn = [
     position: 'Operations Director',
     company: 'Gulf Security Solutions',
     text: 'Melisa provided us with exceptional CCTV and surveillance systems. Their technical expertise and after-sales support have been outstanding. Highly recommended for any security project.',
-    avatar: '/images/avatar-1.webp',
+    rating: 5,
   },
   {
     id: 2,
@@ -29,7 +20,7 @@ const testimonialsEn = [
     position: 'IT Manager',
     company: 'Emirates Industrial Group',
     text: 'We have been working with Melisa for our radio communication needs for over 3 years. Their Motorola solutions have significantly improved our operational efficiency.',
-    avatar: '/images/avatar-2.webp',
+    rating: 5,
   },
   {
     id: 3,
@@ -37,7 +28,7 @@ const testimonialsEn = [
     position: 'Technical Manager',
     company: 'Dubai Port Services',
     text: 'The microwave link solutions from Melisa have transformed our connectivity infrastructure. Professional team with deep technical knowledge.',
-    avatar: '/images/avatar-3.webp',
+    rating: 5,
   },
   {
     id: 4,
@@ -45,15 +36,7 @@ const testimonialsEn = [
     position: 'Procurement Head',
     company: 'Abu Dhabi Construction LLC',
     text: 'Excellent service and competitive pricing. Melisa delivered our complete PAGA system on time and within budget. Their support team is always responsive.',
-    avatar: '/images/avatar-4.webp',
-  },
-  {
-    id: 5,
-    name: 'James Wilson',
-    position: 'Project Manager',
-    company: 'Sharjah Telecom Solutions',
-    text: 'From consultation to installation, Melisa demonstrated professionalism at every step. Their wireless solutions have exceeded our expectations.',
-    avatar: '/images/avatar-5.webp',
+    rating: 5,
   },
 ]
 
@@ -64,7 +47,7 @@ const testimonialsAr = [
     position: 'مدير العمليات',
     company: 'حلول الخليج للأمن',
     text: 'قدمت لنا ميليسا أنظمة مراقبة وكاميرات استثنائية. خبرتهم التقنية ودعمهم بعد البيع كانا متميزين. نوصي بهم بشدة لأي مشروع أمني.',
-    avatar: '/images/avatar-1.webp',
+    rating: 5,
   },
   {
     id: 2,
@@ -72,7 +55,7 @@ const testimonialsAr = [
     position: 'مديرة تقنية المعلومات',
     company: 'مجموعة الإمارات الصناعية',
     text: 'نعمل مع ميليسا لتلبية احتياجاتنا في مجال الاتصالات اللاسلكية منذ أكثر من 3 سنوات. حلول موتورولا التي قدموها حسّنت كفاءتنا التشغيلية بشكل كبير.',
-    avatar: '/images/avatar-2.webp',
+    rating: 5,
   },
   {
     id: 3,
@@ -80,7 +63,7 @@ const testimonialsAr = [
     position: 'المدير التقني',
     company: 'خدمات موانئ دبي',
     text: 'حلول وصلات الميكروويف من ميليسا غيّرت بنيتنا التحتية للاتصالات. فريق محترف يمتلك معرفة تقنية عميقة.',
-    avatar: '/images/avatar-3.webp',
+    rating: 5,
   },
   {
     id: 4,
@@ -88,30 +71,20 @@ const testimonialsAr = [
     position: 'رئيسة المشتريات',
     company: 'شركة أبوظبي للإنشاءات',
     text: 'خدمة ممتازة وأسعار تنافسية. سلّمت ميليسا نظام الإعلان والنداء العام الخاص بنا في الوقت المحدد وضمن الميزانية. فريق الدعم لديهم متجاوب دائماً.',
-    avatar: '/images/avatar-4.webp',
-  },
-  {
-    id: 5,
-    name: 'جيمس ويلسون',
-    position: 'مدير المشاريع',
-    company: 'حلول الشارقة للاتصالات',
-    text: 'من الاستشارة إلى التركيب، أظهرت ميليسا احترافية في كل خطوة. حلولهم اللاسلكية تجاوزت توقعاتنا.',
-    avatar: '/images/avatar-5.webp',
+    rating: 5,
   },
 ]
 
 const translations = {
   en: {
-    customersTitle: 'These Are Our Best Customers',
-    customersSubtitle: 'that enjoy to work with us',
-    testimonialsTitle: 'WE ARE GLAD TO HEAR FROM YOU',
-    noBrands: 'No brands available',
+    badge: 'Testimonials',
+    title: 'What Our Clients Say',
+    subtitle: 'Trusted by leading companies across the UAE and Middle East',
   },
   ar: {
-    customersTitle: 'هؤلاء هم أفضل عملائنا',
-    customersSubtitle: 'الذين يستمتعون بالعمل معنا',
-    testimonialsTitle: 'يسعدنا سماع آرائكم',
-    noBrands: 'لا توجد علامات تجارية متاحة',
+    badge: 'آراء العملاء',
+    title: 'ماذا يقول عملاؤنا',
+    subtitle: 'موثوق من قبل الشركات الرائدة في الإمارات والشرق الأوسط',
   },
 }
 
@@ -121,40 +94,20 @@ export default function CustomersSection() {
   const t = translations[isArabic ? 'ar' : 'en']
   const testimonials = isArabic ? testimonialsAr : testimonialsEn
 
-  const [brands, setBrands] = useState<Brand[]>([])
-  const [loading, setLoading] = useState(true)
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
-  useEffect(() => {
-    async function fetchBrands() {
-      try {
-        const response = await fetch('/api/brands')
-        const data = await response.json()
-        if (data.success && data.data) {
-          const brandsWithLogos = data.data.filter((brand: Brand) => brand.logo)
-          setBrands(brandsWithLogos)
-        }
-      } catch (error) {
-        console.error('Error fetching brands:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchBrands()
-  }, [])
-
   const nextTestimonial = useCallback(() => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-  }, [])
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+  }, [testimonials.length])
 
   const prevTestimonial = useCallback(() => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }, [])
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }, [testimonials.length])
 
   useEffect(() => {
     if (!isAutoPlaying) return
-    const interval = setInterval(nextTestimonial, 5000)
+    const interval = setInterval(nextTestimonial, 6000)
     return () => clearInterval(interval)
   }, [isAutoPlaying, nextTestimonial])
 
@@ -166,152 +119,126 @@ export default function CustomersSection() {
   }
 
   return (
-    <section className="py-16 lg:py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="py-20 lg:py-32 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-primary/5 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-blue-500/5 to-transparent" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className={`text-center mb-16 ${isArabic ? 'text-right' : ''}`}
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-4">
-            {t.customersTitle}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 ${isArabic ? 'flex-row-reverse' : ''}`}
+          >
+            <Quote className="w-4 h-4" />
+            {t.badge}
+          </motion.div>
+
+          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
+            {t.title}
           </h2>
-          <p className="text-gray-600">
-            {t.customersSubtitle}
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+            {t.subtitle}
           </p>
         </motion.div>
 
-        {/* Brand Logos */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap items-center justify-center gap-8 lg:gap-12"
-        >
-          {loading ? (
-            <div className="flex gap-8">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="w-24 h-12 bg-gray-200 animate-pulse rounded" />
-              ))}
-            </div>
-          ) : brands.length > 0 ? (
-            brands.map((brand, index) => (
-              <motion.div
-                key={brand.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="grayscale hover:grayscale-0 transition-all duration-300"
-              >
-                <Image
-                  src={brand.logo || '/images/placeholder.webp'}
-                  alt={brand.name}
-                  width={120}
-                  height={60}
-                  className="h-12 w-auto object-contain"
-                  unoptimized
-                />
-              </motion.div>
-            ))
-          ) : (
-            <p className="text-gray-500">{t.noBrands}</p>
-          )}
-        </motion.div>
-
-        {/* Testimonials Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-20"
-        >
-          <h3 className="text-2xl lg:text-3xl font-bold text-primary text-center mb-12">
-            {t.testimonialsTitle}
-          </h3>
-
-          {/* Testimonial Slider */}
-          <div className="relative max-w-4xl mx-auto">
+        {/* Testimonials Slider */}
+        <div className="max-w-5xl mx-auto">
+          <div className="relative">
             {/* Navigation Buttons */}
             <button
               onClick={() => handleManualNavigation('prev')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-12 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
-              aria-label="Previous testimonial"
+              className={`absolute top-1/2 -translate-y-1/2 ${isArabic ? 'right-0 translate-x-4 lg:translate-x-16' : 'left-0 -translate-x-4 lg:-translate-x-16'} z-10 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-400 hover:text-primary hover:shadow-xl transition-all`}
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={() => handleManualNavigation('next')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-12 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
-              aria-label="Next testimonial"
+              className={`absolute top-1/2 -translate-y-1/2 ${isArabic ? 'left-0 -translate-x-4 lg:-translate-x-16' : 'right-0 translate-x-4 lg:translate-x-16'} z-10 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-400 hover:text-primary hover:shadow-xl transition-all`}
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-6 h-6" />
             </button>
 
             {/* Testimonial Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-12 relative overflow-hidden">
-              <Quote className="absolute top-6 left-6 w-12 h-12 text-primary/10" />
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentTestimonial}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-center"
-                >
-                  {/* Avatar */}
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
-                    {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className={`bg-white rounded-3xl shadow-xl p-8 lg:p-12 ${isArabic ? 'text-right' : ''}`}
+              >
+                {/* Quote Icon */}
+                <div className={`mb-8 ${isArabic ? 'text-right' : ''}`}>
+                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <Quote className="w-8 h-8 text-primary" />
                   </div>
+                </div>
 
-                  {/* Quote */}
-                  <p className="text-gray-600 text-lg lg:text-xl leading-relaxed mb-6 italic">
-                    &ldquo;{testimonials[currentTestimonial].text}&rdquo;
-                  </p>
+                {/* Quote Text */}
+                <p className="text-slate-700 text-xl lg:text-2xl leading-relaxed mb-8 font-light">
+                  &ldquo;{testimonials[currentIndex].text}&rdquo;
+                </p>
 
-                  {/* Author Info */}
+                {/* Rating */}
+                <div className={`flex gap-1 mb-6 ${isArabic ? 'justify-end' : ''}`}>
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-5 h-5 ${i < testimonials[currentIndex].rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Author Info */}
+                <div className={`flex items-center gap-4 ${isArabic ? 'flex-row-reverse' : ''}`}>
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white text-lg font-bold">
+                    {testimonials[currentIndex].name.split(' ').map(n => n[0]).join('')}
+                  </div>
                   <div>
-                    <p className="font-bold text-primary text-lg">
-                      {testimonials[currentTestimonial].name}
+                    <p className="font-bold text-slate-900 text-lg">
+                      {testimonials[currentIndex].name}
                     </p>
-                    <p className="text-gray-500">
-                      {testimonials[currentTestimonial].position}
+                    <p className="text-slate-500">
+                      {testimonials[currentIndex].position}
                     </p>
-                    <p className="text-gray-400 text-sm">
-                      {testimonials[currentTestimonial].company}
+                    <p className="text-primary text-sm font-medium">
+                      {testimonials[currentIndex].company}
                     </p>
                   </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
 
             {/* Dots Navigation */}
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-3 mt-8">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => {
-                    setCurrentTestimonial(index)
+                    setCurrentIndex(index)
                     setIsAutoPlaying(false)
                     setTimeout(() => setIsAutoPlaying(true), 10000)
                   }}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentTestimonial
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    index === currentIndex
                       ? 'bg-primary w-8'
-                      : 'bg-gray-300 hover:bg-gray-400'
+                      : 'bg-slate-300 w-2 hover:bg-slate-400'
                   }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
                 />
               ))}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
