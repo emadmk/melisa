@@ -42,10 +42,16 @@ export default function NewServicePage() {
     setSaving(true)
 
     try {
+      // Use titleEn as titleFa if titleFa is empty
+      const submitData = {
+        ...formData,
+        titleFa: formData.titleFa || formData.titleEn,
+      }
+
       const res = await fetch('/api/admin/services', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       })
 
       const data = await res.json()

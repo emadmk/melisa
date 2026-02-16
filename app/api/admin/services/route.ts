@@ -19,7 +19,10 @@ const serviceSchema = z.object({
   status: z.enum(['DRAFT', 'PUBLISHED']).optional(),
   order: z.number().optional(),
   metaTitle: z.string().optional(),
+  metaTitleAr: z.string().optional(),
   metaDesc: z.string().optional(),
+  metaDescAr: z.string().optional(),
+  focusKeyword: z.string().optional(),
 })
 
 export async function GET() {
