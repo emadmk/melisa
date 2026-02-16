@@ -23,11 +23,11 @@ const translations = {
       support: 'Support'
     },
     features: [
-      { icon: 'radio', title: 'Radio Communication Systems', desc: 'DMR, TETRA & SmartPTT solutions', link: '/products/category/radio' },
-      { icon: 'camera', title: 'CCTV & Video Surveillance', desc: 'IP cameras & video analytics', link: '/products/category/cctv' },
-      { icon: 'speaker', title: 'PA / PAGA & Intercom', desc: 'Industrial & offshore PA systems', link: '/brands/neumann' },
-      { icon: 'shield', title: 'Security & Integrated Systems', desc: 'Radar, access control & C2', link: '/products/category/radar-surveillance-system' },
-      { icon: 'wifi', title: 'Microwave & Wireless Backhaul', desc: 'Licensed & unlicensed links', link: '/products/category/microwave' },
+      { icon: 'radio', title: 'Radio Systems', desc: 'Professional two-way radios', link: '/products/category/radio' },
+      { icon: 'camera', title: 'CCTV Solutions', desc: 'HD surveillance systems', link: '/products/category/cctv' },
+      { icon: 'speaker', title: 'PA & Paging', desc: 'Public address systems', link: '/brands/neumann' },
+      { icon: 'shield', title: 'Security', desc: 'Integrated solutions', link: '/products/category/radar-surveillance-system' },
+      { icon: 'wifi', title: 'Microwave', desc: 'Wireless backhaul', link: '/products/category/microwave' },
     ]
   },
   ar: {
@@ -46,11 +46,11 @@ const translations = {
       support: 'دعم فني'
     },
     features: [
-      { icon: 'radio', title: 'أنظمة الاتصالات اللاسلكية', desc: 'حلول DMR و TETRA و SmartPTT', link: '/products/category/radio' },
-      { icon: 'camera', title: 'كاميرات المراقبة', desc: 'كاميرات IP وتحليلات الفيديو', link: '/products/category/cctv' },
-      { icon: 'speaker', title: 'أنظمة النداء والاتصال الداخلي', desc: 'أنظمة PA صناعية وبحرية', link: '/brands/neumann' },
-      { icon: 'shield', title: 'الأمن والأنظمة المتكاملة', desc: 'الرادار والتحكم في الوصول', link: '/products/category/radar-surveillance-system' },
-      { icon: 'wifi', title: 'الميكروويف والربط اللاسلكي', desc: 'وصلات مرخصة وغير مرخصة', link: '/products/category/microwave' },
+      { icon: 'radio', title: 'أنظمة الراديو', desc: 'أجهزة لاسلكية احترافية', link: '/products/category/radio' },
+      { icon: 'camera', title: 'كاميرات المراقبة', desc: 'أنظمة مراقبة عالية الدقة', link: '/products/category/cctv' },
+      { icon: 'speaker', title: 'أنظمة النداء', desc: 'أنظمة الإذاعة العامة', link: '/brands/neumann' },
+      { icon: 'shield', title: 'الأمان', desc: 'حلول متكاملة', link: '/products/category/radar-surveillance-system' },
+      { icon: 'wifi', title: 'الميكروويف', desc: 'الربط اللاسلكي', link: '/products/category/microwave' },
     ]
   },
 }
@@ -126,7 +126,7 @@ export default function HeroSection() {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 pt-32 pb-16 lg:pt-40 lg:pb-24 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: isArabic ? 50 : -50 }}
@@ -232,40 +232,61 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative"
           >
-            {/* Bento Grid */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {t.features.map((feature, index) => {
-                const Icon = iconMap[feature.icon as keyof typeof iconMap]
-                return (
-                  <Link
-                    key={feature.title}
-                    href={`${basePath}${feature.link}`}
-                  >
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + index * 0.1 }}
-                      whileHover={{ y: -5, scale: 1.02 }}
-                      className={`group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all cursor-pointer ${
-                        index === 0 ? 'col-span-2' : ''
-                      }`}
-                    >
-                      <div className={`flex items-start gap-3 sm:gap-4 ${isArabic ? 'flex-row-reverse text-right' : ''}`}>
-                        <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all shrink-0">
-                          <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                        </div>
-                        <div className="min-w-0">
-                          <h3 className="text-white font-semibold text-sm sm:text-lg mb-0.5 sm:mb-1 truncate">{feature.title}</h3>
-                          <p className="text-slate-400 text-xs sm:text-sm line-clamp-2">{feature.desc}</p>
-                        </div>
-                      </div>
+            {/* Bento Grid - Radio full width, then 2x2 grid */}
+            <div className="space-y-3">
+              {/* Radio Card - Full Width */}
+              <Link href={`${basePath}${t.features[0].link}`}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  whileHover={{ y: -3, scale: 1.01 }}
+                  className="group relative p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all cursor-pointer"
+                >
+                  <div className={`flex items-center gap-3 ${isArabic ? 'flex-row-reverse text-right' : ''}`}>
+                    <div className="p-2.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all shrink-0">
+                      <Radio className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-white font-semibold text-sm sm:text-base">{t.features[0].title}</h3>
+                      <p className="text-slate-400 text-xs sm:text-sm">{t.features[0].desc}</p>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                </motion.div>
+              </Link>
 
-                      {/* Hover Glow */}
-                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                    </motion.div>
-                  </Link>
-                )
-              })}
+              {/* 2x2 Grid for remaining 4 cards */}
+              <div className="grid grid-cols-2 gap-3">
+                {t.features.slice(1).map((feature, index) => {
+                  const Icon = iconMap[feature.icon as keyof typeof iconMap]
+                  return (
+                    <Link
+                      key={feature.title}
+                      href={`${basePath}${feature.link}`}
+                    >
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 + index * 0.1 }}
+                        whileHover={{ y: -3, scale: 1.02 }}
+                        className="group relative p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all cursor-pointer h-full"
+                      >
+                        <div className={`flex items-start gap-2.5 ${isArabic ? 'flex-row-reverse text-right' : ''}`}>
+                          <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all shrink-0">
+                            <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="text-white font-semibold text-xs sm:text-sm mb-0.5">{feature.title}</h3>
+                            <p className="text-slate-400 text-[10px] sm:text-xs line-clamp-2">{feature.desc}</p>
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                      </motion.div>
+                    </Link>
+                  )
+                })}
+              </div>
             </div>
 
             {/* Featured Image Card */}
