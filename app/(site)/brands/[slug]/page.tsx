@@ -184,7 +184,7 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Header */}
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden pt-32 sm:pt-36">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div
@@ -200,7 +200,7 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
 
-        <div className="container mx-auto px-4 py-4 relative z-10">
+        <div className="container mx-auto px-4 pb-4 relative z-10">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm mb-8">
             <Link href="/" className="text-slate-400 hover:text-primary transition-colors flex items-center gap-1">

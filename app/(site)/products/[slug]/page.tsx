@@ -160,8 +160,8 @@ export default async function ProductPage({ params }: PageProps) {
 
       <div className="min-h-screen bg-gray-50">
         {/* Breadcrumb Header */}
-        <div className="bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-700">
-          <div className="container mx-auto px-4 py-4">
+        <div className="bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-700 pt-32 sm:pt-36">
+          <div className="container mx-auto px-4 pb-4">
             <nav className="flex items-center gap-2 text-sm">
               <Link href="/" className="text-slate-400 hover:text-primary transition-colors flex items-center gap-1">
                 <Home className="w-4 h-4" />
