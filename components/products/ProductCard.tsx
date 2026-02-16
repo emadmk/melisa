@@ -60,6 +60,7 @@ export default function ProductCard({
             alt={product.titleFa}
             fill
             className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+            unoptimized={product.image?.includes('/uploads/')}
           />
 
           {/* Compare Button */}

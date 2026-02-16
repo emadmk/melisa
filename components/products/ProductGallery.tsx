@@ -26,6 +26,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
           fill
           className="object-contain p-8"
           priority
+          unoptimized={currentImage.includes('/uploads/')}
         />
       </div>
 
@@ -48,6 +49,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
                 alt={`${title} - Image ${index + 1}`}
                 fill
                 className="object-contain p-2"
+                unoptimized={image.includes('/uploads/')}
               />
             </button>
           ))}
