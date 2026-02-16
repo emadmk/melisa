@@ -3,8 +3,15 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ArrowRight, ArrowLeft, Play, Shield, Radio, Camera, Volume2 } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Play, Shield, Radio, Camera, Volume2, Wifi } from 'lucide-react'
 import { useLocale } from '@/lib/i18n/LocaleContext'
+
+interface Feature {
+  icon: string
+  title: string
+  items: string[]
+  link: string
+}
 
 const translations = {
   en: {
@@ -23,11 +30,37 @@ const translations = {
       support: 'Support'
     },
     features: [
-      { icon: 'radio', title: 'Radio Systems', desc: 'Professional two-way radios' },
-      { icon: 'camera', title: 'CCTV Solutions', desc: 'HD surveillance systems' },
-      { icon: 'speaker', title: 'PA & Paging', desc: 'Public address systems' },
-      { icon: 'shield', title: 'Security', desc: 'Integrated solutions' },
-    ]
+      {
+        icon: 'radio',
+        title: 'Radio Communication Systems',
+        items: ['DMR Tier II / III', 'TETRA', 'Repeaters & IP Linking', 'Dispatch & SmartPTT'],
+        link: '/products/category/radio',
+      },
+      {
+        icon: 'camera',
+        title: 'CCTV & Video Surveillance',
+        items: ['IP Cameras', 'VMS Solutions', 'Thermal & Explosion Proof', 'Video Analytics'],
+        link: '/products/category/cctv',
+      },
+      {
+        icon: 'speaker',
+        title: 'PA / PAGA & Intercom',
+        items: ['Industrial PA Systems', 'Offshore & Hazardous Area', 'Voice Alarm Systems', 'Redundant Controllers'],
+        link: '/brands/neumann',
+      },
+      {
+        icon: 'shield',
+        title: 'Security & Integrated Systems',
+        items: ['Access Control', 'Perimeter Protection', 'Radar & Thermal Integration', 'Command & Control'],
+        link: '/products/category/radar-surveillance-system',
+      },
+      {
+        icon: 'wifi',
+        title: 'Microwave & Wireless Backhaul',
+        items: ['Licensed Microwave', 'Unlicensed PTP/PTMP', 'Fiber Integration', 'Network Design & Link Budget'],
+        link: '/products/category/microwave',
+      },
+    ] as Feature[]
   },
   ar: {
     badge: 'الشركة الرائدة في حلول الاتصالات في الإمارات',
@@ -45,11 +78,37 @@ const translations = {
       support: 'دعم فني'
     },
     features: [
-      { icon: 'radio', title: 'أنظمة الراديو', desc: 'أجهزة لاسلكية احترافية' },
-      { icon: 'camera', title: 'حلول المراقبة', desc: 'أنظمة مراقبة عالية الدقة' },
-      { icon: 'speaker', title: 'أنظمة النداء', desc: 'أنظمة الإذاعة العامة' },
-      { icon: 'shield', title: 'الأمان', desc: 'حلول متكاملة' },
-    ]
+      {
+        icon: 'radio',
+        title: 'أنظمة الاتصالات اللاسلكية',
+        items: ['DMR Tier II / III', 'TETRA', 'المكررات وربط IP', 'Dispatch و SmartPTT'],
+        link: '/products/category/radio',
+      },
+      {
+        icon: 'camera',
+        title: 'كاميرات المراقبة',
+        items: ['كاميرات IP', 'حلول VMS', 'حرارية ومقاومة للانفجار', 'تحليلات الفيديو'],
+        link: '/products/category/cctv',
+      },
+      {
+        icon: 'speaker',
+        title: 'أنظمة النداء والاتصال الداخلي',
+        items: ['أنظمة PA صناعية', 'المناطق البحرية والخطرة', 'أنظمة إنذار صوتي', 'وحدات تحكم احتياطية'],
+        link: '/brands/neumann',
+      },
+      {
+        icon: 'shield',
+        title: 'الأمن والأنظمة المتكاملة',
+        items: ['التحكم في الوصول', 'حماية المحيط', 'تكامل الرادار والحرارية', 'القيادة والتحكم'],
+        link: '/products/category/radar-surveillance-system',
+      },
+      {
+        icon: 'wifi',
+        title: 'الميكروويف والربط اللاسلكي',
+        items: ['ميكروويف مرخص', 'PTP/PTMP غير مرخص', 'تكامل الألياف', 'تصميم الشبكات'],
+        link: '/products/category/microwave',
+      },
+    ] as Feature[]
   },
 }
 
@@ -82,6 +141,7 @@ export default function HeroSection() {
     camera: Camera,
     speaker: Volume2,
     shield: Shield,
+    wifi: Wifi,
   }
 
   return (
@@ -229,34 +289,58 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative"
           >
-            {/* Bento Grid */}
+            {/* Bento Grid - 5 cards */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {t.features.map((feature, index) => {
                 const Icon = iconMap[feature.icon as keyof typeof iconMap]
+                // First card spans full width
+                const isFirst = index === 0
                 return (
-                  <motion.div
+                  <Link
                     key={feature.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    className={`group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all cursor-pointer ${
-                      index === 0 ? 'col-span-2' : ''
-                    }`}
+                    href={`${basePath}${feature.link}`}
                   >
-                    <div className={`flex items-start gap-3 sm:gap-4 ${isArabic ? 'flex-row-reverse text-right' : ''}`}>
-                      <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all shrink-0">
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 + index * 0.1 }}
+                      whileHover={{ y: -5, scale: 1.02 }}
+                      className={`group relative p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all cursor-pointer h-full ${
+                        isFirst ? 'col-span-2' : ''
+                      }`}
+                    >
+                      <div className={`flex items-start gap-3 ${isArabic ? 'flex-row-reverse text-right' : ''}`}>
+                        <div className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all shrink-0">
+                          <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-white font-semibold text-xs sm:text-sm mb-2 leading-tight">{feature.title}</h3>
+                          <div className={`flex flex-wrap gap-1.5 ${isArabic ? 'justify-end' : ''}`}>
+                            {feature.items.map((item) => (
+                              <span
+                                key={item}
+                                className="text-[10px] sm:text-xs text-slate-400 bg-white/5 px-2 py-0.5 rounded-md border border-white/5"
+                              >
+                                {item}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <h3 className="text-white font-semibold text-sm sm:text-lg mb-0.5 sm:mb-1 truncate">{feature.title}</h3>
-                        <p className="text-slate-400 text-xs sm:text-sm line-clamp-2">{feature.desc}</p>
-                      </div>
-                    </div>
 
-                    {/* Hover Glow */}
-                    <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                  </motion.div>
+                      {/* Arrow indicator */}
+                      <div className={`absolute top-4 ${isArabic ? 'left-4' : 'right-4'} opacity-0 group-hover:opacity-100 transition-opacity`}>
+                        {isArabic ? (
+                          <ArrowLeft className="w-4 h-4 text-primary" />
+                        ) : (
+                          <ArrowRight className="w-4 h-4 text-primary" />
+                        )}
+                      </div>
+
+                      {/* Hover Glow */}
+                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    </motion.div>
+                  </Link>
                 )
               })}
             </div>
@@ -265,7 +349,7 @@ export default function HeroSection() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.9 }}
+              transition={{ delay: 1.1 }}
               className="mt-4 relative rounded-2xl overflow-hidden group"
             >
               <div className="aspect-video relative">
