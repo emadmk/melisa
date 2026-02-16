@@ -50,10 +50,11 @@ function NeumannProductCard({ product, onNavigate }: { product: Product; onNavig
         <div className="relative aspect-square bg-black p-6 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
           <Image
-            src={product.image || '/images/placeholder-product.webp'}
+            src={product.image || '/images/placeholder.svg'}
             alt={product.titleEn || product.titleFa}
             fill
             className="object-contain p-4 group-hover:scale-110 transition-transform duration-700"
+            unoptimized
           />
           <div className="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/10 transition-all duration-500 z-20" />
         </div>
@@ -492,6 +493,7 @@ export default function NeumannBrandPage({ products, categories, total }: Neuman
                       alt="Featured Product"
                       fill
                       className="object-contain"
+                      unoptimized
                     />
                   )}
                 </div>

@@ -60,7 +60,7 @@ export function formatPrice(price: number): string {
 }
 
 export function getImageUrl(path: string | null | undefined): string {
-  if (!path) return '/images/placeholder.jpg'
+  if (!path) return '/images/placeholder.svg'
   if (path.startsWith('http')) return path
   return path.startsWith('/') ? path : `/${path}`
 }
