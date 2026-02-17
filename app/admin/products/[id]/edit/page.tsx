@@ -36,6 +36,7 @@ interface ProductData {
   status: string
   featured: boolean
   categoryId: string | null
+  categoryIds: string[]
   brandId: string | null
   attributes: { key: string; value: string }[]
   metaTitle: string | null
@@ -69,6 +70,7 @@ export default function EditProductPage() {
     status: 'DRAFT',
     featured: false,
     categoryId: '',
+    categoryIds: [],
     brandId: '',
     attributes: [{ key: '', value: '' }],
     metaTitle: '',
@@ -99,6 +101,7 @@ export default function EditProductPage() {
           status: product.status || 'DRAFT',
           featured: product.featured || false,
           categoryId: product.categoryId || '',
+          categoryIds: product.categories?.map((c: { id: string }) => c.id) || (product.categoryId ? [product.categoryId] : []),
           brandId: product.brandId || '',
           attributes: product.attributes?.length > 0
             ? product.attributes.map((a: { key: string; value: string }) => ({ key: a.key, value: a.value }))
@@ -158,7 +161,8 @@ export default function EditProductPage() {
           catalogFile: formData.catalogFile || null,
           status: formData.status,
           featured: formData.featured,
-          categoryId: formData.categoryId || null,
+          categoryId: formData.categoryIds[0] || null,
+          categoryIds: formData.categoryIds,
           brandId: formData.brandId || null,
           attributes: formData.attributes.filter(a => a.key && a.value),
           metaTitle: formData.metaTitle || null,
@@ -171,7 +175,7 @@ export default function EditProductPage() {
 
       if (data.success) {
         alert('Product saved successfully')
-        router.push('/admin/products')
+        router.back()
       } else {
         alert(data.message || 'Error saving product')
       }
@@ -532,22 +536,30 @@ export default function EditProductPage() {
               </div>
             </div>
 
-            {/* Category */}
+            {/* Categories */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">Category</h2>
-
-              <select
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                value={formData.categoryId || ''}
-                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-              >
-                <option value="">Select Category</option>
+              <h2 className="font-bold text-dark mb-4">Categories</h2>
+              <div className="space-y-2 max-h-60 overflow-y-auto">
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.nameFa}
-                  </option>
+                  <label key={cat.id} className="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 text-primary rounded"
+                      checked={formData.categoryIds.includes(cat.id)}
+                      onChange={(e) => {
+                        const newIds = e.target.checked
+                          ? [...formData.categoryIds, cat.id]
+                          : formData.categoryIds.filter(id => id !== cat.id)
+                        setFormData({ ...formData, categoryIds: newIds, categoryId: newIds[0] || '' })
+                      }}
+                    />
+                    <span className="text-sm text-gray-700">{cat.nameFa}</span>
+                  </label>
                 ))}
-              </select>
+              </div>
+              {formData.categoryIds.length === 0 && (
+                <p className="text-xs text-gray-400 mt-2">No category selected</p>
+              )}
             </div>
 
             {/* Brand */}

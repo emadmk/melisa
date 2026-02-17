@@ -86,7 +86,8 @@ model Product {
   focusKeyword    String?
   keywords        String[]
   categoryId      String?
-  category        Category?         @relation(fields: [categoryId], references: [id])
+  category        Category?         @relation("PrimaryCategory", fields: [categoryId], references: [id])
+  categories      Category[]        @relation("ProductCategories")
   brandId         String?
   brand           Brand?            @relation(fields: [brandId], references: [id])
   attributes      ProductAttribute[]
@@ -129,7 +130,8 @@ model Category {
   parentId      String?
   parent        Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
   children      Category[] @relation("CategoryHierarchy")
-  products      Product[]
+  products      Product[]  @relation("PrimaryCategory")
+  productsMulti Product[]  @relation("ProductCategories")
   order         Int        @default(0)
   metaTitle     String?
   metaTitleAr   String?    // Arabic meta title

@@ -23,6 +23,7 @@ const productSchema = z.object({
   metaDesc: z.string().nullable().optional(),
   keywords: z.array(z.string()).optional(),
   categoryId: z.string().nullable().optional(),
+  categoryIds: z.array(z.string()).optional(),
   brandId: z.string().nullable().optional(),
   attributes: z.array(z.object({
     key: z.string(),
@@ -52,14 +53,35 @@ export async function GET(request: NextRequest) {
     }
 
     if (status) where.status = status
-    if (categoryId) where.categoryId = categoryId
+    if (categoryId) {
+      where.OR = [
+        ...(where.OR ? (where.OR as Record<string, unknown>[]) : []),
+        { categoryId },
+        { categories: { some: { id: categoryId } } },
+      ]
+      // If there was a search OR, combine them with AND
+      if (search) {
+        where.AND = [
+          { OR: [
+            { titleFa: { contains: search, mode: 'insensitive' } },
+            { titleEn: { contains: search, mode: 'insensitive' } },
+          ]},
+          { OR: [
+            { categoryId },
+            { categories: { some: { id: categoryId } } },
+          ]},
+        ]
+        delete where.OR
+      }
+    }
     if (brandId) where.brandId = brandId
 
     const [products, total] = await Promise.all([
       prisma.product.findMany({
         where,
         include: {
-          category: { select: { nameFa: true, slug: true } },
+          category: { select: { id: true, nameFa: true, slug: true } },
+          categories: { select: { id: true, nameFa: true, slug: true } },
           brand: { select: { name: true, slug: true } },
           _count: { select: { inquiries: true } },
         },
@@ -103,6 +125,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const categoryIds = data.categoryIds || []
+
     const product = await prisma.product.create({
       data: {
         titleFa: data.titleFa,
@@ -121,7 +145,10 @@ export async function POST(request: NextRequest) {
         metaTitle: data.metaTitle,
         metaDesc: data.metaDesc,
         keywords: data.keywords || [],
-        categoryId: data.categoryId,
+        categoryId: categoryIds[0] || data.categoryId || null,
+        categories: categoryIds.length > 0
+          ? { connect: categoryIds.map((id: string) => ({ id })) }
+          : undefined,
         brandId: data.brandId,
         attributes: data.attributes
           ? {
@@ -135,6 +162,7 @@ export async function POST(request: NextRequest) {
       },
       include: {
         category: true,
+        categories: true,
         brand: true,
         attributes: true,
       },
@@ -174,16 +202,24 @@ export async function PUT(request: NextRequest) {
     }
 
     const data = productSchema.partial().parse(updateData)
+    const categoryIds = data.categoryIds
 
     // Delete existing attributes if new ones provided
     if (data.attributes) {
       await prisma.productAttribute.deleteMany({ where: { productId: id } })
     }
 
+    // Build update data without categoryIds (not a Prisma field)
+    const { categoryIds: _catIds, ...prismaData } = data
+
     const product = await prisma.product.update({
       where: { id },
       data: {
-        ...data,
+        ...prismaData,
+        categoryId: categoryIds ? (categoryIds[0] || null) : prismaData.categoryId,
+        categories: categoryIds
+          ? { set: categoryIds.map((cid: string) => ({ id: cid })) }
+          : undefined,
         attributes: data.attributes
           ? {
               create: data.attributes.map((attr, index) => ({
@@ -196,6 +232,7 @@ export async function PUT(request: NextRequest) {
       },
       include: {
         category: true,
+        categories: true,
         brand: true,
         attributes: true,
       },

@@ -15,6 +15,7 @@ export async function GET(
       where: { id },
       include: {
         category: { select: { id: true, nameFa: true, slug: true } },
+        categories: { select: { id: true, nameFa: true, slug: true } },
         brand: { select: { id: true, name: true, slug: true } },
       },
     })

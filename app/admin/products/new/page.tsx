@@ -41,6 +41,7 @@ export default function NewProductPage() {
     status: 'DRAFT',
     featured: false,
     categoryId: '',
+    categoryIds: [] as string[],
     brandId: '',
     metaTitle: '',
     metaTitleAr: '',
@@ -93,8 +94,10 @@ export default function NewProductPage() {
           ...form,
           image: form.image || null,
           catalogFile: form.catalogFile || null,
-          categoryId: form.categoryId || null,
+          categoryId: form.categoryIds[0] || form.categoryId || null,
+          categoryIds: form.categoryIds,
           brandId: form.brandId || null,
+          titleFa: form.titleFa || form.titleEn,
           attributes: attributes.filter((a) => a.key && a.value),
         }),
       })
@@ -549,21 +552,30 @@ export default function NewProductPage() {
               </div>
             </div>
 
-            {/* Category */}
+            {/* Categories */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-bold text-dark mb-4">Category</h2>
-              <select
-                value={form.categoryId}
-                onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              >
-                <option value="">Select Category</option>
+              <h2 className="font-bold text-dark mb-4">Categories</h2>
+              <div className="space-y-2 max-h-60 overflow-y-auto">
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.nameFa}
-                  </option>
+                  <label key={cat.id} className="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 text-primary rounded"
+                      checked={form.categoryIds.includes(cat.id)}
+                      onChange={(e) => {
+                        const newIds = e.target.checked
+                          ? [...form.categoryIds, cat.id]
+                          : form.categoryIds.filter(id => id !== cat.id)
+                        setForm({ ...form, categoryIds: newIds, categoryId: newIds[0] || '' })
+                      }}
+                    />
+                    <span className="text-sm text-gray-700">{cat.nameFa}</span>
+                  </label>
                 ))}
-              </select>
+              </div>
+              {form.categoryIds.length === 0 && (
+                <p className="text-xs text-gray-400 mt-2">No category selected</p>
+              )}
             </div>
 
             {/* Brand */}

@@ -55,8 +55,8 @@ export default function ProductsPage() {
         limit: pagination.limit.toString(),
       })
       if (searchQuery) params.set('search', searchQuery)
-      if (categoryFilter) params.set('category', categoryFilter)
-      if (brandFilter) params.set('brand', brandFilter)
+      if (categoryFilter) params.set('categoryId', categoryFilter)
+      if (brandFilter) params.set('brandId', brandFilter)
 
       const res = await fetch(`/api/admin/products?${params}`)
       const data = await res.json()
@@ -230,6 +230,7 @@ export default function ProductsPage() {
                               alt={product.titleFa}
                               fill
                               className="object-contain"
+                              unoptimized
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
