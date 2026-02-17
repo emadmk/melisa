@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 import { Plus, Search, Edit, Trash2, Eye, Loader2 } from 'lucide-react'
 
 interface Product {
@@ -36,11 +37,14 @@ interface PaginationInfo {
   totalPages: number
 }
 
-export default function ProductsPage() {
+function ProductsContent() {
+  const searchParams = useSearchParams()
+  const initialPage = parseInt(searchParams.get('page') || '1', 10)
+
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [brands, setBrands] = useState<Brand[]>([])
-  const [pagination, setPagination] = useState<PaginationInfo>({ page: 1, limit: 10, total: 0, totalPages: 0 })
+  const [pagination, setPagination] = useState<PaginationInfo>({ page: initialPage, limit: 10, total: 0, totalPages: 0 })
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('')
@@ -275,7 +279,7 @@ export default function ProductsPage() {
                           <Eye className="w-4 h-4" />
                         </Link>
                         <Link
-                          href={`/admin/products/${product.id}/edit`}
+                          href={`/admin/products/${product.id}/edit?returnPage=${pagination.page}`}
                           className="p-2 text-gray-400 hover:text-primary transition-colors"
                           title="Edit"
                         >
@@ -353,5 +357,13 @@ export default function ProductsPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>}>
+      <ProductsContent />
+    </Suspense>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, X, Plus, Loader2, Save } from 'lucide-react'
 import ImageUpload from '../../../components/ImageUpload'
@@ -47,7 +47,9 @@ interface ProductData {
 export default function EditProductPage() {
   const params = useParams()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const productId = params.id as string
+  const returnPage = searchParams.get('returnPage') || '1'
 
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -175,7 +177,7 @@ export default function EditProductPage() {
 
       if (data.success) {
         alert('Product saved successfully')
-        router.back()
+        router.push(`/admin/products?page=${returnPage}`)
       } else {
         alert(data.message || 'Error saving product')
       }
