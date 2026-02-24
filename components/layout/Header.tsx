@@ -21,7 +21,13 @@ import { LanguageSwitcher } from '@/components/common'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 
 // Product categories based on PDF menu structure
-const productCategoriesEn = [
+type ProductCategory = {
+  name: string;
+  slug: string;
+  children?: ProductCategory[];
+};
+
+const productCategoriesEn: ProductCategory[] = [
   {
     name: 'PAGA & Industrial Intercom',
     slug: 'paga',
@@ -78,7 +84,7 @@ const productCategoriesEn = [
   },
 ]
 
-const productCategoriesAr = [
+const productCategoriesAr: ProductCategory[] = [
   {
     name: 'أنظمة النداء العام والاتصال الداخلي',
     slug: 'paga',
