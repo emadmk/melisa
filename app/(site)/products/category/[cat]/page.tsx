@@ -8,12 +8,14 @@ import RadarCategoryPage from '@/components/categories/RadarCategoryPage'
 import RadioCategoryPage from '@/components/categories/RadioCategoryPage'
 import MicrowaveCategoryPage from '@/components/categories/MicrowaveCategoryPage'
 import FiberCategoryPage from '@/components/categories/FiberCategoryPage'
+import PAGACategoryPage from '@/components/categories/PAGACategoryPage'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
 // Categories with special themed pages
 const THEMED_CATEGORIES: Record<string, string> = {
+  'paga': 'paga',
   'cctv': 'cctv',
   'radar-surveillance-system': 'radar',
   'radio': 'radio',
@@ -168,6 +170,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Custom metadata for themed categories
   const themedMeta: Record<string, { title: string; description: string }> = {
+    'paga': {
+      title: 'PAGA & Industrial Intercom Systems | NEUMANN Elektronik | Melisa',
+      description: 'Professional PA/GA and industrial intercom systems by NEUMANN Elektronik. SIL2-certified public address, general alarm, and IP intercom solutions for oil & gas and critical infrastructure.',
+    },
     'cctv': {
       title: 'Industrial CCTV & Video Surveillance Systems | Melisa',
       description: 'Advanced CCTV and video surveillance systems for industrial environments. Pelco, Avigilon, and Axis cameras for oil & gas, power plants, and critical infrastructure.',
@@ -222,6 +228,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     const { products, total } = await getAllProductsByCategory(cat)
 
     switch (themedType) {
+      case 'paga':
+        return <PAGACategoryPage products={products} totalProducts={total} />
       case 'cctv':
         return <CCTVCategoryPage products={products} totalProducts={total} />
       case 'radar':
