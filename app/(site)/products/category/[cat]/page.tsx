@@ -1,11 +1,30 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import ProductCard from '@/components/products/ProductCard'
 import { Breadcrumb, Pagination } from '@/components/common'
 import CategorySidebar from '@/components/products/CategorySidebar'
+import CCTVCategoryPage from '@/components/categories/CCTVCategoryPage'
+import RadarCategoryPage from '@/components/categories/RadarCategoryPage'
+import RadioCategoryPage from '@/components/categories/RadioCategoryPage'
+import MicrowaveCategoryPage from '@/components/categories/MicrowaveCategoryPage'
+import FiberCategoryPage from '@/components/categories/FiberCategoryPage'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
+
+// Categories with special themed pages
+const THEMED_CATEGORIES: Record<string, string> = {
+  'cctv': 'cctv',
+  'radar-surveillance-system': 'radar',
+  'radio': 'radio',
+  'microwave': 'microwave',
+  'otn-fiber': 'fiber',
+}
+
+// PAGA redirects to Neumann brand page
+const REDIRECT_CATEGORIES: Record<string, string> = {
+  'paga': '/brands/neumann',
+}
 
 interface PageProps {
   params: Promise<{ cat: string }>
@@ -105,12 +124,78 @@ async function getProductsByCategory(categorySlug: string, page: number = 1, lim
 
   return {
     products: mappedProducts,
+    total,
     totalPages: Math.ceil(total / limit),
   }
 }
 
+async function getAllProductsByCategory(categorySlug: string) {
+  const encodedSlug = encodeURIComponent(categorySlug).toLowerCase()
+  const [products, total] = await Promise.all([
+    prisma.product.findMany({
+      where: {
+        category: { slug: encodedSlug },
+        status: 'PUBLISHED',
+      },
+      include: {
+        category: { select: { id: true, nameFa: true, nameEn: true, slug: true } },
+        brand: { select: { id: true, name: true, slug: true, logo: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.product.count({
+      where: {
+        category: { slug: encodedSlug },
+        status: 'PUBLISHED',
+      },
+    }),
+  ])
+
+  const mappedProducts: Product[] = (products as RawProduct[]).map((p) => ({
+    id: p.id,
+    titleFa: p.titleFa,
+    titleEn: p.titleEn,
+    slug: p.slug,
+    shortDesc: p.shortDesc,
+    image: p.image,
+    category: p.category ? { nameFa: p.category.nameFa, slug: p.category.slug } : null,
+    brand: p.brand ? { name: p.brand.name, slug: p.brand.slug, logo: p.brand.logo } : null,
+  }))
+
+  return { products: mappedProducts, total }
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { cat } = await params
+
+  // Custom metadata for themed categories
+  const themedMeta: Record<string, { title: string; description: string }> = {
+    'cctv': {
+      title: 'Industrial CCTV & Video Surveillance Systems | Melisa',
+      description: 'Advanced CCTV and video surveillance systems for industrial environments. Pelco, Avigilon, and Axis cameras for oil & gas, power plants, and critical infrastructure.',
+    },
+    'radar-surveillance-system': {
+      title: 'Perimeter Radar Security Systems | Navtech Radar | Melisa',
+      description: 'Next-generation radar-based perimeter security systems for critical infrastructure. Authorized Navtech Radar partner in UAE and GCC.',
+    },
+    'radio': {
+      title: 'Mission-Critical Radio Communication Systems | TETRA & DMR | Melisa',
+      description: 'TETRA, DMR, and P25 digital radio systems by Motorola Solutions. Enterprise-grade communication for public safety, defense, and industrial operations.',
+    },
+    'microwave': {
+      title: 'Microwave Communication Systems | SIAE Microelettronica | Melisa',
+      description: 'High-capacity microwave communication systems for telecom operators and enterprises. Licensed and unlicensed microwave links up to 10 Gbps.',
+    },
+    'otn-fiber': {
+      title: 'OTN & Fiber Optic Communication Networks | Melisa',
+      description: 'Cutting-edge OTN/DWDM and fiber optic solutions for telecom operators and enterprise networks. Ultra-high-capacity optical infrastructure.',
+    },
+  }
+
+  if (themedMeta[cat]) {
+    return themedMeta[cat]
+  }
+
   const category = await getCategory(cat)
 
   if (!category) {
@@ -128,6 +213,31 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   const { page } = await searchParams
   const currentPage = parseInt(page || '1', 10)
 
+  // Check if this category should redirect
+  if (REDIRECT_CATEGORIES[cat]) {
+    redirect(REDIRECT_CATEGORIES[cat])
+  }
+
+  // Check if this is a themed category
+  const themedType = THEMED_CATEGORIES[cat]
+  if (themedType) {
+    const { products, total } = await getAllProductsByCategory(cat)
+
+    switch (themedType) {
+      case 'cctv':
+        return <CCTVCategoryPage products={products} totalProducts={total} />
+      case 'radar':
+        return <RadarCategoryPage products={products} totalProducts={total} />
+      case 'radio':
+        return <RadioCategoryPage products={products} totalProducts={total} />
+      case 'microwave':
+        return <MicrowaveCategoryPage products={products} totalProducts={total} />
+      case 'fiber':
+        return <FiberCategoryPage products={products} totalProducts={total} />
+    }
+  }
+
+  // Regular category page
   const [category, categories, { products, totalPages }] = await Promise.all([
     getCategory(cat),
     getCategories(),
