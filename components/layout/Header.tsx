@@ -20,164 +20,118 @@ import { trackPhoneClick } from '@/lib/analytics'
 import { LanguageSwitcher } from '@/components/common'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 
-// Product categories
+// Product categories based on PDF menu structure
 const productCategoriesEn = [
   {
-    name: 'PAGA',
+    name: 'PAGA & Industrial Intercom',
     slug: 'paga',
     children: [
-      {
-        name: 'Controllers & System Modules',
-        slug: 'controllers-system-modules',
-        children: [
-          { name: 'DS-6', slug: 'ds-6-controllers' },
-          { name: 'DS-22', slug: 'ds-22-controllers' },
-        ]
-      },
-      {
-        name: 'Call Stations',
-        slug: 'call-stations',
-        children: [
-          { name: 'DS-6', slug: 'ds-6-call-stations' },
-          { name: 'DS-22', slug: 'ds-22-call-stations' },
-        ]
-      },
+      { name: 'Public Address & General Alarm', slug: 'public-address-general-alarm' },
+      { name: 'Industrial Intercom Systems', slug: 'industrial-intercom-systems' },
       { name: 'Speakers & Siren', slug: 'speakers-siren' },
-      { name: 'Software', slug: 'paga-software' },
     ],
   },
   {
-    name: 'Radio',
-    slug: 'radio',
-    children: [
-      {
-        name: 'DMR',
-        slug: 'dmr',
-        children: [
-          { name: 'MOTOTRBO', slug: 'mototrbo' }
-        ]
-      },
-      { name: 'TETRA', slug: 'tetra' },
-      {
-        name: 'Project 25 Radios',
-        slug: 'project-25-radios',
-        children: [
-          { name: 'Mobile Radios', slug: 'mobile-radios' },
-          { name: 'Portable Radios', slug: 'portable-radios' },
-          { name: 'Discontinued', slug: 'discontinued' },
-        ]
-      },
-    ],
-  },
-  {
-    name: 'Microwave',
-    slug: 'microwave',
-    children: [
-      { name: 'Hardware Products', slug: 'hardware-products' },
-      { name: 'Software Products', slug: 'software-products' },
-    ],
-  },
-  {
-    name: 'Wireless',
-    slug: 'wireless',
-    children: [
-      { name: 'Point to Point', slug: 'point-to-point' },
-      { name: 'Point to Multipoint', slug: 'point-to-multipoint' },
-      { name: 'WLAN', slug: 'wlan' },
-      { name: 'MESH', slug: 'mesh' },
-    ],
-  },
-  {
-    name: 'CCTV',
+    name: 'Industrial CCTV & Surveillance',
     slug: 'cctv',
     children: [
-      { name: 'Access Control', slug: 'access-control' },
-      { name: 'Security Cameras', slug: 'security-cameras' },
+      { name: 'Fixed & PTZ Cameras', slug: 'fixed-ptz-cameras' },
+      { name: 'Explosion Proof Cameras', slug: 'explosion-proof-cameras' },
+      { name: 'Video Management System', slug: 'video-management-system' },
     ],
   },
   {
-    name: 'Radar Surveillance System',
+    name: 'Perimeter Security & Radar',
     slug: 'radar-surveillance-system',
+    children: [
+      { name: 'Perimeter Radars 360°', slug: 'perimeter-radars' },
+      { name: 'Intrusion Detection Systems', slug: 'intrusion-detection-systems' },
+      { name: 'Radar & CCTV Integration', slug: 'radar-cctv-integration' },
+    ],
+  },
+  {
+    name: 'Radio Communication',
+    slug: 'radio',
+    children: [
+      { name: 'TETRA Systems', slug: 'tetra' },
+      { name: 'DMR Radio System', slug: 'dmr' },
+      { name: 'Dispatching Solutions', slug: 'dispatching-solutions' },
+    ],
+  },
+  {
+    name: 'Microwave Communication',
+    slug: 'microwave',
+    children: [
+      { name: 'PtP Microwave Links', slug: 'ptp-microwave-links' },
+      { name: 'PtMP Solutions', slug: 'ptmp' },
+    ],
+  },
+  {
+    name: 'Optical Transport & Fiber',
+    slug: 'otn-fiber',
+    children: [
+      { name: 'OTN Systems', slug: 'otn-systems' },
+      { name: 'SDH/Legacy Integration', slug: 'sdh-legacy-integration' },
+      { name: 'Fiber Optic Infrastructure', slug: 'fiber-optic-infrastructure' },
+      { name: 'Optical Transmission Solutions', slug: 'optical-transmission-solutions' },
+    ],
   },
 ]
 
 const productCategoriesAr = [
   {
-    name: 'أنظمة النداء العام',
+    name: 'أنظمة النداء العام والاتصال الداخلي',
     slug: 'paga',
     children: [
-      {
-        name: 'وحدات التحكم والنظام',
-        slug: 'controllers-system-modules',
-        children: [
-          { name: 'DS-6', slug: 'ds-6-controllers' },
-          { name: 'DS-22', slug: 'ds-22-controllers' },
-        ]
-      },
-      {
-        name: 'محطات الاتصال',
-        slug: 'call-stations',
-        children: [
-          { name: 'DS-6', slug: 'ds-6-call-stations' },
-          { name: 'DS-22', slug: 'ds-22-call-stations' },
-        ]
-      },
+      { name: 'النداء العام والإنذار العام', slug: 'public-address-general-alarm' },
+      { name: 'أنظمة الاتصال الداخلي الصناعي', slug: 'industrial-intercom-systems' },
       { name: 'مكبرات الصوت والصفارات', slug: 'speakers-siren' },
-      { name: 'البرمجيات', slug: 'paga-software' },
     ],
   },
   {
-    name: 'الراديو',
-    slug: 'radio',
-    children: [
-      {
-        name: 'DMR',
-        slug: 'dmr',
-        children: [
-          { name: 'MOTOTRBO', slug: 'mototrbo' }
-        ]
-      },
-      { name: 'TETRA', slug: 'tetra' },
-      {
-        name: 'راديو المشروع 25',
-        slug: 'project-25-radios',
-        children: [
-          { name: 'الراديو المتنقل', slug: 'mobile-radios' },
-          { name: 'الراديو المحمول', slug: 'portable-radios' },
-          { name: 'منتجات متوقفة', slug: 'discontinued' },
-        ]
-      },
-    ],
-  },
-  {
-    name: 'الميكروويف',
-    slug: 'microwave',
-    children: [
-      { name: 'المنتجات المادية', slug: 'hardware-products' },
-      { name: 'المنتجات البرمجية', slug: 'software-products' },
-    ],
-  },
-  {
-    name: 'اللاسلكي',
-    slug: 'wireless',
-    children: [
-      { name: 'نقطة إلى نقطة', slug: 'point-to-point' },
-      { name: 'نقطة إلى متعدد', slug: 'point-to-multipoint' },
-      { name: 'شبكة محلية لاسلكية', slug: 'wlan' },
-      { name: 'شبكة MESH', slug: 'mesh' },
-    ],
-  },
-  {
-    name: 'كاميرات المراقبة',
+    name: 'كاميرات المراقبة الصناعية',
     slug: 'cctv',
     children: [
-      { name: 'التحكم في الوصول', slug: 'access-control' },
-      { name: 'كاميرات الأمن', slug: 'security-cameras' },
+      { name: 'كاميرات ثابتة ومتحركة', slug: 'fixed-ptz-cameras' },
+      { name: 'كاميرات مقاومة للانفجار', slug: 'explosion-proof-cameras' },
+      { name: 'نظام إدارة الفيديو', slug: 'video-management-system' },
     ],
   },
   {
-    name: 'نظام مراقبة الرادار',
+    name: 'أمن المحيط ونظام الرادار',
     slug: 'radar-surveillance-system',
+    children: [
+      { name: 'رادارات المحيط 360°', slug: 'perimeter-radars' },
+      { name: 'أنظمة كشف التسلل', slug: 'intrusion-detection-systems' },
+      { name: 'تكامل الرادار والمراقبة', slug: 'radar-cctv-integration' },
+    ],
+  },
+  {
+    name: 'اتصالات الراديو',
+    slug: 'radio',
+    children: [
+      { name: 'أنظمة TETRA', slug: 'tetra' },
+      { name: 'نظام راديو DMR', slug: 'dmr' },
+      { name: 'حلول الإرسال', slug: 'dispatching-solutions' },
+    ],
+  },
+  {
+    name: 'أنظمة اتصالات الميكروويف',
+    slug: 'microwave',
+    children: [
+      { name: 'وصلات ميكروويف نقطة لنقطة', slug: 'ptp-microwave-links' },
+      { name: 'حلول نقطة لمتعدد النقاط', slug: 'ptmp' },
+    ],
+  },
+  {
+    name: 'النقل البصري وشبكات الألياف',
+    slug: 'otn-fiber',
+    children: [
+      { name: 'أنظمة OTN', slug: 'otn-systems' },
+      { name: 'تكامل SDH/القديم', slug: 'sdh-legacy-integration' },
+      { name: 'البنية التحتية للألياف الضوئية', slug: 'fiber-optic-infrastructure' },
+      { name: 'حلول النقل البصري', slug: 'optical-transmission-solutions' },
+    ],
   },
 ]
 
@@ -192,20 +146,20 @@ const brands = [
 
 const navigationEn = [
   { name: 'Home', href: '/' },
+  { name: 'Solutions', href: '/services' },
+  { name: 'Industries', href: '/industries' },
   { name: 'Products', href: '/products', hasMegaMenu: 'products' },
-  { name: 'Brands', href: '/brands', hasMegaMenu: 'brands' },
-  { name: 'Services', href: '/services' },
-  { name: 'Blog', href: '/blog' },
+  { name: 'Partners', href: '/brands', hasMegaMenu: 'brands' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ]
 
 const navigationAr = [
   { name: 'الرئيسية', href: '/ar' },
+  { name: 'الحلول', href: '/ar/services' },
+  { name: 'الصناعات', href: '/ar/industries' },
   { name: 'المنتجات', href: '/ar/products', hasMegaMenu: 'products' },
-  { name: 'العلامات التجارية', href: '/ar/brands', hasMegaMenu: 'brands' },
-  { name: 'خدماتنا', href: '/ar/services' },
-  { name: 'المدونة', href: '/ar/blog' },
+  { name: 'الشركاء', href: '/ar/brands', hasMegaMenu: 'brands' },
   { name: 'من نحن', href: '/ar/about' },
   { name: 'اتصل بنا', href: '/ar/contact' },
 ]

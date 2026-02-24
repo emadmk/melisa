@@ -21,10 +21,8 @@ const THEMED_CATEGORIES: Record<string, string> = {
   'otn-fiber': 'fiber',
 }
 
-// PAGA redirects to Neumann brand page
-const REDIRECT_CATEGORIES: Record<string, string> = {
-  'paga': '/brands/neumann',
-}
+// Category redirects (if any)
+const REDIRECT_CATEGORIES: Record<string, string> = {}
 
 interface PageProps {
   params: Promise<{ cat: string }>
