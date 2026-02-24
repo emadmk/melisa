@@ -153,9 +153,9 @@ function DarkHeader({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: {
 
           {/* Contact Info */}
           <div className="hidden lg:flex items-center gap-6">
-            <a href="tel:+97143214000" className="flex items-center gap-2 text-zinc-400 hover:text-orange-500 transition-colors">
+            <a href="tel:+971527664837" className="flex items-center gap-2 text-zinc-400 hover:text-orange-500 transition-colors">
               <Phone className="w-4 h-4" />
-              <span className="text-sm">+971 4 321 4000</span>
+              <span className="text-sm">(971) 527664837</span>
             </a>
             <button
               onClick={() => onNavigate('/contact')}
@@ -236,9 +236,9 @@ function DarkFooter({ onNavigate }: { onNavigate: (url: string) => void }) {
               Providing professional communication and PA systems for industrial environments.
             </p>
             <div className="flex items-center gap-4">
-              <a href="tel:+97143214000" className="flex items-center gap-2 text-zinc-400 hover:text-orange-500 transition-colors">
+              <a href="tel:+971527664837" className="flex items-center gap-2 text-zinc-400 hover:text-orange-500 transition-colors">
                 <Phone className="w-5 h-5" />
-                <span>+971 4 321 4000</span>
+                <span>(971) 527664837</span>
               </a>
               <a href="mailto:info@melisa.ae" className="flex items-center gap-2 text-zinc-400 hover:text-orange-500 transition-colors">
                 <Mail className="w-5 h-5" />

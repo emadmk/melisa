@@ -806,11 +806,11 @@ export default function CCTVCategoryPage({ products, totalProducts }: CCTVCatego
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <a
-                  href="tel:+97143214000"
+                  href="tel:+971527664837"
                   className="inline-flex items-center gap-2 px-8 py-4 bg-zinc-800/60 backdrop-blur-sm text-white font-semibold rounded-xl border border-zinc-700/50 hover:border-emerald-500/30 hover:bg-zinc-800 transition-all duration-300 text-base"
                 >
                   <Phone className="w-5 h-5 text-emerald-400" />
-                  +971 4 321 4000
+                  (971) 527664837
                 </a>
               </div>
 
