@@ -38,6 +38,7 @@ const contentEn = {
     { name: 'About Us', href: '/about' },
     { name: 'Contact', href: '/contact' },
     { name: 'Blog', href: '/blog' },
+    { name: 'Privacy Policy', href: '/privacy' },
   ],
   servicesList: [
     { name: 'Radio Communication', icon: 'radio' },
@@ -66,6 +67,7 @@ const contentAr = {
     { name: 'من نحن', href: '/ar/about' },
     { name: 'اتصل بنا', href: '/ar/contact' },
     { name: 'المدونة', href: '/ar/blog' },
+    { name: 'سياسة الخصوصية', href: '/ar/privacy' },
   ],
   servicesList: [
     { name: 'الاتصالات اللاسلكية', icon: 'radio' },
@@ -260,12 +262,21 @@ export default function Footer() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
             <p>{content.copyright}</p>
-            <p className="flex items-center gap-2">
-              {content.designedBy}
-              <span className="w-6 h-6 rounded bg-slate-800 flex items-center justify-center text-xs text-slate-400">
-                ES
-              </span>
-            </p>
+            <div className="flex items-center gap-4">
+              <Link
+                href={isArabic ? '/ar/privacy' : '/privacy'}
+                className="hover:text-primary transition-colors"
+              >
+                {isArabic ? 'سياسة الخصوصية' : 'Privacy Policy'}
+              </Link>
+              <span className="w-px h-4 bg-slate-700" />
+              <p className="flex items-center gap-2">
+                {content.designedBy}
+                <span className="w-6 h-6 rounded bg-slate-800 flex items-center justify-center text-xs text-slate-400">
+                  ES
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
