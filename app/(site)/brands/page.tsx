@@ -18,7 +18,7 @@ interface Brand {
 
 export const metadata: Metadata = {
   title: 'Brands | Melisa Trading',
-  description: 'Official distributor of Motorola, Avigilon, Cambium Networks and Industronic brands in the UAE',
+  description: 'Official distributor of Motorola, Avigilon, Cambium Networks and NEUMANN brands in the UAE',
 }
 
 async function getBrands() {

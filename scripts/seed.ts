@@ -65,7 +65,6 @@ async function main() {
     { name: 'Motorola', slug: 'motorola', featured: true },
     { name: 'Avigilon', slug: 'avigilon', featured: true },
     { name: 'Cambium Networks', slug: 'cambium', featured: true },
-    { name: 'Industronic', slug: 'industronic', featured: true },
   ]
 
   for (const brand of brands) {

@@ -146,7 +146,6 @@ const brands = [
   { name: 'Cambium Networks', slug: 'cambium-networks' },
   { name: 'Motorola', slug: 'motorola' },
   { name: 'SIAE Microelettronica', slug: 'siae-microelettronica' },
-  { name: 'Industronic', slug: 'industronic' },
   { name: 'NEUMANN', slug: 'neumann' },
 ]
 
