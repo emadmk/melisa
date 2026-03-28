@@ -53,6 +53,7 @@ const productCategoriesEn: ProductCategory[] = [
       { name: 'Perimeter Radars 360°', slug: 'perimeter-radars' },
       { name: 'Intrusion Detection Systems', slug: 'intrusion-detection-systems' },
       { name: 'Radar & CCTV Integration', slug: 'radar-cctv-integration' },
+      { name: 'Software & Functions', slug: 'radar-software-functions' },
     ],
   },
   {
@@ -110,6 +111,7 @@ const productCategoriesAr: ProductCategory[] = [
       { name: 'رادارات المحيط 360°', slug: 'perimeter-radars' },
       { name: 'أنظمة كشف التسلل', slug: 'intrusion-detection-systems' },
       { name: 'تكامل الرادار والمراقبة', slug: 'radar-cctv-integration' },
+      { name: 'البرمجيات والوظائف', slug: 'radar-software-functions' },
     ],
   },
   {

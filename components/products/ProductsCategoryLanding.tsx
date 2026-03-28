@@ -102,6 +102,7 @@ const categories: ProductCategory[] = [
       { name: 'Perimeter Radars 360°', slug: 'perimeter-radars' },
       { name: 'Intrusion Detection Systems', slug: 'intrusion-detection-systems' },
       { name: 'Radar & CCTV Integration', slug: 'radar-cctv-integration' },
+      { name: 'Software & Functions', slug: 'radar-software-functions' },
     ],
   },
   {
