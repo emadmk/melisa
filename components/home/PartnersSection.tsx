@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ArrowRight, ArrowLeft, Handshake, ExternalLink, Package, Loader2 } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Handshake, Loader2 } from 'lucide-react'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 
 interface Brand {
@@ -13,40 +13,102 @@ interface Brand {
   nameAr: string | null
   slug: string
   logo: string | null
-  description: string | null
-  descriptionAr: string | null
   website: string | null
   _count?: { products: number }
 }
 
-const brandColors: Record<string, { bg: string; border: string; glow: string }> = {
-  avigilon: { bg: 'from-blue-950 to-slate-900', border: 'hover:border-blue-500/30', glow: 'bg-blue-500/20' },
-  'cambium-networks': { bg: 'from-emerald-950 to-slate-900', border: 'hover:border-emerald-500/30', glow: 'bg-emerald-500/20' },
-  motorola: { bg: 'from-sky-950 to-slate-900', border: 'hover:border-sky-500/30', glow: 'bg-sky-500/20' },
-  'siae-microelettronica': { bg: 'from-violet-950 to-slate-900', border: 'hover:border-violet-500/30', glow: 'bg-violet-500/20' },
-  neumann: { bg: 'from-amber-950 to-slate-900', border: 'hover:border-amber-500/30', glow: 'bg-amber-500/20' },
+const brandSlogans: Record<string, { tagline: string; lines: string[] }> = {
+  neumann: {
+    tagline: 'The Sound of Safety.',
+    lines: [
+      'PAGA, Intercom, and mission-critical communication systems',
+      'engineered for environments where failure is not an option.',
+      'From refineries to offshore platforms,',
+      'NEUMANN stands for German engineering and absolute reliability.',
+    ],
+  },
+  avigilon: {
+    tagline: 'See More. Know More. Protect More.',
+    lines: [
+      'AI-powered video security and intelligent surveillance solutions',
+      'designed for environments where every detail matters.',
+      'From critical infrastructure to smart cities,',
+      'Avigilon delivers clarity, intelligence, and security you can rely on.',
+    ],
+  },
+  'cambium-networks': {
+    tagline: 'Connectivity Without Limits.',
+    lines: [
+      'Wireless broadband solutions delivering reliable, high-speed,',
+      'and secure communication across every environment.',
+      'From microwave backhaul to enterprise Wi-Fi,',
+      'Cambium Networks means dependable connectivity that never stops.',
+    ],
+  },
+  motorola: {
+    tagline: 'When It Matters Most.',
+    lines: [
+      'Mission-critical communication and security solutions',
+      'built for reliability, speed, and absolute performance.',
+      'From radios to command centers,',
+      'Motorola Solutions delivers confidence when every second counts.',
+    ],
+  },
+  'siae-microelettronica': {
+    tagline: 'High Capacity. Zero Compromise.',
+    lines: [
+      'Carrier-grade microwave and wireless backhaul solutions',
+      'engineered for performance, reliability, and scalability.',
+      'From E-band to long-haul links,',
+      'SIAE Microelettronica delivers ultra-high capacity connectivity.',
+    ],
+  },
+  'navtech-radar': {
+    tagline: '360° Awareness. Uninterrupted Security.',
+    lines: [
+      'Advanced radar solutions delivering precise, real-time',
+      'perimeter protection in all weather and lighting conditions.',
+      'From airports to critical infrastructure,',
+      'Navtech Radar ensures total visibility and security that never sleeps.',
+    ],
+  },
+  pelco: {
+    tagline: 'Smart Vision. Stronger Security.',
+    lines: [
+      'Advanced video surveillance solutions',
+      'built for clarity, control, and confidence.',
+      'From real-time monitoring to intelligent analytics,',
+      'Pelco delivers security you can trust.',
+    ],
+  },
 }
 
-const defaultColor = { bg: 'from-slate-800 to-slate-900', border: 'hover:border-primary/30', glow: 'bg-primary/20' }
+const brandColors: Record<string, { bg: string; border: string; glow: string; accent: string }> = {
+  neumann: { bg: 'from-amber-950 to-slate-900', border: 'hover:border-amber-500/30', glow: 'bg-amber-500/20', accent: 'text-amber-400' },
+  avigilon: { bg: 'from-blue-950 to-slate-900', border: 'hover:border-blue-500/30', glow: 'bg-blue-500/20', accent: 'text-blue-400' },
+  'cambium-networks': { bg: 'from-emerald-950 to-slate-900', border: 'hover:border-emerald-500/30', glow: 'bg-emerald-500/20', accent: 'text-emerald-400' },
+  motorola: { bg: 'from-sky-950 to-slate-900', border: 'hover:border-sky-500/30', glow: 'bg-sky-500/20', accent: 'text-sky-400' },
+  'siae-microelettronica': { bg: 'from-violet-950 to-slate-900', border: 'hover:border-violet-500/30', glow: 'bg-violet-500/20', accent: 'text-violet-400' },
+  'navtech-radar': { bg: 'from-red-950 to-slate-900', border: 'hover:border-red-500/30', glow: 'bg-red-500/20', accent: 'text-red-400' },
+  pelco: { bg: 'from-cyan-950 to-slate-900', border: 'hover:border-cyan-500/30', glow: 'bg-cyan-500/20', accent: 'text-cyan-400' },
+}
+
+const defaultColor = { bg: 'from-slate-800 to-slate-900', border: 'hover:border-primary/30', glow: 'bg-primary/20', accent: 'text-primary' }
 
 const translations = {
   en: {
     badge: 'Our Partners',
     title: 'Trusted Technology Partners',
     subtitle: 'Official distributor and partner of leading global telecommunications and security brands',
-    viewProducts: 'View Products',
+    viewProducts: 'Explore',
     viewAll: 'View All Partners',
-    products: 'Products',
-    visitWebsite: 'Website',
   },
   ar: {
     badge: 'شركاؤنا',
     title: 'شركاء التكنولوجيا الموثوقون',
     subtitle: 'شريك وموزع رسمي لأبرز العلامات التجارية العالمية في الاتصالات والأمن',
-    viewProducts: 'عرض المنتجات',
+    viewProducts: 'استكشف',
     viewAll: 'عرض جميع الشركاء',
-    products: 'منتج',
-    visitWebsite: 'الموقع',
   },
 }
 
@@ -132,8 +194,7 @@ export default function PartnersSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {brands.map((brand, index) => {
               const colors = brandColors[brand.slug] || defaultColor
-              const desc = isArabic && brand.descriptionAr ? brand.descriptionAr : brand.description
-              const productCount = brand._count?.products || 0
+              const slogan = brandSlogans[brand.slug]
 
               return (
                 <motion.div
@@ -141,72 +202,69 @@ export default function PartnersSection() {
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-30px' }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`group relative rounded-2xl overflow-hidden border border-white/10 ${colors.border} transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40`}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
                 >
-                  {/* Card Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg}`} />
-                  {/* Glow effect on hover */}
-                  <div className={`absolute -top-20 -right-20 w-40 h-40 ${colors.glow} rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+                  <Link
+                    href={`${basePath}/brands/${brand.slug}`}
+                    className={`group relative block h-full rounded-2xl overflow-hidden border border-white/10 ${colors.border} transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40`}
+                  >
+                    {/* Card Background */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg}`} />
+                    {/* Glow effect on hover */}
+                    <div className={`absolute -top-20 -right-20 w-40 h-40 ${colors.glow} rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
 
-                  <div className="relative p-6 sm:p-8">
-                    {/* Logo Area */}
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="relative w-36 h-14 flex items-center">
+                    <div className="relative p-6 sm:p-8 flex flex-col h-full min-h-[320px]">
+                      {/* Logo */}
+                      <div className="relative w-32 h-10 mb-8">
                         {brand.logo ? (
                           <Image
                             src={brand.logo}
                             alt={brand.name}
                             fill
-                            className="object-contain object-left brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity"
+                            className="object-contain object-left brightness-0 invert opacity-60 group-hover:opacity-90 transition-opacity"
                             unoptimized
                           />
                         ) : (
-                          <span className="text-xl font-bold text-white/80 group-hover:text-white transition-colors">{brand.name}</span>
+                          <span className="text-lg font-bold text-white/60 group-hover:text-white/90 transition-colors">{brand.name}</span>
                         )}
                       </div>
-                      {productCount > 0 && (
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 rounded-full text-xs font-medium text-white/70">
-                          <Package className="w-3.5 h-3.5" />
-                          {productCount} {t.products}
+
+                      {/* Slogan Content */}
+                      {slogan ? (
+                        <div className="flex-1">
+                          <p className={`text-xl sm:text-2xl font-bold italic ${colors.accent} mb-4 leading-tight`}>
+                            {slogan.tagline}
+                          </p>
+                          <div className="space-y-1">
+                            {slogan.lines.map((line, i) => (
+                              <p key={i} className="text-white/40 text-sm leading-relaxed">
+                                {line}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-white mb-3">{brand.name}</h3>
                         </div>
                       )}
+
+                      {/* Bottom Action */}
+                      <div className={`mt-6 pt-5 border-t border-white/10 flex items-center justify-between ${isArabic ? 'flex-row-reverse' : ''}`}>
+                        <span className={`inline-flex items-center gap-2 text-white/60 group-hover:text-white text-sm font-medium transition-colors ${isArabic ? 'flex-row-reverse' : ''}`}>
+                          {t.viewProducts}
+                          {isArabic ? (
+                            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                          ) : (
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          )}
+                        </span>
+                        <span className="text-white/30 text-xs font-medium uppercase tracking-wider">
+                          {brand.name}
+                        </span>
+                      </div>
                     </div>
-
-                    {/* Brand Name */}
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors">
-                      {brand.name}
-                    </h3>
-
-                    {/* Description */}
-                    {desc && (
-                      <p className={`text-white/50 text-sm leading-relaxed mb-6 line-clamp-3 ${isArabic ? 'text-right' : ''}`}>
-                        {desc}
-                      </p>
-                    )}
-
-                    {/* Actions */}
-                    <div className={`flex items-center gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
-                      <Link
-                        href={`${basePath}/brands/${brand.slug}`}
-                        className={`inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-primary rounded-xl text-white text-sm font-medium transition-all ${isArabic ? 'flex-row-reverse' : ''}`}
-                      >
-                        {t.viewProducts}
-                        {isArabic ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
-                      </Link>
-                      {brand.website && (
-                        <a
-                          href={brand.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-2.5 text-white/50 hover:text-white text-sm transition-colors"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          {t.visitWebsite}
-                        </a>
-                      )}
-                    </div>
-                  </div>
+                  </Link>
                 </motion.div>
               )
             })}

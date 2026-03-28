@@ -28,6 +28,8 @@ const brandAccents: Record<string, string> = {
   motorola: 'from-sky-600 to-blue-600',
   'siae-microelettronica': 'from-violet-600 to-purple-600',
   neumann: 'from-amber-600 to-orange-600',
+  'navtech-radar': 'from-red-600 to-rose-600',
+  pelco: 'from-cyan-600 to-teal-600',
 }
 
 async function getBrands() {

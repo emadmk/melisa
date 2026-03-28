@@ -144,14 +144,16 @@ const productCategoriesAr: ProductCategory[] = [
 const brands = [
   { name: 'Avigilon', slug: 'avigilon' },
   { name: 'Cambium Networks', slug: 'cambium-networks' },
-  { name: 'Motorola', slug: 'motorola' },
+  { name: 'Motorola Solutions', slug: 'motorola' },
   { name: 'SIAE Microelettronica', slug: 'siae-microelettronica' },
-  { name: 'NEUMANN', slug: 'neumann' },
+  { name: 'NEUMANN Elektronik', slug: 'neumann' },
+  { name: 'Navtech Radar', slug: 'navtech-radar' },
+  { name: 'Pelco', slug: 'pelco' },
 ]
 
 const navigationEn = [
   { name: 'Home', href: '/' },
-  { name: 'Solutions', href: '/services' },
+  { name: 'Services', href: '/services' },
   { name: 'Industries', href: '/industries' },
   { name: 'Products', href: '/products', hasMegaMenu: 'products' },
   { name: 'Partners', href: '/brands', hasMegaMenu: 'brands' },
@@ -161,7 +163,7 @@ const navigationEn = [
 
 const navigationAr = [
   { name: 'الرئيسية', href: '/ar' },
-  { name: 'الحلول', href: '/ar/services' },
+  { name: 'الخدمات', href: '/ar/services' },
   { name: 'الصناعات', href: '/ar/industries' },
   { name: 'المنتجات', href: '/ar/products', hasMegaMenu: 'products' },
   { name: 'الشركاء', href: '/ar/brands', hasMegaMenu: 'brands' },

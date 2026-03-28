@@ -187,6 +187,8 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
     motorola: 'from-sky-600/20 to-blue-600/10',
     'siae-microelettronica': 'from-violet-600/20 to-purple-600/10',
     neumann: 'from-amber-600/20 to-orange-600/10',
+    'navtech-radar': 'from-red-600/20 to-rose-600/10',
+    pelco: 'from-cyan-600/20 to-teal-600/10',
   }
   const accentGradient = brandAccents[brand.slug] || 'from-primary/20 to-red-600/10'
 
