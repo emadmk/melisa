@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Megaphone,
   Video,
@@ -11,6 +12,7 @@ import {
   Network,
   ArrowRight,
   ChevronRight,
+  CheckCircle2,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -22,26 +24,35 @@ interface CategoryChild {
 interface ProductCategory {
   name: string
   slug: string
+  title: string
   description: string
   icon: LucideIcon
   gradient: string
   iconBg: string
   iconColor: string
-  accentColor: string
+  features: string[]
+  partners: string[]
   children: CategoryChild[]
 }
 
 const categories: ProductCategory[] = [
   {
-    name: 'PAGA & Industrial Intercom Systems',
+    name: 'PAGA & Industrial Intercom',
     slug: 'paga',
+    title: 'Industrial PAGA Systems for Oil & Gas Facilities',
     description:
-      'Complete public address, general alarm, and industrial intercom solutions designed for mission-critical and hazardous environments.',
+      'MELISA provides advanced Public Address & General Alarm (PAGA) systems designed for critical communication in oil & gas, petrochemical and industrial environments. Our solutions ensure clear, reliable and real-time communication across hazardous and high-noise areas, fully compliant with international safety standards. We support EPC contractors from design stage through installation, integration and commissioning.',
     icon: Megaphone,
     gradient: 'from-blue-600 to-blue-800',
     iconBg: 'bg-blue-100',
     iconColor: 'text-blue-600',
-    accentColor: 'border-blue-500',
+    features: [
+      'High intelligibility in noisy environments',
+      'Redundant and fail-safe architecture',
+      'Integration with fire & gas systems',
+      'Certified for hazardous areas',
+    ],
+    partners: ['Neumann Elektronik'],
     children: [
       { name: 'Public Address & General Alarm', slug: 'public-address-general-alarm' },
       { name: 'Industrial Intercom Systems', slug: 'industrial-intercom-systems' },
@@ -49,15 +60,22 @@ const categories: ProductCategory[] = [
     ],
   },
   {
-    name: 'Industrial CCTV & Video Surveillance',
+    name: 'Industrial CCTV & Surveillance',
     slug: 'cctv',
+    title: 'Industrial CCTV & Video Surveillance Systems',
     description:
-      'Advanced video surveillance systems including fixed, PTZ, and explosion-proof cameras for industrial and critical infrastructure.',
+      'MELISA delivers robust CCTV and video surveillance systems tailored for industrial and critical infrastructure applications. Our solutions include high-resolution cameras, video management systems and intelligent analytics designed to enhance security, monitoring and operational awareness. We specialize in hazardous area surveillance and integration with command & control centers.',
     icon: Video,
     gradient: 'from-slate-700 to-slate-900',
     iconBg: 'bg-slate-100',
     iconColor: 'text-slate-700',
-    accentColor: 'border-slate-500',
+    features: [
+      'HD / 4K industrial cameras',
+      'Video analytics & AI detection',
+      'Centralized monitoring systems',
+      'Integration with access control & radar',
+    ],
+    partners: ['Pelco', 'Avigilon'],
     children: [
       { name: 'Fixed & PTZ Cameras', slug: 'fixed-ptz-cameras' },
       { name: 'Explosion Proof Cameras', slug: 'explosion-proof-cameras' },
@@ -65,17 +83,24 @@ const categories: ProductCategory[] = [
     ],
   },
   {
-    name: 'Perimeter Security & Radar System',
+    name: 'Perimeter Security & Radar',
     slug: 'radar-surveillance-system',
+    title: 'Perimeter Radar Security Systems for Critical Infrastructure',
     description:
-      '360-degree perimeter radars, intrusion detection, and integrated radar-CCTV security solutions for critical sites.',
+      'MELISA provides advanced perimeter security solutions based on Navtech radar technology, offering continuous 360° detection and tracking in all weather and lighting conditions. Our radar systems ensure early threat detection and seamless integration with CCTV and security platforms.',
     icon: ShieldCheck,
     gradient: 'from-emerald-600 to-emerald-800',
     iconBg: 'bg-emerald-100',
     iconColor: 'text-emerald-600',
-    accentColor: 'border-emerald-500',
+    features: [
+      '360° real-time detection',
+      'Long-range intrusion monitoring',
+      'Works in all weather conditions',
+      'Full integration with CCTV systems',
+    ],
+    partners: ['Navtech Radar'],
     children: [
-      { name: 'Perimeter Radars 360\u00B0', slug: 'perimeter-radars' },
+      { name: 'Perimeter Radars 360°', slug: 'perimeter-radars' },
       { name: 'Intrusion Detection Systems', slug: 'intrusion-detection-systems' },
       { name: 'Radar & CCTV Integration', slug: 'radar-cctv-integration' },
     ],
@@ -83,13 +108,20 @@ const categories: ProductCategory[] = [
   {
     name: 'Radio Communication',
     slug: 'radio',
+    title: 'Mission-Critical Radio Communication Systems (TETRA & DMR)',
     description:
-      'Mission-critical TETRA and DMR digital radio systems with advanced dispatching solutions for public safety and enterprise.',
+      'MELISA designs and deploys professional radio communication systems ensuring reliable voice and data communication across industrial sites. Our TETRA and DMR solutions are ideal for oil & gas operations, providing secure, scalable and mission-critical communication.',
     icon: Radio,
     gradient: 'from-amber-600 to-orange-700',
     iconBg: 'bg-amber-100',
     iconColor: 'text-amber-600',
-    accentColor: 'border-amber-500',
+    features: [
+      'Wide-area communication coverage',
+      'Secure and encrypted communication',
+      'Dispatching & control room solutions',
+      'Explosion-proof radio support',
+    ],
+    partners: ['Motorola Solutions'],
     children: [
       { name: 'TETRA Systems', slug: 'tetra' },
       { name: 'DMR Radio System', slug: 'dmr' },
@@ -97,30 +129,44 @@ const categories: ProductCategory[] = [
     ],
   },
   {
-    name: 'Microwave Communication System',
+    name: 'Microwave Communication',
     slug: 'microwave',
+    title: 'Microwave Communication Systems for Long Distance Connectivity',
     description:
-      'High-capacity point-to-point and point-to-multipoint microwave communication links for telecom and enterprise networks.',
+      'MELISA provides microwave communication systems for reliable long-distance connectivity where fiber deployment is not feasible. Our solutions are designed for critical communication links across remote and industrial locations.',
     icon: Waves,
     gradient: 'from-purple-600 to-purple-800',
     iconBg: 'bg-purple-100',
     iconColor: 'text-purple-600',
-    accentColor: 'border-purple-500',
+    features: [
+      'Point-to-point communication',
+      'High availability links',
+      'Ideal for remote areas',
+      'Backup communication solutions',
+    ],
+    partners: ['SIAE Microelettronica', 'Cambium Networks'],
     children: [
       { name: 'PtP Microwave Links', slug: 'ptp-microwave-links' },
       { name: 'PtMP Solutions', slug: 'ptmp' },
     ],
   },
   {
-    name: 'Optical Transport & Fiber Network',
+    name: 'OTN & Fiber Optic Network',
     slug: 'otn-fiber',
+    title: 'OTN & Fiber Optic Communication Networks',
     description:
-      'Cutting-edge OTN/DWDM systems, fiber optic infrastructure, and optical transmission solutions for ultra-high-capacity networks.',
+      'MELISA delivers high-capacity optical transport networks (OTN) and fiber optic infrastructure for industrial communication systems. Our solutions ensure reliable, high-speed data transmission for critical applications across large-scale facilities.',
     icon: Network,
     gradient: 'from-cyan-600 to-teal-700',
     iconBg: 'bg-cyan-100',
     iconColor: 'text-cyan-600',
-    accentColor: 'border-cyan-500',
+    features: [
+      'High bandwidth optical transmission',
+      'Scalable network architecture',
+      'Integration with legacy systems (SDH/IP)',
+      'Designed for industrial environments',
+    ],
+    partners: [],
     children: [
       { name: 'OTN Systems', slug: 'otn-systems' },
       { name: 'SDH/Legacy Integration', slug: 'sdh-legacy-integration' },
@@ -134,9 +180,7 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.12 },
   },
 }
 
@@ -154,7 +198,6 @@ export default function ProductsCategoryLanding() {
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background Pattern */}
         <div className="absolute inset-0 bg-slate-900">
           <div className="absolute inset-0 opacity-10">
             <div
@@ -192,7 +235,6 @@ export default function ProductsCategoryLanding() {
           </motion.div>
         </div>
 
-        {/* Bottom Wave */}
         <div className="relative">
           <svg
             viewBox="0 0 1440 56"
@@ -208,79 +250,113 @@ export default function ProductsCategoryLanding() {
         </div>
       </section>
 
-      {/* Categories Grid */}
+      {/* Categories */}
       <section className="container mx-auto px-4 py-12 md:py-20">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          className="space-y-8"
         >
-          {categories.map((category) => {
+          {categories.map((category, index) => {
             const Icon = category.icon
+            const isEven = index % 2 === 0
+
             return (
               <motion.div key={category.slug} variants={cardVariants}>
-                <Link
-                  href={`/products/category/${category.slug}`}
-                  className="group block h-full"
-                >
-                  <div
-                    className={`relative h-full bg-white rounded-2xl border border-slate-200 overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-slate-200/50 group-hover:border-slate-300 group-hover:-translate-y-1`}
-                  >
-                    {/* Top Accent Bar */}
-                    <div className={`h-1 bg-gradient-to-r ${category.gradient}`} />
+                <div className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:border-slate-300 transition-all duration-500">
+                  <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
+                    {/* Left/Right: Gradient Side */}
+                    <div className={`relative lg:w-[380px] xl:w-[440px] flex-shrink-0 bg-gradient-to-br ${category.gradient} p-8 sm:p-10 flex flex-col justify-between min-h-[280px] lg:min-h-[360px]`}>
+                      {/* Pattern */}
+                      <div
+                        className="absolute inset-0 opacity-10"
+                        style={{
+                          backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+                          backgroundSize: '24px 24px',
+                        }}
+                      />
 
-                    <div className="p-6 lg:p-8">
-                      {/* Icon & Title */}
-                      <div className="flex items-start gap-4 mb-5">
-                        <div
-                          className={`flex-shrink-0 w-14 h-14 ${category.iconBg} rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}
-                        >
-                          <Icon className={`w-7 h-7 ${category.iconColor}`} />
+                      <div className="relative">
+                        {/* Icon */}
+                        <div className="w-16 h-16 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-6">
+                          <Icon className="w-8 h-8 text-white" />
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-lg font-bold text-slate-900 leading-snug group-hover:text-primary transition-colors">
-                            {category.name}
-                          </h3>
+
+                        {/* Category Name */}
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                          {category.name}
+                        </h2>
+
+                        {/* Subcategories */}
+                        <div className="space-y-2">
+                          {category.children.map((child) => (
+                            <Link
+                              key={child.slug}
+                              href={`/products/category/${category.slug}`}
+                              className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
+                            >
+                              <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
+                              <span>{child.name}</span>
+                            </Link>
+                          ))}
                         </div>
                       </div>
 
+                      {/* Technology Partners */}
+                      {category.partners.length > 0 && (
+                        <div className="relative mt-6 pt-5 border-t border-white/20">
+                          <p className="text-white/50 text-xs uppercase tracking-wider mb-2">Technology Partner{category.partners.length > 1 ? 's' : ''}</p>
+                          <p className="text-white font-semibold text-sm">
+                            {category.partners.join(' | ')}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right/Left: Content Side */}
+                    <div className="flex-1 p-8 sm:p-10 flex flex-col justify-center">
+                      {/* Title */}
+                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 group-hover:text-primary transition-colors">
+                        {category.title}
+                      </h3>
+
                       {/* Description */}
-                      <p className="text-sm text-slate-500 leading-relaxed mb-6">
+                      <p className="text-slate-500 leading-relaxed mb-6 text-sm sm:text-base">
                         {category.description}
                       </p>
 
-                      {/* Subcategories */}
-                      <div className="space-y-2 mb-6">
-                        {category.children.map((child) => (
-                          <div
-                            key={child.slug}
-                            className="flex items-center gap-2 text-sm text-slate-600"
-                          >
-                            <ChevronRight
-                              className={`w-3.5 h-3.5 flex-shrink-0 ${category.iconColor} opacity-60`}
-                            />
-                            <span>{child.name}</span>
+                      {/* Key Features */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                        {category.features.map((feature) => (
+                          <div key={feature} className="flex items-start gap-2.5">
+                            <CheckCircle2 className={`w-4.5 h-4.5 ${category.iconColor} flex-shrink-0 mt-0.5`} />
+                            <span className="text-sm text-slate-600">{feature}</span>
                           </div>
                         ))}
                       </div>
 
                       {/* CTA */}
-                      <div className="flex items-center gap-2 text-sm font-semibold text-primary pt-4 border-t border-slate-100">
-                        <span>Explore Solutions</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      <div>
+                        <Link
+                          href={`/products/category/${category.slug}`}
+                          className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${category.gradient} text-white rounded-xl text-sm font-medium hover:shadow-lg transition-all group-hover:gap-3`}
+                        >
+                          Explore Solutions
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
                       </div>
                     </div>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             )
           })}
         </motion.div>
       </section>
 
-      {/* Bottom CTA Section */}
+      {/* Bottom CTA */}
       <section className="container mx-auto px-4 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -321,7 +397,7 @@ export default function ProductsCategoryLanding() {
                 href="/services"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 text-white border border-white/20 rounded-xl font-medium hover:bg-white/20 transition-all"
               >
-                View Our Solutions
+                View Our Services
               </Link>
             </div>
           </div>
