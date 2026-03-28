@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import HeroSection from '@/components/home/HeroSection'
-import ServicesSection from '@/components/home/ServicesSection'
+import PartnersSection from '@/components/home/PartnersSection'
 import WhoWeAreSection from '@/components/home/WhoWeAreSection'
 import CustomersSection from '@/components/home/CustomersSection'
 import LatestPosts from '@/components/home/LatestPosts'
@@ -27,7 +27,7 @@ export default function ArabicHomePage() {
   return (
     <>
       <HeroSection />
-      <ServicesSection />
+      <PartnersSection />
       <WhoWeAreSection />
       <CustomersSection />
       <LatestPosts />
