@@ -38,19 +38,21 @@ export async function PUT(
     const { id } = await params
     const body = await request.json()
 
+    // Only update fields that are actually sent in the request
+    const data: Record<string, unknown> = {}
+    if ('name' in body) data.name = body.name
+    if ('nameAr' in body) data.nameAr = body.nameAr || null
+    if ('slug' in body) data.slug = body.slug
+    if ('logo' in body) data.logo = body.logo || null
+    if ('description' in body) data.description = body.description || null
+    if ('descriptionAr' in body) data.descriptionAr = body.descriptionAr || null
+    if ('website' in body) data.website = body.website || null
+    if ('featured' in body) data.featured = body.featured || false
+    if ('order' in body) data.order = body.order || 0
+
     const brand = await prisma.brand.update({
       where: { id },
-      data: {
-        name: body.name,
-        nameAr: body.nameAr || null,
-        slug: body.slug,
-        logo: body.logo || null,
-        description: body.description || null,
-        descriptionAr: body.descriptionAr || null,
-        website: body.website || null,
-        featured: body.featured || false,
-        order: body.order || 0,
-      },
+      data,
     })
 
     return NextResponse.json({ success: true, data: brand })
