@@ -17,8 +17,8 @@ interface Brand {
 }
 
 export const metadata: Metadata = {
-  title: 'Brands | Melisa Trading',
-  description: 'Official distributor of Motorola, Avigilon, Cambium Networks and NEUMANN brands in the UAE',
+  title: 'Our Partners | Melisa Trading',
+  description: 'Official partner and distributor of Motorola Solutions, Avigilon, Cambium Networks, SIAE Microelettronica and NEUMANN Elektronik in the UAE',
 }
 
 async function getBrands() {
@@ -37,15 +37,15 @@ export default async function BrandsPage() {
   const brands = await getBrands()
 
   const breadcrumbItems = [
-    { name: 'Brands', url: '/brands' },
+    { name: 'Partners', url: '/brands' },
   ]
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <PageHero
-        title="Our Brands"
-        subtitle="Official distributor of leading global telecommunications and security brands in the UAE"
+        title="Our Partners"
+        subtitle="Official partner and distributor of leading global telecommunications and security brands in the UAE"
         breadcrumbItems={breadcrumbItems}
         iconName="Award"
       />
