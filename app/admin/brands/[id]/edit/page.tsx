@@ -12,12 +12,15 @@ export default function EditBrandPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
+  const [activeTab, setActiveTab] = useState<'en' | 'ar'>('en')
 
   const [form, setForm] = useState({
     name: '',
+    nameAr: '',
     slug: '',
     logo: '',
     description: '',
+    descriptionAr: '',
     website: '',
     featured: false,
     order: 0,
@@ -31,9 +34,11 @@ export default function EditBrandPage() {
           const brand = data.data
           setForm({
             name: brand.name || '',
+            nameAr: brand.nameAr || '',
             slug: brand.slug || '',
             logo: brand.logo || '',
             description: brand.description || '',
+            descriptionAr: brand.descriptionAr || '',
             website: brand.website || '',
             featured: brand.featured || false,
             order: brand.order || 0,
@@ -92,33 +97,108 @@ export default function EditBrandPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
+        {/* Language Tabs */}
+        <div className="flex gap-2 mb-6 border-b">
+          <button
+            type="button"
+            onClick={() => setActiveTab('en')}
+            className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === 'en'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            English
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('ar')}
+            className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === 'ar'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            العربية
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Brand Name *
-            </label>
-            <input
-              type="text"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              required
-            />
-          </div>
+          {/* English Fields */}
+          {activeTab === 'en' && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Brand Name *
+                </label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  required
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Slug
-            </label>
-            <input
-              type="text"
-              value={form.slug}
-              onChange={(e) => setForm({ ...form, slug: e.target.value })}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              dir="ltr"
-            />
-          </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Slug
+                </label>
+                <input
+                  type="text"
+                  value={form.slug}
+                  onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  dir="ltr"
+                />
+              </div>
 
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Description (English)
+                </label>
+                <textarea
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  rows={5}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+            </>
+          )}
+
+          {/* Arabic Fields */}
+          {activeTab === 'ar' && (
+            <>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  اسم البراند (عربی)
+                </label>
+                <input
+                  type="text"
+                  value={form.nameAr}
+                  onChange={(e) => setForm({ ...form, nameAr: e.target.value })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  dir="rtl"
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  التوضیحات (عربی)
+                </label>
+                <textarea
+                  value={form.descriptionAr}
+                  onChange={(e) => setForm({ ...form, descriptionAr: e.target.value })}
+                  rows={5}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  dir="rtl"
+                />
+              </div>
+            </>
+          )}
+
+          {/* Common Fields (always visible) */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Website
@@ -141,18 +221,6 @@ export default function EditBrandPage() {
               type="number"
               value={form.order}
               onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
-            <textarea
-              value={form.description}
-              onChange={(e) => setForm({ ...form, description: e.target.value })}
-              rows={4}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>

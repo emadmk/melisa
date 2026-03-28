@@ -42,9 +42,11 @@ export async function PUT(
       where: { id },
       data: {
         name: body.name,
+        nameAr: body.nameAr || null,
         slug: body.slug,
         logo: body.logo || null,
         description: body.description || null,
+        descriptionAr: body.descriptionAr || null,
         website: body.website || null,
         featured: body.featured || false,
         order: body.order || 0,
