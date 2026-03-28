@@ -181,14 +181,24 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
   // Regular brand page
   const { products, total, totalPages } = await getProductsByBrand(brand.id, currentPage)
 
+  const brandAccents: Record<string, string> = {
+    avigilon: 'from-blue-600/20 to-cyan-600/10',
+    'cambium-networks': 'from-emerald-600/20 to-teal-600/10',
+    motorola: 'from-sky-600/20 to-blue-600/10',
+    'siae-microelettronica': 'from-violet-600/20 to-purple-600/10',
+    neumann: 'from-amber-600/20 to-orange-600/10',
+  }
+  const accentGradient = brandAccents[brand.slug] || 'from-primary/20 to-red-600/10'
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Header */}
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden pt-32 sm:pt-36">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
+      <div className="bg-slate-900 relative overflow-hidden pt-32 sm:pt-36">
+        {/* Background */}
+        <div className="absolute inset-0">
+          <div className={`absolute inset-0 bg-gradient-to-br ${accentGradient}`} />
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
               backgroundSize: '32px 32px',
@@ -196,13 +206,12 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
           />
         </div>
 
-        {/* Gradient Orbs */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        {/* Red Accent Line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
 
-        <div className="container mx-auto px-4 pb-4 relative z-10">
+        <div className="container mx-auto px-4 pb-10 sm:pb-14 relative z-10">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm mb-8">
+          <nav className="flex items-center gap-2 text-sm mb-10">
             <Link href="/" className="text-slate-400 hover:text-primary transition-colors flex items-center gap-1">
               <Home className="w-4 h-4" />
               Home
@@ -215,67 +224,83 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
             <span className="text-white font-medium">{brand.name}</span>
           </nav>
 
-          {/* Brand Info */}
-          <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10 py-8 sm:py-12">
+          {/* Brand Info - Centered Layout */}
+          <div className="text-center max-w-3xl mx-auto">
+            {/* Logo */}
             {brand.logo && (
-              <div className="relative w-40 h-24 sm:w-56 sm:h-32 bg-white rounded-2xl p-4 shadow-xl">
-                <Image src={brand.logo} alt={brand.name} fill className="object-contain p-2" unoptimized />
+              <div className="relative w-48 h-14 sm:w-60 sm:h-16 mx-auto mb-6">
+                <Image
+                  src={brand.logo}
+                  alt={brand.name}
+                  fill
+                  className="object-contain brightness-0 invert opacity-90"
+                  unoptimized
+                />
               </div>
             )}
-            <div className="text-center sm:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/20 rounded-full text-primary text-xs font-medium mb-3">
-                <Shield className="w-3.5 h-3.5" />
-                Official Partner
+
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/20 rounded-full text-primary text-xs font-semibold mb-4">
+              <Shield className="w-3.5 h-3.5" />
+              Official Partner
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">{brand.name}</h1>
+
+            {/* Short description under title */}
+            {brand.description && (
+              <p className="text-slate-400 text-base sm:text-lg leading-relaxed mb-6 line-clamp-2 max-w-2xl mx-auto">
+                {brand.description}
+              </p>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 rounded-full text-white text-sm font-medium">
+                <Package className="w-4 h-4 text-primary" />
+                {total} Products
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3">{brand.name}</h1>
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white">
-                  <Package className="w-5 h-5 text-primary" />
-                  <span className="font-medium">{total} Products</span>
-                </div>
-                {brand.website && (
-                  <a
-                    href={brand.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-                  >
-                    <Globe className="w-5 h-5 text-primary" />
-                    <span className="font-medium">Official Website</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-60" />
-                  </a>
-                )}
-              </div>
+              {brand.website && (
+                <a
+                  href={brand.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full text-white text-sm font-medium transition-colors"
+                >
+                  <Globe className="w-4 h-4 text-primary" />
+                  Official Website
+                  <ExternalLink className="w-3.5 h-3.5 opacity-60" />
+                </a>
+              )}
             </div>
           </div>
+        </div>
+
+        {/* Bottom Wave */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path
+              d="M0 60L60 55C120 50 240 40 360 35C480 30 600 30 720 32.5C840 35 960 40 1080 42.5C1200 45 1320 45 1380 45L1440 45V60H1380C1320 60 1200 60 1080 60C960 60 840 60 720 60C600 60 480 60 360 60C240 60 120 60 60 60H0Z"
+              fill="rgb(249 250 251)"
+            />
+          </svg>
         </div>
       </div>
 
       {/* About Partner Section */}
       {brand.description && (
         <section className="bg-white border-b border-slate-100">
-          <div className="container mx-auto px-4 py-10 sm:py-14">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                  <Building2 className="w-5 h-5 text-primary" />
-                </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-slate-900">About {brand.name}</h2>
+          <div className="container mx-auto px-4 py-8 sm:py-10">
+            <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-6 items-start">
+              <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                <Building2 className="w-5 h-5 text-primary" />
               </div>
-              <p className="text-slate-600 leading-relaxed text-base sm:text-lg">
-                {brand.description}
-              </p>
-              {brand.website && (
-                <a
-                  href={brand.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 mt-6 text-primary font-medium hover:gap-3 transition-all"
-                >
-                  Visit {brand.name} Website
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-3">About {brand.name}</h2>
+                <p className="text-slate-500 leading-relaxed text-sm sm:text-base">
+                  {brand.description}
+                </p>
+              </div>
             </div>
           </div>
         </section>
