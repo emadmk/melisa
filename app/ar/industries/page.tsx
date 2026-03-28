@@ -1,17 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import {
-  Factory,
-  Flame,
-  Anchor,
-  Building2,
-  Plane,
-  Container,
-  Zap,
-  Landmark,
-  Home,
-  ArrowLeft
-} from 'lucide-react'
+import Image from 'next/image'
+import { ArrowLeft, Factory } from 'lucide-react'
 import { Breadcrumb } from '@/components/common'
 
 export const metadata: Metadata = {
@@ -23,56 +13,56 @@ const industries = [
   {
     title: 'المصافي',
     description: 'أنظمة اتصالات وسلامة متقدمة لعمليات تكرير النفط، تضمن اتصالاً موثوقاً في البيئات الخطرة.',
-    icon: Factory,
     gradient: 'from-orange-600 to-red-700',
+    image: 'https://images.pexels.com/photos/10407689/pexels-photo-10407689.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'المصانع البتروكيماوية',
     description: 'حلول PAGA والراديو وكاميرات المراقبة المقاومة للانفجار المصممة لمنشآت المعالجة البتروكيماوية.',
-    icon: Flame,
     gradient: 'from-amber-600 to-orange-700',
+    image: 'https://images.pexels.com/photos/5884386/pexels-photo-5884386.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'المنصات البحرية',
     description: 'أنظمة اتصالات وإنذار طوارئ بحرية لعمليات النفط والغاز البحرية.',
-    icon: Anchor,
     gradient: 'from-cyan-600 to-blue-700',
+    image: 'https://images.pexels.com/photos/3207536/pexels-photo-3207536.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'صناعات الحديد والصلب',
     description: 'بنية تحتية متينة للاتصالات مصممة لتحمل الحرارة الشديدة والبيئات الصناعية الثقيلة.',
-    icon: Building2,
     gradient: 'from-slate-600 to-slate-800',
+    image: 'https://images.pexels.com/photos/8973680/pexels-photo-8973680.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'المطارات والنقل والبنية التحتية',
     description: 'أنظمة أمن ومراقبة ونداء عام متكاملة للمطارات ومراكز النقل.',
-    icon: Plane,
     gradient: 'from-sky-600 to-indigo-700',
+    image: 'https://images.pexels.com/photos/28603501/pexels-photo-28603501.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'مزارع الخزانات',
     description: 'حلول اتصالات ومراقبة متخصصة للمناطق الخطرة في منشآت تخزين الوقود.',
-    icon: Container,
     gradient: 'from-emerald-600 to-teal-700',
+    image: 'https://images.pexels.com/photos/9407367/pexels-photo-9407367.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'محطات الطاقة والكهرباء',
     description: 'أنظمة اتصالات متوافقة مع SCADA لمنشآت توليد وتوزيع الطاقة.',
-    icon: Zap,
     gradient: 'from-yellow-500 to-amber-600',
+    image: 'https://images.pexels.com/photos/459728/pexels-photo-459728.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'المرافق والبنية التحتية العامة',
     description: 'شبكات اتصالات ذكية لمعالجة المياه وإدارة النفايات والخدمات البلدية.',
-    icon: Landmark,
     gradient: 'from-violet-600 to-purple-700',
+    image: 'https://images.pexels.com/photos/10274179/pexels-photo-10274179.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'المنازل الذكية',
     description: 'أنظمة أتمتة منزلية حديثة وكاميرات أمنية وتحكم بالدخول وأنظمة اتصال داخلي للمشاريع السكنية.',
-    icon: Home,
     gradient: 'from-rose-500 to-pink-600',
+    image: 'https://images.pexels.com/photos/18186205/pexels-photo-18186205.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
 ]
 
@@ -103,12 +93,10 @@ export default function IndustriesPageAr() {
         <div className="h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
 
         <div className="container mx-auto px-4 py-12 sm:py-16 lg:py-20 relative z-10">
-          {/* Breadcrumb */}
           <div className="mb-6">
             <Breadcrumb items={breadcrumbItems} variant="dark" />
           </div>
 
-          {/* Title Section */}
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-6">
               <Factory className="w-8 h-8" />
@@ -136,59 +124,51 @@ export default function IndustriesPageAr() {
       {/* Industries Grid */}
       <section className="container mx-auto px-4 py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {industries.map((industry, index) => {
-            const IconComponent = industry.icon
-            return (
-              <div
-                key={index}
-                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 hover:border-transparent hover:-translate-y-1"
-              >
-                {/* Gradient Background */}
-                <div className={`relative h-48 sm:h-52 bg-gradient-to-br ${industry.gradient} overflow-hidden`}>
-                  {/* Grid Pattern Overlay */}
-                  <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                      backgroundImage: `linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)`,
-                      backgroundSize: '30px 30px',
-                    }}
-                  />
-                  {/* Decorative circles */}
-                  <div className="absolute -top-8 -left-8 w-32 h-32 bg-white/10 rounded-full" />
-                  <div className="absolute -bottom-12 -right-12 w-40 h-40 bg-white/5 rounded-full" />
+          {industries.map((industry, index) => (
+            <div
+              key={index}
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 hover:border-transparent hover:-translate-y-1"
+            >
+              {/* Image */}
+              <div className="relative h-52 sm:h-56 overflow-hidden">
+                <Image
+                  src={industry.image}
+                  alt={industry.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-                  {/* Icon */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                      <IconComponent className="w-10 h-10 text-white" strokeWidth={1.5} />
-                    </div>
-                  </div>
-
-                  {/* Number Badge */}
-                  <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">{(index + 1).toString().padStart(2, '0')}</span>
-                  </div>
+                {/* Number Badge */}
+                <div className="absolute top-4 right-4 w-9 h-9 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/30">
+                  <span className="text-white text-sm font-bold">{(index + 1).toString().padStart(2, '0')}</span>
                 </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
+                {/* Title on image */}
+                <div className="absolute bottom-4 right-4 left-4">
+                  <h3 className="text-white text-lg font-bold drop-shadow-lg">
                     {industry.title}
                   </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-4">
-                    {industry.description}
-                  </p>
-                  <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
-                    <span>اقرأ المزيد</span>
-                    <ArrowLeft className="w-4 h-4" />
-                  </div>
                 </div>
-
-                {/* Bottom accent line */}
-                <div className={`h-1 bg-gradient-to-r ${industry.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right`} />
               </div>
-            )
-          })}
+
+              {/* Content */}
+              <div className="p-5">
+                <p className="text-slate-500 text-sm leading-relaxed mb-4">
+                  {industry.description}
+                </p>
+                <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
+                  <span>اقرأ المزيد</span>
+                  <ArrowLeft className="w-4 h-4" />
+                </div>
+              </div>
+
+              {/* Bottom accent line */}
+              <div className={`h-1 bg-gradient-to-r ${industry.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right`} />
+            </div>
+          ))}
         </div>
       </section>
 

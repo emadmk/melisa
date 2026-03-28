@@ -1,17 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import {
-  Factory,
-  Flame,
-  Anchor,
-  Building2,
-  Plane,
-  Container,
-  Zap,
-  Landmark,
-  Home,
-  ArrowRight
-} from 'lucide-react'
+import Image from 'next/image'
+import { ArrowRight } from 'lucide-react'
 import { PageHero } from '@/components/common'
 
 export const metadata: Metadata = {
@@ -23,65 +13,56 @@ const industries = [
   {
     title: 'Refineries',
     description: 'Advanced communication and safety systems for oil refining operations, ensuring reliable connectivity in hazardous environments.',
-    icon: Factory,
     gradient: 'from-orange-600 to-red-700',
-    image: '/images/industries/refineries.webp',
+    image: 'https://images.pexels.com/photos/10407689/pexels-photo-10407689.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'Petrochemical Plants',
     description: 'Explosion-proof PAGA, radio and CCTV solutions designed for petrochemical processing facilities.',
-    icon: Flame,
     gradient: 'from-amber-600 to-orange-700',
-    image: '/images/industries/petrochemical.webp',
+    image: 'https://images.pexels.com/photos/5884386/pexels-photo-5884386.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'Offshore Platforms',
     description: 'Marine-grade telecommunications and emergency notification systems for offshore oil & gas operations.',
-    icon: Anchor,
     gradient: 'from-cyan-600 to-blue-700',
-    image: '/images/industries/offshore.webp',
+    image: 'https://images.pexels.com/photos/3207536/pexels-photo-3207536.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'Steel Industries',
     description: 'Rugged communication infrastructure built to withstand extreme heat and heavy industrial environments.',
-    icon: Building2,
     gradient: 'from-slate-600 to-slate-800',
-    image: '/images/industries/steel.webp',
+    image: 'https://images.pexels.com/photos/8973680/pexels-photo-8973680.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'Airports, Transport & Infrastructure',
     description: 'Integrated security, surveillance and public address systems for airports and transportation hubs.',
-    icon: Plane,
     gradient: 'from-sky-600 to-indigo-700',
-    image: '/images/industries/airports.webp',
+    image: 'https://images.pexels.com/photos/28603501/pexels-photo-28603501.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'Tank Farms',
     description: 'Specialized hazardous area communication and monitoring solutions for fuel storage facilities.',
-    icon: Container,
     gradient: 'from-emerald-600 to-teal-700',
-    image: '/images/industries/tankfarms.webp',
+    image: 'https://images.pexels.com/photos/9407367/pexels-photo-9407367.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'Energy & Power Plants',
     description: 'Reliable SCADA-compatible communication systems for power generation and distribution facilities.',
-    icon: Zap,
     gradient: 'from-yellow-500 to-amber-600',
-    image: '/images/industries/energy.webp',
+    image: 'https://images.pexels.com/photos/459728/pexels-photo-459728.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'Utilities & Public Infrastructure',
     description: 'Smart communication networks for water treatment, waste management and municipal services.',
-    icon: Landmark,
     gradient: 'from-violet-600 to-purple-700',
-    image: '/images/industries/utilities.webp',
+    image: 'https://images.pexels.com/photos/10274179/pexels-photo-10274179.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
   {
     title: 'Smart Homes',
     description: 'Modern home automation, security cameras, access control and intercom systems for residential projects.',
-    icon: Home,
     gradient: 'from-rose-500 to-pink-600',
-    image: '/images/industries/smarthomes.webp',
+    image: 'https://images.pexels.com/photos/18186205/pexels-photo-18186205.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop',
   },
 ]
 
@@ -103,59 +84,51 @@ export default function IndustriesPage() {
       {/* Industries Grid */}
       <section className="container mx-auto px-4 py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {industries.map((industry, index) => {
-            const IconComponent = industry.icon
-            return (
-              <div
-                key={index}
-                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 hover:border-transparent hover:-translate-y-1"
-              >
-                {/* Image / Gradient Background */}
-                <div className={`relative h-48 sm:h-52 bg-gradient-to-br ${industry.gradient} overflow-hidden`}>
-                  {/* Grid Pattern Overlay */}
-                  <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                      backgroundImage: `linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)`,
-                      backgroundSize: '30px 30px',
-                    }}
-                  />
-                  {/* Decorative circles */}
-                  <div className="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full" />
-                  <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-white/5 rounded-full" />
+          {industries.map((industry, index) => (
+            <div
+              key={index}
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 hover:border-transparent hover:-translate-y-1"
+            >
+              {/* Image */}
+              <div className="relative h-52 sm:h-56 overflow-hidden">
+                <Image
+                  src={industry.image}
+                  alt={industry.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-                  {/* Icon */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                      <IconComponent className="w-10 h-10 text-white" strokeWidth={1.5} />
-                    </div>
-                  </div>
-
-                  {/* Number Badge */}
-                  <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">{(index + 1).toString().padStart(2, '0')}</span>
-                  </div>
+                {/* Number Badge */}
+                <div className="absolute top-4 left-4 w-9 h-9 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/30">
+                  <span className="text-white text-sm font-bold">{(index + 1).toString().padStart(2, '0')}</span>
                 </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
+                {/* Title on image */}
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-white text-lg font-bold drop-shadow-lg">
                     {industry.title}
                   </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-4">
-                    {industry.description}
-                  </p>
-                  <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
-                    <span>Learn More</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
                 </div>
-
-                {/* Bottom accent line */}
-                <div className={`h-1 bg-gradient-to-r ${industry.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
               </div>
-            )
-          })}
+
+              {/* Content */}
+              <div className="p-5">
+                <p className="text-slate-500 text-sm leading-relaxed mb-4">
+                  {industry.description}
+                </p>
+                <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
+                  <span>Learn More</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+
+              {/* Bottom accent line */}
+              <div className={`h-1 bg-gradient-to-r ${industry.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+            </div>
+          ))}
         </div>
       </section>
 
