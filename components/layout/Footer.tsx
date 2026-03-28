@@ -29,8 +29,8 @@ const contentEn = {
   newsletterText: 'Subscribe to our newsletter for latest updates and industry insights.',
   subscribe: 'Subscribe',
   emailPlaceholder: 'Enter your email',
-  copyright: '© 2025 Melisa Trading LLC. All rights reserved.',
-  designedBy: 'Designed by Esperios',
+  copyright: '© 2026 Melisa Trading LLC. All rights reserved.',
+  designedBy: 'Designed By Emad Makhdumi',
   links: [
     { name: 'Home', href: '/' },
     { name: 'Products', href: '/products' },
@@ -58,8 +58,8 @@ const contentAr = {
   newsletterText: 'اشترك في نشرتنا الإخبارية لآخر التحديثات ورؤى الصناعة.',
   subscribe: 'اشترك',
   emailPlaceholder: 'أدخل بريدك الإلكتروني',
-  copyright: '© 2025 ملیسا للتجارة ذ.م.م. جميع الحقوق محفوظة.',
-  designedBy: 'تصميم Esperios',
+  copyright: '© 2026 ملیسا للتجارة ذ.م.م. جميع الحقوق محفوظة.',
+  designedBy: 'تصميم Emad Makhdumi',
   links: [
     { name: 'الرئيسية', href: '/ar' },
     { name: 'المنتجات', href: '/ar/products' },
@@ -270,12 +270,15 @@ export default function Footer() {
                 {isArabic ? 'سياسة الخصوصية' : 'Privacy Policy'}
               </Link>
               <span className="w-px h-4 bg-slate-700" />
-              <p className="flex items-center gap-2">
+              <a
+                href="mailto:makhdoumiemad@gmail.com"
+                className="flex items-center gap-2 hover:text-primary transition-colors"
+              >
                 {content.designedBy}
                 <span className="w-6 h-6 rounded bg-slate-800 flex items-center justify-center text-xs text-slate-400">
-                  ES
+                  EM
                 </span>
-              </p>
+              </a>
             </div>
           </div>
         </div>
