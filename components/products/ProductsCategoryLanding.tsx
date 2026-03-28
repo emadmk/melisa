@@ -42,9 +42,9 @@ const categories: ProductCategory[] = [
     description:
       'MELISA provides advanced Public Address & General Alarm (PAGA) systems designed for critical communication in oil & gas, petrochemical and industrial environments. Our solutions ensure clear, reliable and real-time communication across hazardous and high-noise areas, fully compliant with international safety standards. We support EPC contractors from design stage through installation, integration and commissioning.',
     icon: Megaphone,
-    gradient: 'from-blue-600 to-blue-800',
-    iconBg: 'bg-blue-100',
-    iconColor: 'text-blue-600',
+    gradient: 'from-amber-600 to-orange-700',
+    iconBg: 'bg-amber-100',
+    iconColor: 'text-amber-600',
     features: [
       'High intelligibility in noisy environments',
       'Redundant and fail-safe architecture',
@@ -56,6 +56,7 @@ const categories: ProductCategory[] = [
       { name: 'Public Address & General Alarm', slug: 'public-address-general-alarm' },
       { name: 'Industrial Intercom Systems', slug: 'industrial-intercom-systems' },
       { name: 'Speakers & Siren', slug: 'speakers-siren' },
+      { name: 'Software & Functions', slug: 'paga-software-functions' },
     ],
   },
   {
@@ -102,7 +103,6 @@ const categories: ProductCategory[] = [
       { name: 'Perimeter Radars 360°', slug: 'perimeter-radars' },
       { name: 'Intrusion Detection Systems', slug: 'intrusion-detection-systems' },
       { name: 'Radar & CCTV Integration', slug: 'radar-cctv-integration' },
-      { name: 'Software & Functions', slug: 'radar-software-functions' },
     ],
   },
   {
@@ -112,9 +112,9 @@ const categories: ProductCategory[] = [
     description:
       'MELISA designs and deploys professional radio communication systems ensuring reliable voice and data communication across industrial sites. Our TETRA and DMR solutions are ideal for oil & gas operations, providing secure, scalable and mission-critical communication.',
     icon: Radio,
-    gradient: 'from-amber-600 to-orange-700',
-    iconBg: 'bg-amber-100',
-    iconColor: 'text-amber-600',
+    gradient: 'from-blue-600 to-blue-800',
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-600',
     features: [
       'Wide-area communication coverage',
       'Secure and encrypted communication',
