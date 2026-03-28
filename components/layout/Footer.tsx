@@ -41,10 +41,10 @@ const contentEn = {
     { name: 'Privacy Policy', href: '/privacy' },
   ],
   servicesList: [
-    { name: 'Radio Communication', icon: 'radio' },
-    { name: 'CCTV & Surveillance', icon: 'camera' },
-    { name: 'PA & Paging Systems', icon: 'speaker' },
-    { name: 'Wireless Solutions', icon: 'wifi' },
+    { name: 'Radio Communication', icon: 'radio', href: '/products/category/radio' },
+    { name: 'CCTV & Surveillance', icon: 'camera', href: '/products/category/cctv' },
+    { name: 'PA & Paging Systems', icon: 'speaker', href: '/products/category/paga' },
+    { name: 'Wireless Solutions', icon: 'wifi', href: '/products/category/microwave' },
   ],
 }
 
@@ -70,10 +70,10 @@ const contentAr = {
     { name: 'سياسة الخصوصية', href: '/ar/privacy' },
   ],
   servicesList: [
-    { name: 'الاتصالات اللاسلكية', icon: 'radio' },
-    { name: 'كاميرات المراقبة', icon: 'camera' },
-    { name: 'أنظمة النداء والإذاعة', icon: 'speaker' },
-    { name: 'الحلول اللاسلكية', icon: 'wifi' },
+    { name: 'الاتصالات اللاسلكية', icon: 'radio', href: '/ar/products/category/radio' },
+    { name: 'كاميرات المراقبة', icon: 'camera', href: '/ar/products/category/cctv' },
+    { name: 'أنظمة النداء والإذاعة', icon: 'speaker', href: '/ar/products/category/paga' },
+    { name: 'الحلول اللاسلكية', icon: 'wifi', href: '/ar/products/category/microwave' },
   ],
 }
 
@@ -93,7 +93,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900 text-white relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
         <div
           className="absolute inset-0"
           style={{
@@ -195,10 +195,13 @@ export default function Footer() {
                 const Icon = iconMap[service.icon as keyof typeof iconMap]
                 return (
                   <li key={service.name}>
-                    <div className={`flex items-center gap-3 text-slate-400 text-sm ${isArabic ? 'flex-row-reverse justify-end' : ''}`}>
+                    <Link
+                      href={service.href}
+                      className={`flex items-center gap-3 text-slate-400 hover:text-primary transition-colors text-sm ${isArabic ? 'flex-row-reverse justify-end' : ''}`}
+                    >
                       <Icon className="w-4 h-4 text-primary" />
                       {service.name}
-                    </div>
+                    </Link>
                   </li>
                 )
               })}
@@ -216,14 +219,19 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-6">{content.contact}</h4>
             <div className="space-y-4">
               {/* Location */}
-              <div className={`flex items-start gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
-                <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5 text-primary" />
+              <a
+                href={`https://maps.google.com/?q=${encodeURIComponent(siteConfig.address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-start gap-3 group ${isArabic ? 'flex-row-reverse' : ''}`}
+              >
+                <div className="w-10 h-10 rounded-lg bg-slate-800 group-hover:bg-primary flex items-center justify-center shrink-0 transition-colors">
+                  <MapPin className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
                 </div>
-                <p className="text-slate-400 text-sm leading-relaxed">
+                <p className="text-slate-400 text-sm leading-relaxed group-hover:text-primary transition-colors">
                   {siteConfig.address}
                 </p>
-              </div>
+              </a>
 
               {/* Phone */}
               <div className={`flex items-start gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
@@ -258,7 +266,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-slate-800">
+      <div className="border-t border-slate-800 relative z-10">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
             <p>{content.copyright}</p>
