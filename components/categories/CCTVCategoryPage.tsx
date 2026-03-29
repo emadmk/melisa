@@ -38,6 +38,7 @@ interface CCTVCategoryPageProps {
     brand?: { name: string; slug: string; logo?: string | null } | null
   }[]
   totalProducts: number
+  subcategoryName?: string
 }
 
 // ─── Animation Variants ───────────────────────────────────────────────────────
@@ -300,7 +301,7 @@ function CCTVProductCard({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function CCTVCategoryPage({ products, totalProducts }: CCTVCategoryPageProps) {
+export default function CCTVCategoryPage({ products, totalProducts, subcategoryName }: CCTVCategoryPageProps) {
   const featuresRef = useRef<HTMLDivElement>(null)
   const featuresInView = useInView(featuresRef, { once: true, margin: '-100px' })
 
@@ -353,6 +354,12 @@ export default function CCTVCategoryPage({ products, totalProducts }: CCTVCatego
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
             <span className="text-emerald-400 font-medium">CCTV & Surveillance</span>
+            {subcategoryName && (
+              <>
+                <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
+                <span className="text-emerald-300">{subcategoryName}</span>
+              </>
+            )}
           </motion.nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">

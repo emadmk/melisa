@@ -369,19 +369,26 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       total = result.total
     }
 
+    // Get subcategory name if this is a subcategory
+    let subcategoryName: string | undefined
+    if (!THEMED_CATEGORIES[cat] && SUBCATEGORY_TO_PARENT[cat]) {
+      const subCat = await getCategory(cat)
+      subcategoryName = subCat?.nameEn || subCat?.nameFa || undefined
+    }
+
     switch (themedType) {
       case 'paga':
-        return <PAGACategoryPage products={products} totalProducts={total} />
+        return <PAGACategoryPage products={products} totalProducts={total} subcategoryName={subcategoryName} />
       case 'cctv':
-        return <CCTVCategoryPage products={products} totalProducts={total} />
+        return <CCTVCategoryPage products={products} totalProducts={total} subcategoryName={subcategoryName} />
       case 'radar':
-        return <RadarCategoryPage products={products} totalProducts={total} />
+        return <RadarCategoryPage products={products} totalProducts={total} subcategoryName={subcategoryName} />
       case 'radio':
-        return <RadioCategoryPage products={products} totalProducts={total} />
+        return <RadioCategoryPage products={products} totalProducts={total} subcategoryName={subcategoryName} />
       case 'microwave':
-        return <MicrowaveCategoryPage products={products} totalProducts={total} />
+        return <MicrowaveCategoryPage products={products} totalProducts={total} subcategoryName={subcategoryName} />
       case 'fiber':
-        return <FiberCategoryPage products={products} totalProducts={total} />
+        return <FiberCategoryPage products={products} totalProducts={total} subcategoryName={subcategoryName} />
     }
   }
 

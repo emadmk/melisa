@@ -36,6 +36,7 @@ interface PAGACategoryPageProps {
     brand?: { name: string; slug: string; logo?: string | null } | null
   }[]
   totalProducts: number
+  subcategoryName?: string
 }
 
 // ─── Animation Variants ───────────────────────────────────────────────────────
@@ -292,7 +293,7 @@ function PAGAProductCard({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function PAGACategoryPage({ products, totalProducts }: PAGACategoryPageProps) {
+export default function PAGACategoryPage({ products, totalProducts, subcategoryName }: PAGACategoryPageProps) {
   const featuresRef = useRef<HTMLDivElement>(null)
   const featuresInView = useInView(featuresRef, { once: true, margin: '-100px' })
 
@@ -345,6 +346,12 @@ export default function PAGACategoryPage({ products, totalProducts }: PAGACatego
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
             <span className="text-orange-400 font-medium">PAGA & Industrial Intercom</span>
+            {subcategoryName && (
+              <>
+                <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
+                <span className="text-orange-300">{subcategoryName}</span>
+              </>
+            )}
           </motion.nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">

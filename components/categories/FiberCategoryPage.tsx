@@ -39,6 +39,7 @@ interface FiberCategoryPageProps {
     brand?: { name: string; slug: string; logo?: string | null } | null
   }[]
   totalProducts: number
+  subcategoryName?: string
 }
 
 // ---------------------------------------------------------------------------
@@ -399,6 +400,7 @@ function FiberProductCard({
 export default function FiberCategoryPage({
   products,
   totalProducts,
+  subcategoryName,
 }: FiberCategoryPageProps) {
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -479,6 +481,12 @@ export default function FiberCategoryPage({
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
             <span className="text-cyan-400">OTN & Fiber Optic</span>
+            {subcategoryName && (
+              <>
+                <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
+                <span className="text-cyan-300">{subcategoryName}</span>
+              </>
+            )}
           </motion.nav>
 
           <div className="max-w-4xl">

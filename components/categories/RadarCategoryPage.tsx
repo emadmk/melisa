@@ -42,6 +42,7 @@ interface RadarCategoryPageProps {
     brand?: { name: string; slug: string; logo?: string | null } | null
   }[]
   totalProducts: number
+  subcategoryName?: string
 }
 
 // ---------------------------------------------------------------------------
@@ -286,6 +287,7 @@ function RadarProductCard({
 export default function RadarCategoryPage({
   products,
   totalProducts,
+  subcategoryName,
 }: RadarCategoryPageProps) {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -331,6 +333,12 @@ export default function RadarCategoryPage({
                 </Link>
                 <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
                 <span className="text-blue-400">Navtech Radar</span>
+                {subcategoryName && (
+                  <>
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+                    <span className="text-blue-300">{subcategoryName}</span>
+                  </>
+                )}
               </motion.nav>
 
               <motion.div

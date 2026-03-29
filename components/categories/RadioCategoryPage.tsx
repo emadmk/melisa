@@ -29,6 +29,7 @@ interface RadioCategoryPageProps {
     brand?: { name: string; slug: string; logo?: string | null } | null
   }[]
   totalProducts: number
+  subcategoryName?: string
 }
 
 const KEY_FEATURES = [
@@ -259,6 +260,7 @@ function RadioProductCard({
 export default function RadioCategoryPage({
   products,
   totalProducts,
+  subcategoryName,
 }: RadioCategoryPageProps) {
   return (
     <div className="min-h-screen bg-black text-white pt-32 sm:pt-36">
@@ -303,6 +305,12 @@ export default function RadioCategoryPage({
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
             <span className="text-red-500">Radio Communication</span>
+            {subcategoryName && (
+              <>
+                <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
+                <span className="text-red-300">{subcategoryName}</span>
+              </>
+            )}
           </motion.nav>
 
           <div className="max-w-3xl">

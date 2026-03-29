@@ -34,6 +34,7 @@ interface MicrowaveCategoryPageProps {
     brand?: { name: string; slug: string; logo?: string | null } | null
   }[]
   totalProducts: number
+  subcategoryName?: string
 }
 
 /* ------------------------------------------------------------------ */
@@ -320,6 +321,7 @@ const whyChooseItems = [
 export default function MicrowaveCategoryPage({
   products,
   totalProducts,
+  subcategoryName,
 }: MicrowaveCategoryPageProps) {
   const [showAll, setShowAll] = useState(false)
   const visibleProducts = showAll ? products : products.slice(0, 8)
@@ -353,6 +355,12 @@ export default function MicrowaveCategoryPage({
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
             <span className="text-purple-400">Microwave Communication</span>
+            {subcategoryName && (
+              <>
+                <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
+                <span className="text-purple-300">{subcategoryName}</span>
+              </>
+            )}
           </motion.nav>
 
           <div className="max-w-3xl">
