@@ -23,6 +23,54 @@ const THEMED_CATEGORIES: Record<string, string> = {
   'otn-fiber': 'fiber',
 }
 
+// Map subcategories to their parent's theme
+const SUBCATEGORY_TO_PARENT: Record<string, { parent: string; theme: string }> = {
+  // PAGA subcategories
+  'public-address-general-alarm': { parent: 'paga', theme: 'paga' },
+  'industrial-intercom-systems': { parent: 'paga', theme: 'paga' },
+  'speakers-siren': { parent: 'paga', theme: 'paga' },
+  'paga-software-functions': { parent: 'paga', theme: 'paga' },
+  'paga-software': { parent: 'paga', theme: 'paga' },
+  'controllers-system-modules': { parent: 'paga', theme: 'paga' },
+  'call-stations': { parent: 'paga', theme: 'paga' },
+  'ds-6-controllers': { parent: 'paga', theme: 'paga' },
+  'ds-22-controllers': { parent: 'paga', theme: 'paga' },
+  'ds-6-call-stations': { parent: 'paga', theme: 'paga' },
+  'ds-22-call-stations': { parent: 'paga', theme: 'paga' },
+  // CCTV subcategories
+  'fixed-ptz-cameras': { parent: 'cctv', theme: 'cctv' },
+  'explosion-proof-cameras': { parent: 'cctv', theme: 'cctv' },
+  'video-management-system': { parent: 'cctv', theme: 'cctv' },
+  'security-cameras': { parent: 'cctv', theme: 'cctv' },
+  'access-control': { parent: 'cctv', theme: 'cctv' },
+  'explosion-proof': { parent: 'cctv', theme: 'cctv' },
+  'outdoor': { parent: 'cctv', theme: 'cctv' },
+  // Radar subcategories
+  'perimeter-radars': { parent: 'radar-surveillance-system', theme: 'radar' },
+  'intrusion-detection-systems': { parent: 'radar-surveillance-system', theme: 'radar' },
+  'radar-cctv-integration': { parent: 'radar-surveillance-system', theme: 'radar' },
+  // Radio subcategories
+  'tetra': { parent: 'radio', theme: 'radio' },
+  'dmr': { parent: 'radio', theme: 'radio' },
+  'mototrbo': { parent: 'radio', theme: 'radio' },
+  'dispatching-solutions': { parent: 'radio', theme: 'radio' },
+  'project-25-radios': { parent: 'radio', theme: 'radio' },
+  // Microwave subcategories
+  'ptp-microwave-links': { parent: 'microwave', theme: 'microwave' },
+  'ptmp': { parent: 'microwave', theme: 'microwave' },
+  'hardware-products': { parent: 'microwave', theme: 'microwave' },
+  'software-products': { parent: 'microwave', theme: 'microwave' },
+  'point-to-point': { parent: 'microwave', theme: 'microwave' },
+  'point-to-multipoint': { parent: 'microwave', theme: 'microwave' },
+  'wlan': { parent: 'microwave', theme: 'microwave' },
+  'mesh': { parent: 'microwave', theme: 'microwave' },
+  // OTN/Fiber subcategories
+  'otn-systems': { parent: 'otn-fiber', theme: 'fiber' },
+  'sdh-legacy-integration': { parent: 'otn-fiber', theme: 'fiber' },
+  'fiber-optic-infrastructure': { parent: 'otn-fiber', theme: 'fiber' },
+  'optical-transmission-solutions': { parent: 'otn-fiber', theme: 'fiber' },
+}
+
 // Category redirects (if any)
 const REDIRECT_CATEGORIES: Record<string, string> = {}
 
@@ -129,6 +177,65 @@ async function getProductsByCategory(categorySlug: string, page: number = 1, lim
   }
 }
 
+async function getAllProductsIncludingChildren(categorySlug: string) {
+  const encodedSlug = encodeURIComponent(categorySlug).toLowerCase()
+  // Find the parent category and all its children
+  const parentCat = await prisma.category.findUnique({
+    where: { slug: encodedSlug },
+    include: {
+      children: {
+        include: {
+          children: true, // grandchildren
+        },
+      },
+    },
+  })
+
+  if (!parentCat) return { products: [] as Product[], total: 0 }
+
+  // Collect all category IDs (parent + children + grandchildren)
+  const categoryIds = [parentCat.id]
+  for (const child of parentCat.children) {
+    categoryIds.push(child.id)
+    for (const grandchild of child.children) {
+      categoryIds.push(grandchild.id)
+    }
+  }
+
+  const [rawProducts, total] = await Promise.all([
+    prisma.product.findMany({
+      where: {
+        categoryId: { in: categoryIds },
+        status: 'PUBLISHED',
+      },
+      include: {
+        category: { select: { id: true, nameFa: true, nameEn: true, slug: true } },
+        brand: { select: { id: true, name: true, slug: true, logo: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.product.count({
+      where: {
+        categoryId: { in: categoryIds },
+        status: 'PUBLISHED',
+      },
+    }),
+  ])
+
+  const products: Product[] = (rawProducts as RawProduct[]).map((p) => ({
+    id: p.id,
+    titleFa: p.titleFa,
+    titleEn: p.titleEn,
+    slug: p.slug,
+    shortDesc: p.shortDesc,
+    image: p.image,
+    category: p.category ? { nameFa: p.category.nameFa, slug: p.category.slug } : null,
+    brand: p.brand ? { name: p.brand.name, slug: p.brand.slug, logo: p.brand.logo } : null,
+  }))
+
+  return { products, total }
+}
+
 async function getAllProductsByCategory(categorySlug: string) {
   const encodedSlug = encodeURIComponent(categorySlug).toLowerCase()
   const [products, total] = await Promise.all([
@@ -200,6 +307,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return themedMeta[cat]
   }
 
+  // For subcategories, use parent's meta with subcategory name
+  if (SUBCATEGORY_TO_PARENT[cat]) {
+    const category = await getCategory(cat)
+    if (category) {
+      const name = category.nameEn || category.nameFa
+      return {
+        title: `${name} | Melisa Trading`,
+        description: `Browse ${name} products - Professional telecommunications and security solutions by Melisa Trading.`,
+      }
+    }
+  }
+
   const category = await getCategory(cat)
 
   if (!category) {
@@ -222,10 +341,33 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     redirect(REDIRECT_CATEGORIES[cat])
   }
 
-  // Check if this is a themed category
-  const themedType = THEMED_CATEGORIES[cat]
+  // Check if this is a themed category or a subcategory of one
+  let themedType = THEMED_CATEGORIES[cat]
+  let productSlug = cat // which category slug to load products from
+
+  // If not a parent themed category, check if it's a subcategory
+  if (!themedType && SUBCATEGORY_TO_PARENT[cat]) {
+    themedType = SUBCATEGORY_TO_PARENT[cat].theme
+    productSlug = cat // load products from this subcategory, not parent
+  }
+
   if (themedType) {
-    const { products, total } = await getAllProductsByCategory(cat)
+    // For parent categories: load ALL products (including from subcategories)
+    // For subcategories: load only that subcategory's products
+    let products: Product[]
+    let total: number
+
+    if (THEMED_CATEGORIES[cat]) {
+      // Parent category - get products from this cat AND all its subcategories
+      const result = await getAllProductsIncludingChildren(cat)
+      products = result.products
+      total = result.total
+    } else {
+      // Subcategory - get only this subcategory's products
+      const result = await getAllProductsByCategory(productSlug)
+      products = result.products
+      total = result.total
+    }
 
     switch (themedType) {
       case 'paga':
