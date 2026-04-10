@@ -10,7 +10,7 @@ export const siteConfig = {
   phone2: '(971) 42438653 Ext. 202',
   whatsapp: '+971527664837',
   email: 'info@melisa.ae',
-  address: 'Office No. 02, Unit 2202, 22nd Floor, Metropolis Tower, Al Abraj Street, Business Bay, Dubai, United Arab Emirates',
+  address: 'Office No. 02, Unit 2201, 22nd Floor, Metropolis Tower, Al Abraj Street, Business Bay, Dubai, United Arab Emirates',
   experience: '15',
   instagram: 'https://instagram.com/melisa.ae',
   linkedin: 'https://www.linkedin.com/company/melisa-telecommunications-equipment-trading-l-l-c/',

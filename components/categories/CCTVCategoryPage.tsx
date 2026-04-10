@@ -675,7 +675,7 @@ export default function CCTVCategoryPage({ products, totalProducts, subcategoryN
                     <div>
                       <p className="text-zinc-500 text-sm font-medium tracking-wider uppercase mb-4">Certifications</p>
                       <div className="flex flex-wrap gap-3">
-                        {['ATEX', 'IECEx', 'IP68', 'NEMA 4X', 'SIL2'].map((cert) => (
+                        {['ATEX', 'IECEx', 'IP68', 'NEMA 4X', 'EN 50155'].map((cert) => (
                           <span key={cert} className="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400 text-xs font-bold tracking-wider">
                             {cert}
                           </span>

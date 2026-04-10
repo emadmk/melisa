@@ -279,7 +279,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const themedMeta: Record<string, { title: string; description: string }> = {
     'paga': {
       title: 'PAGA & Industrial Intercom Systems | NEUMANN Elektronik | Melisa',
-      description: 'Professional PA/GA and industrial intercom systems by NEUMANN Elektronik. SIL2-certified public address, general alarm, and IP intercom solutions for oil & gas and critical infrastructure.',
+      description: 'Professional PA/GA and industrial intercom systems by NEUMANN Elektronik. EN 54-16 certified public address, general alarm, and IP intercom solutions for oil & gas and critical infrastructure.',
     },
     'cctv': {
       title: 'Industrial CCTV & Video Surveillance Systems | Melisa',

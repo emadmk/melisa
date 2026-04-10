@@ -80,8 +80,8 @@ const features = [
   {
     icon: Megaphone,
     title: 'Public Address & General Alarm (PA/GA)',
-    description: 'SIL2-certified PA/GA systems designed for oil & gas, petrochemical, and critical infrastructure with crystal-clear voice intelligibility.',
-    badge: 'SIL2 Certified',
+    description: 'Certified PA/GA systems designed for oil & gas, petrochemical, and critical infrastructure with crystal-clear voice intelligibility.',
+    badge: 'EN 54-16',
   },
   {
     icon: Mic2,
@@ -117,7 +117,7 @@ const features = [
 
 const whyChoose = [
   'Authorized NEUMANN Elektronik partner in the UAE',
-  'SIL2-certified PA/GA solutions for safety-critical environments',
+  'Certified PA/GA solutions for safety-critical environments',
   'Complete ATEX Zone 1/2 certified product range',
   'IP-based modular architecture for unlimited scalability',
   'Integration with DCS, SCADA, and fire & gas systems',
@@ -406,8 +406,8 @@ export default function PAGACategoryPage({ products, totalProducts, subcategoryN
                     <span className="text-zinc-500 text-sm mt-0.5 block">Solution Areas</span>
                   </div>
                   <div className="px-5 py-4 bg-zinc-900/70 backdrop-blur-sm rounded-xl border border-zinc-800/60">
-                    <span className="text-orange-400 font-bold text-3xl block">SIL2</span>
-                    <span className="text-zinc-500 text-sm mt-0.5 block">Safety Rated</span>
+                    <span className="text-orange-400 font-bold text-3xl block">ATEX</span>
+                    <span className="text-zinc-500 text-sm mt-0.5 block">Certified</span>
                   </div>
                 </div>
 
@@ -482,7 +482,7 @@ export default function PAGACategoryPage({ products, totalProducts, subcategoryN
                 >
                   <div className="flex items-center gap-2">
                     <Shield className="w-4 h-4 text-orange-400" />
-                    <span className="text-white text-xs font-medium">SIL2 Certified</span>
+                    <span className="text-white text-xs font-medium">EN 54-16 Certified</span>
                   </div>
                 </motion.div>
 
@@ -596,7 +596,7 @@ export default function PAGACategoryPage({ products, totalProducts, subcategoryN
                     </div>
                     <h3 className="text-white font-bold text-2xl mb-3">NEUMANN Elektronik</h3>
                     <p className="text-zinc-400 text-base mb-6 max-w-md mx-auto">
-                      German engineering excellence in PA/GA and intercom systems. IP-compatible, SIL2-certified, and built for the harshest industrial conditions.
+                      German engineering excellence in PA/GA and intercom systems. IP-compatible, EN 54-16 certified, and built for the harshest industrial conditions.
                     </p>
                     <span className="inline-flex items-center gap-2 text-orange-400 font-medium group-hover:text-orange-300 transition-colors">
                       Explore NEUMANN Products
@@ -673,7 +673,7 @@ export default function PAGACategoryPage({ products, totalProducts, subcategoryN
                     <div>
                       <p className="text-zinc-500 text-sm font-medium tracking-wider uppercase mb-4">Certifications</p>
                       <div className="flex flex-wrap gap-3">
-                        {['SIL2', 'ATEX', 'IECEx', 'IP66', 'DNV-GL'].map((cert) => (
+                        {['EN 54-16', 'ATEX', 'IECEx', 'IP66', 'DNV-GL'].map((cert) => (
                           <span key={cert} className="px-3 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-lg text-orange-400 text-xs font-bold tracking-wider">
                             {cert}
                           </span>
