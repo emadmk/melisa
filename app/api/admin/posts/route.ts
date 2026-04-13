@@ -6,19 +6,25 @@ import { slugify } from '@/lib/utils'
 export const dynamic = 'force-dynamic'
 
 const postSchema = z.object({
-  titleFa: z.string().min(2),
+  titleFa: z.string().min(1),
   titleEn: z.string().optional(),
+  titleAr: z.string().optional(),
   slug: z.string().optional(),
   excerpt: z.string().optional(),
+  excerptAr: z.string().optional(),
   content: z.string().optional(),
-  image: z.string().optional(),
+  contentAr: z.string().optional(),
+  image: z.string().optional().nullable(),
   status: z.enum(['DRAFT', 'PUBLISHED']).optional(),
   publishedAt: z.string().optional(),
   author: z.string().optional(),
-  postCategoryId: z.string().optional(),
+  postCategoryId: z.string().optional().nullable(),
   tags: z.array(z.string()).optional(),
   metaTitle: z.string().optional(),
+  metaTitleAr: z.string().optional(),
   metaDesc: z.string().optional(),
+  metaDescAr: z.string().optional(),
+  focusKeyword: z.string().optional(),
 })
 
 export async function GET(request: NextRequest) {

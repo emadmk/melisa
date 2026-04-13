@@ -61,6 +61,7 @@ export default function NewPostPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
+          titleFa: form.titleFa || form.titleEn || form.titleAr,
           image: form.image || null,
           postCategoryId: form.postCategoryId || null,
           tags: form.tags ? form.tags.split(',').map((t) => t.trim()) : [],
