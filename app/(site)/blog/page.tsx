@@ -98,6 +98,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
                       alt={post.titleFa}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      unoptimized={!!post.image?.includes('/uploads/')}
                     />
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
