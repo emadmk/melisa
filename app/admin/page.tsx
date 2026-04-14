@@ -18,41 +18,67 @@ interface Inquiry {
 }
 
 async function getStats() {
-  const [
-    productCount,
-    inquiryCount,
-    postCount,
-    projectCount,
-    pendingInquiries,
-    recentInquiries,
-  ] = await Promise.all([
-    prisma.product.count(),
-    prisma.inquiry.count(),
-    prisma.post.count({ where: { status: 'PUBLISHED' } }),
-    prisma.project.count({ where: { status: 'PUBLISHED' } }),
-    prisma.inquiry.count({ where: { status: 'NEW' } }),
-    prisma.inquiry.findMany({
-      take: 5,
-      orderBy: { createdAt: 'desc' },
-      select: {
-        id: true,
-        name: true,
-        status: true,
-        createdAt: true,
-        product: {
-          select: { titleFa: true }
+  try {
+    const [
+      productCount,
+      inquiryCount,
+      postCount,
+      projectCount,
+      pendingInquiries,
+      rawInquiries,
+    ] = await Promise.all([
+      prisma.product.count().catch(() => 0),
+      prisma.inquiry.count().catch(() => 0),
+      prisma.post.count({ where: { status: 'PUBLISHED' } }).catch(() => 0),
+      prisma.project.count({ where: { status: 'PUBLISHED' } }).catch(() => 0),
+      prisma.inquiry.count({ where: { status: 'NEW' } }).catch(() => 0),
+      prisma.inquiry.findMany({
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+      }).catch(() => []),
+    ])
+
+    // Manually fetch product titles to avoid orphaned references
+    const recentInquiries: Inquiry[] = []
+    for (const inq of rawInquiries) {
+      let productTitle: string | null = null
+      if (inq.productId) {
+        try {
+          const p = await prisma.product.findUnique({
+            where: { id: inq.productId },
+            select: { titleFa: true },
+          })
+          productTitle = p?.titleFa || null
+        } catch {
+          productTitle = null
         }
       }
-    }),
-  ])
+      recentInquiries.push({
+        id: inq.id,
+        name: inq.name,
+        status: inq.status,
+        createdAt: inq.createdAt,
+        product: productTitle ? { titleFa: productTitle } : null,
+      })
+    }
 
-  return {
-    productCount,
-    inquiryCount,
-    postCount,
-    projectCount,
-    pendingInquiries,
-    recentInquiries: recentInquiries as Inquiry[],
+    return {
+      productCount,
+      inquiryCount,
+      postCount,
+      projectCount,
+      pendingInquiries,
+      recentInquiries,
+    }
+  } catch {
+    return {
+      productCount: 0,
+      inquiryCount: 0,
+      postCount: 0,
+      projectCount: 0,
+      pendingInquiries: 0,
+      recentInquiries: [] as Inquiry[],
+    }
   }
 }
 

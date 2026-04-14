@@ -28,26 +28,61 @@ interface PageProps {
 }
 
 async function getPosts(page: number = 1, limit: number = 9) {
-  const skip = (page - 1) * limit
+  try {
+    const skip = (page - 1) * limit
 
-  const [posts, total] = await Promise.all([
-    prisma.post.findMany({
-      where: { status: 'PUBLISHED' },
-      orderBy: { publishedAt: 'desc' },
-      skip,
-      take: limit,
-      include: {
-        postCategory: {
-          select: { nameFa: true, slug: true }
+    const [rawPosts, total] = await Promise.all([
+      prisma.post.findMany({
+        where: { status: 'PUBLISHED' },
+        orderBy: { publishedAt: 'desc' },
+        skip,
+        take: limit,
+        select: {
+          id: true,
+          slug: true,
+          titleFa: true,
+          image: true,
+          excerpt: true,
+          author: true,
+          publishedAt: true,
+          postCategoryId: true,
+        },
+      }).catch(() => []),
+      prisma.post.count({ where: { status: 'PUBLISHED' } }).catch(() => 0),
+    ])
+
+    // Fetch categories defensively
+    const posts: Post[] = []
+    for (const p of rawPosts) {
+      let postCategory: { nameFa: string; slug: string } | null = null
+      if (p.postCategoryId) {
+        try {
+          const cat = await prisma.postCategory.findUnique({
+            where: { id: p.postCategoryId },
+            select: { nameFa: true, slug: true },
+          })
+          postCategory = cat
+        } catch {
+          postCategory = null
         }
       }
-    }),
-    prisma.post.count({
-      where: { status: 'PUBLISHED' }
-    })
-  ])
+      posts.push({
+        id: p.id,
+        slug: p.slug,
+        titleFa: p.titleFa,
+        image: p.image,
+        excerpt: p.excerpt,
+        author: p.author,
+        publishedAt: p.publishedAt,
+        postCategory,
+      })
+    }
 
-  return { posts: posts as Post[], total, totalPages: Math.ceil(total / limit) }
+    return { posts, total, totalPages: Math.ceil(total / limit) }
+  } catch (e) {
+    console.error('Error loading posts:', e)
+    return { posts: [] as Post[], total: 0, totalPages: 0 }
+  }
 }
 
 function formatDate(date: Date | null): string {
