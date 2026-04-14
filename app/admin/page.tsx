@@ -14,7 +14,7 @@ interface Inquiry {
   name: string
   status: string
   createdAt: Date
-  product: { titleFa: string } | null
+  product?: { titleFa: string } | null
 }
 
 async function getStats() {
@@ -34,7 +34,11 @@ async function getStats() {
     prisma.inquiry.findMany({
       take: 5,
       orderBy: { createdAt: 'desc' },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        status: true,
+        createdAt: true,
         product: {
           select: { titleFa: true }
         }
