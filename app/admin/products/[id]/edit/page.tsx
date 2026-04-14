@@ -4,9 +4,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, X, Plus, Loader2, Save } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import ImageUpload from '../../../components/ImageUpload'
 import FileUpload from '../../../components/FileUpload'
 import SeoAnalyzer from '@/components/admin/SeoAnalyzer'
+
+const RichTextEditor = dynamic(() => import('@/components/admin/RichTextEditor'), { ssr: false })
 
 interface Category {
   id: string
@@ -328,28 +331,30 @@ export default function EditProductPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Full Description (English)
                     </label>
-                    <textarea
-                      rows={6}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    <RichTextEditor
                       value={formData.fullDesc || ''}
-                      onChange={(e) => setFormData({ ...formData, fullDesc: e.target.value })}
+                      onChange={(html) => setFormData({ ...formData, fullDesc: html })}
+                      uploadFolder="products"
+                      placeholder="Product full description with images, headings, links..."
+                      minHeight={300}
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Full Description (Arabic)
                     </label>
-                    <textarea
-                      rows={6}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    <RichTextEditor
                       value={formData.fullDescAr || ''}
-                      onChange={(e) => setFormData({ ...formData, fullDescAr: e.target.value })}
+                      onChange={(html) => setFormData({ ...formData, fullDescAr: html })}
+                      uploadFolder="products"
                       dir="rtl"
+                      placeholder="الوصف الكامل للمنتج..."
+                      minHeight={300}
                     />
                   </div>
                 </div>

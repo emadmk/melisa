@@ -192,10 +192,11 @@ export default async function BlogPostPage({ params }: PageProps) {
               <div className="relative aspect-video rounded-2xl sm:rounded-3xl overflow-hidden mb-8 sm:mb-12 shadow-2xl -mt-16 sm:-mt-24">
                 <Image
                   src={post.image}
-                  alt={post.titleFa}
+                  alt={post.titleEn || post.titleFa}
                   fill
                   className="object-cover"
                   priority
+                  unoptimized={post.image.includes('/uploads/')}
                 />
               </div>
             )}
@@ -246,6 +247,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                         alt={relPost.titleFa}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        unoptimized={!!relPost.image?.includes('/uploads/')}
                       />
                     </div>
                     <div className="p-5">

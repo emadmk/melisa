@@ -4,10 +4,13 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Plus, X, Loader2, Save } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import ImageUpload from '../../components/ImageUpload'
 import FileUpload from '../../components/FileUpload'
 import SeoAnalyzer from '@/components/admin/SeoAnalyzer'
 import { cn } from '@/lib/utils'
+
+const RichTextEditor = dynamic(() => import('@/components/admin/RichTextEditor'), { ssr: false })
 
 interface Category {
   id: string
@@ -211,12 +214,12 @@ export default function NewProductPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Full Description (English)
                     </label>
-                    <textarea
-                      rows={6}
+                    <RichTextEditor
                       value={form.fullDesc}
-                      onChange={(e) => setForm({ ...form, fullDesc: e.target.value })}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                      dir="ltr"
+                      onChange={(html) => setForm({ ...form, fullDesc: html })}
+                      uploadFolder="products"
+                      placeholder="Product full description. Add headings, images, links..."
+                      minHeight={300}
                     />
                   </div>
                 </div>
@@ -257,13 +260,13 @@ export default function NewProductPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       الوصف الكامل (العربية)
                     </label>
-                    <textarea
-                      rows={6}
+                    <RichTextEditor
                       value={form.fullDescAr}
-                      onChange={(e) => setForm({ ...form, fullDescAr: e.target.value })}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                      onChange={(html) => setForm({ ...form, fullDescAr: html })}
+                      uploadFolder="products"
                       dir="rtl"
-                      style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
+                      placeholder="الوصف الكامل للمنتج..."
+                      minHeight={300}
                     />
                   </div>
                 </div>

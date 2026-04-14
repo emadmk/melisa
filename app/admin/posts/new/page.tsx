@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowRight, Loader2, Save } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import ImageUpload from '../../components/ImageUpload'
 import SeoAnalyzer from '@/components/admin/SeoAnalyzer'
 import { cn } from '@/lib/utils'
+
+const RichTextEditor = dynamic(() => import('@/components/admin/RichTextEditor'), { ssr: false })
 
 interface PostCategory {
   id: string
@@ -168,11 +171,11 @@ export default function NewPostPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Content (English)
                 </label>
-                <textarea
+                <RichTextEditor
                   value={form.content}
-                  onChange={(e) => setForm({ ...form, content: e.target.value })}
-                  rows={10}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  onChange={(html) => setForm({ ...form, content: html })}
+                  uploadFolder="posts"
+                  placeholder="Write your post content here. You can paste from Word, add images, links, headings..."
                 />
               </div>
             </>
@@ -208,12 +211,12 @@ export default function NewPostPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   المحتوى (العربية)
                 </label>
-                <textarea
+                <RichTextEditor
                   value={form.contentAr}
-                  onChange={(e) => setForm({ ...form, contentAr: e.target.value })}
-                  rows={10}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                  onChange={(html) => setForm({ ...form, contentAr: html })}
+                  uploadFolder="posts"
                   dir="rtl"
+                  placeholder="اكتب محتوى المنشور هنا..."
                 />
               </div>
             </>
